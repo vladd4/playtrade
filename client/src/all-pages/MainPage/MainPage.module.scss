@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  max-height: $page-height;
+  overflow-y: auto;
+  margin-top: 2%;
+  .logo_block {
+    width: 50%;
+    margin-top: 0%;
+    margin-bottom: 2%;
+  }
+  .cards_block {
+    width: 90%;
+    display: grid;
+    place-items: center;
+    margin-top: 3%;
+    row-gap: 15px;
+    .no_games {
+      font-size: 12px;
+      color: var(--hint-color);
+      width: 90%;
+      text-align: center;
+      background-color: var(--card-background-color);
+      border-radius: 15px;
+      padding: 5% 0%;
+    }
+  }
+}

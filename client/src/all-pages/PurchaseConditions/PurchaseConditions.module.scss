@@ -1,0 +1,51 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  max-height: $page-height;
+  margin-top: 2%;
+  overflow-y: scroll;
+  .wrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    h1 {
+      color: var(--button-active-color);
+      font-size: 30px;
+      font-weight: 600;
+      margin-bottom: 5%;
+      text-align: center;
+    }
+    .info_block {
+      width: 100%;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: var(--card-background-color);
+      color: var(--font-color);
+      padding: 4%;
+      h5 {
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 3%;
+      }
+      p {
+        font-size: 14px;
+        span {
+          font-weight: 600;
+        }
+      }
+      .btn {
+        width: 55%;
+        padding: 3% 0%;
+        margin-top: 4%;
+      }
+    }
+  }
+}

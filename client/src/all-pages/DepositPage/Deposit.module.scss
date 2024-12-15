@@ -1,0 +1,136 @@
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  position: fixed;
+  background: var(--filter-overflow-color);
+  z-index: 1003;
+  backdrop-filter: blur(3px);
+  top: 0;
+  left: 0;
+  .wrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 15px;
+    background-color: var(--card-background-color);
+    transform: translate(-50%, -50%);
+    height: 75svh;
+    z-index: 1005;
+    padding: 25px 20px;
+    .top_block {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-bottom: 7%;
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--hint-color);
+      }
+      h1 {
+        font-size: 50px;
+        font-weight: 600;
+        margin: 0;
+        margin-top: 0%;
+      }
+      span {
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: -3%;
+      }
+    }
+    .label {
+      font-size: 13px;
+      color: var(--hint-color);
+    }
+    .bottom_block {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      margin-top: 7%;
+      p {
+        font-size: 15px;
+        color: var(--font-color);
+      }
+      .card_input {
+        width: 100%;
+        background-color: var(--card-background-color);
+        border-radius: 15px;
+        border: 1px solid var(--font-color);
+        padding: 3%;
+        font-family: inherit;
+        font-size: 15px;
+        outline: none;
+        margin-top: 4%;
+        color: var(--font-color);
+        &::placeholder {
+          font-family: inherit;
+          font-size: 15px;
+          color: var(--font-color);
+        }
+      }
+      .select {
+        width: 100%;
+        margin-top: 3%;
+        background-color: var(--card-background-color);
+        border-radius: 15px;
+        border: 1px solid var(--font-color);
+        padding: 3%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .select_wrapper {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+          p {
+            font-family: inherit;
+            color: var(--font-color);
+          }
+        }
+        .options_block {
+          width: 100%;
+          margin-top: 6%;
+          display: none;
+          row-gap: 13px;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          .option {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 6px;
+            label {
+              font-size: 15px;
+              font-family: inherit;
+            }
+            input {
+              height: 16px;
+              width: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.show_options {
+  display: flex !important;
+}

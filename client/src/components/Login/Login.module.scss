@@ -1,0 +1,77 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100vw;
+  height: 100svh;
+  z-index: 1010 !important;
+  display: grid;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--background-color);
+  .logo {
+    width: 60%;
+    position: absolute;
+    top: 5%;
+  }
+  .form_block {
+    background-color: var(--card-background-color);
+    width: 90%;
+    border-radius: 20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 25px;
+    padding: 5%;
+    font-size: 18px;
+    form {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 15px;
+      row-gap: 15px;
+      .input {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        input {
+          width: 100%;
+          border-radius: 15px;
+          border: 1px solid $color-black;
+          background-color: $color-white;
+
+          font-family: inherit;
+          font-size: 16px;
+          padding: 3% 5%;
+          padding-right: 15%;
+        }
+        .icon {
+          position: absolute;
+          top: 17%;
+          right: 5%;
+        }
+        p {
+          font-size: 13px;
+          color: var(--hint-color);
+          margin-left: 3%;
+          margin-top: 1%;
+          cursor: pointer;
+        }
+      }
+
+      button {
+        width: 55%;
+        margin-top: 5%;
+        padding: 5%;
+      }
+    }
+  }
+}

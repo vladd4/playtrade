@@ -1,0 +1,100 @@
+"use client";
+
+import { Pencil } from "lucide-react";
+import styles from "./Profile.module.scss";
+import ProfileButton from "./ProfileButton";
+
+import No_Avatar from "@/../public/no-avatar.jpg";
+import { jost } from "@/font";
+import { profile_links } from "@/static_store/profile_links";
+import StarRating from "../GameCards/StarRating";
+import { User } from "@/types/user.type";
+import AlertChangeForm from "../AlertChangeForm/AlertChangeForm";
+import { useAppDispatch } from "@/hooks/redux-hooks";
+import {
+  setChangeAlertType,
+  setShowChangeAlert,
+} from "@/redux/slices/alertSlice";
+import { formatImageFromServer } from "@/utils/formatImageName";
+
+interface ProfileProps {
+  user: User;
+}
+
+export default function ProfileCard({ user }: ProfileProps) {
+  const dispatch = useAppDispatch();
+
+  const handleAlertOpen = (alertType: "name" | "password") => {
+    dispatch(setShowChangeAlert(true));
+    dispatch(setChangeAlertType(alertType));
+  };
+
+  return (
+    <>
+      <div className={`${styles.root} ${jost.className}`}>
+        <div className={styles.info_block}>
+          <div
+            className={styles.image_div}
+            style={{
+              backgroundImage: `url(${
+                user.avatarPhoto === null
+                  ? No_Avatar.src
+                  : `${
+                      process.env.NEXT_PUBLIC_BACKEND_API_URL
+                    }${formatImageFromServer(user.avatarPhoto)}`
+              })`,
+            }}
+          />
+          <div className={styles.user_info}>
+            <div className={styles.name}>
+              <p>
+                Ім'я: <span>{user.name}</span>
+              </p>
+              <Pencil
+                size={16}
+                className={styles.svg}
+                onClick={() => handleAlertOpen("name")}
+              />
+            </div>
+            <div className={styles.name}>
+              <p>Рейтинг:</p>
+              <StarRating
+                size={14}
+                rating={user.rating}
+                className={styles.stars}
+              />
+            </div>
+            <div className={styles.name}>
+              <p>
+                E-mail: <span>{user.email}</span>
+              </p>
+            </div>
+            <div className={styles.name}>
+              <p>
+                Пароль: <span>*****</span>
+              </p>
+              <Pencil
+                size={16}
+                className={styles.svg}
+                onClick={() => handleAlertOpen("password")}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={styles.buttons_block}>
+          {profile_links.map((btn) => {
+            return (
+              <ProfileButton
+                key={btn.label}
+                label={btn.label}
+                icon={btn.icon}
+                href={btn.href}
+              />
+            );
+          })}
+        </div>
+      </div>
+      <AlertChangeForm currentUserName={user.name} />
+    </>
+  );
+}

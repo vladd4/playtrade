@@ -1,0 +1,45 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  max-height: $page-height;
+  margin-top: 2%;
+  overflow-y: scroll;
+  .wrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .h1 {
+      color: var(--button-active-color);
+      font-size: 30px;
+      font-weight: 600;
+      margin-bottom: 6%;
+    }
+    .add_product {
+      width: 100%;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      padding: 25px 3%;
+      background-color: var(--card-background-color);
+      p {
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 4%;
+      }
+      div {
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        background-color: var(--button-active-color);
+        border-radius: 50px;
+      }
+    }
+  }
+}

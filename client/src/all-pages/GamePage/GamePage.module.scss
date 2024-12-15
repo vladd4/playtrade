@@ -1,0 +1,51 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  max-height: $page-height;
+  margin-top: 2%;
+  overflow-y: scroll;
+  .wrapper {
+    width: 90%;
+    .filter {
+      width: 35%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1%;
+      margin-bottom: 4%;
+      p {
+        font-size: 14px;
+      }
+    }
+    .no_items {
+      font-size: 12px;
+      color: var(--hint-color);
+      width: 100%;
+      text-align: center;
+      background-color: var(--card-background-color);
+      border-radius: 15px;
+      padding: 5% 0%;
+    }
+    .loader {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        animation: spin 1.5s linear infinite;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

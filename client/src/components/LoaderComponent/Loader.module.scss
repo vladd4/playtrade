@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  z-index: 1005;
+  background-color: $color-dark-blue;
+  display: grid;
+  place-items: center;
+  .svg {
+    animation: spin 1.2s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

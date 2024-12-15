@@ -1,0 +1,88 @@
+@import "../../../styles/variables";
+
+.root {
+  background: linear-gradient(119.67deg, #4f5a6b 3.17%, #7989a3 74.81%);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  color: $color-white;
+  border-radius: 20px;
+  border: none;
+  padding: 15px;
+  padding-bottom: 5px;
+  .chart_div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5%;
+    position: relative;
+  }
+  .chart {
+    width: auto !important;
+  }
+  .count {
+    position: absolute;
+    z-index: 1001;
+    text-align: center;
+    left: 12.5%;
+    top: 50%;
+    transform: translateY(-65%);
+    font-size: calc(#{$font-size}/ 1.8);
+    span {
+      font-size: calc(#{$font-size/1.1});
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .labels_block {
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    row-gap: 15px;
+    .labels_div {
+      width: 100%;
+      display: flex;
+      gap: 5%;
+      align-items: center;
+      justify-content: flex-start;
+      .color_mark {
+        width: 6px;
+        border-radius: 50px;
+        border: none;
+        height: 25px;
+        background-color: $color-white;
+      }
+    }
+  }
+  .type {
+    font-size: calc(#{$font-size}/ 1.5);
+    width: 100%;
+    text-align: start;
+    margin-bottom: 2%;
+  }
+  div {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 2%;
+    h1 {
+      font-size: calc(#{$font-size}* 2);
+      font-weight: 600;
+      margin: 0;
+    }
+    .label {
+      font-size: calc(#{$font-size}/ 1.6);
+      margin: 0;
+      text-transform: uppercase;
+    }
+  }
+}

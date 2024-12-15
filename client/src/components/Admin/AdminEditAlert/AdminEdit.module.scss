@@ -1,0 +1,124 @@
+@import "../../../styles/variables";
+
+.root {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  opacity: 1;
+  pointer-events: none;
+  display: none;
+  overflow-y: hidden;
+
+  .wrapper {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2%;
+    color: $color-white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $color-darken-blue;
+    border-radius: 12px;
+    border: 1px solid $color-white;
+    z-index: 1007;
+    h1 {
+      font-size: calc(#{$font-size}* 1.1);
+      margin-bottom: 3%;
+      font-weight: 500;
+    }
+    form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      p {
+        font-size: calc(#{$font-size}/ 1.5);
+        color: $color-white;
+        text-align: start;
+        width: 100%;
+        margin-bottom: 1%;
+      }
+      input,
+      textarea,
+      .select {
+        width: 100%;
+        padding: 2.5%;
+        border-radius: 12px;
+        border: none;
+        margin-bottom: 2%;
+        font-family: inherit;
+        font-size: calc(#{$font-size}/ 1.5);
+        resize: none;
+        &::placeholder {
+          color: $color-light-grey;
+        }
+      }
+      textarea {
+        height: 20svh;
+      }
+      .manager_select {
+        width: 100%;
+        padding: 2.5%;
+        border-radius: 12px;
+        border: none;
+        margin-bottom: 2%;
+        font-family: inherit;
+        font-size: calc(#{$font-size}/ 1.5);
+        resize: none;
+        &::placeholder {
+          color: $color-light-grey;
+        }
+      }
+      .select {
+        padding: 0% 0%;
+        margin-top: 0%;
+        select {
+          background-color: $color-white;
+          color: $color-black;
+          padding: 2.5%;
+        }
+        p {
+          font-weight: 400;
+          margin-bottom: 0%;
+        }
+      }
+
+      .button {
+        width: 50%;
+        font-size: calc(#{$font-size}/ 1.5);
+        background-color: $color-aqua;
+        border-color: $color-aqua;
+        transition: all 0.3s;
+        font-family: inherit;
+        margin-top: 3%;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}
+
+.overlay {
+  z-index: 1005;
+  width: 100%;
+  height: 100svh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  backdrop-filter: blur(15px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.show_form {
+  opacity: 1;
+  pointer-events: auto;
+  display: grid;
+}

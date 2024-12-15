@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Chat Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+    .chat-section {
+      width: 80%;
+      max-width: 800px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 20px;
+    }
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    .input-group input,
+    .input-group button {
+      padding: 10px;
+      font-size: 1em;
+    }
+    .input-group input {
+      flex: 1;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .input-group button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .input-group button:hover {
+      background-color: #218838;
+    }
+    #messages {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      height: 300px;
+      overflow-y: scroll;
+      padding: 10px;
+    }
+    #messages div {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    #messages div:last-child {
+      border-bottom: none;
+    }
+    .message-time {
+      font-size: 0.8em;
+      color: #777;
+    }
+    .message img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<h1>Support Chat Management</h1>
+<div class="container">
+  <div class="chat-section">
+    <h2>Manage Chat</h2>
+    <div class="input-group">
+      <input id="chatId" type="text" placeholder="Chat ID" />
+      <button id="joinChat">Join Chat</button>
+      <button id="leaveChat">Leave Chat</button>
+      <button id="closeChat">Close Chat</button>
+    </div>
+  </div>
+  <div class="chat-section">
+    <h2>Send a Message</h2>
+    <div class="input-group">
+      <input id="message" type="text" placeholder="Message" />
+      <button id="sendMessage">Send Message</button>
+    </div>
+  </div>
+  <div class="chat-section">
+    <h2>Messages</h2>
+    <div id="messages"></div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const socket = io('http://localhost:2000', { reconnection: true });
+    const messagesDiv = document.getElementById('messages');
+    const chatIdInput = document.getElementById('chatId');
+    const messageInput = document.getElementById('message');
+    const sendButton = document.getElementById('sendMessage');
+    const joinButton = document.getElementById('joinChat');
+    const leaveButton = document.getElementById('leaveChat');
+    const closeButton = document.getElementById('closeChat');
+
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket');
+      updateConnectionStatus('Connected');
+    });
+    socket.on('disconnect', () => {
+      console.log('Disconnected from WebSocket');
+      updateConnectionStatus('Disconnected');
+    });
+
+    closeButton.onclick = () => {
+      const senderId = '0a9736e3-2cc7-4972-ad1c-462efc00691e';
+      if (senderId) {
+        socket.emit('closeSupportChat', { senderId });
+        console.log(`Closed chat for user: ${senderId}`);
+      } else {
+        alert('Sender ID is not provided');
+      }
+    };
+    joinButton.onclick = () => {
+      const chatId = chatIdInput.value;
+      if (chatId) {
+        socket.emit('joinSupportChat', { chatId });
+        console.log(`Joined chat: ${chatId}`);
+      } else {
+        alert('Chat ID is not provided');
+      }
+    };
+    leaveButton.onclick = () => {
+      const chatId = chatIdInput.value;
+      if (chatId) {
+        socket.emit('leaveSupportChat', chatId);
+        console.log(`Left chat: ${chatId}`);
+        messagesDiv.innerHTML = '';
+      } else {
+        alert('Chat ID is not provided');
+      }
+    };
+    sendButton.onclick = () => {
+      const message = messageInput.value;
+      const chatId = chatIdInput.value;
+      const senderId = '0a9736e3-2cc7-4972-ad1c-462efc00691e';
+      const adminId = '6e2d3005-22a5-4730-afec-7668aa34ccf0';
+      if (chatId && message) {
+        socket.emit('sendMessageToBot', { content: message, senderId, chatId, adminId });
+        messageInput.value = '';
+      } else {
+        alert('Chat ID and message are required');
+      }
+    };
+
+    socket.on('supportMessage', (msg) => {
+      console.log('New message received:', msg);
+      appendMessage(msg);
+    });
+    socket.on('messageSent', (msg) => {
+      console.log('Message sent event received:', msg);
+      appendMessage(msg);
+    });
+    socket.on('supportChatHistory', (messages) => {
+      console.log('Chat history received:', messages);
+      messagesDiv.innerHTML = '';
+      messages.forEach(appendMessage);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    });
+
+    function appendMessage(msg) {
+      const content = msg.message?.content || msg.content;
+      const timestamp = msg.message?.timestamp || msg.timestamp;
+      const senderId = msg.senderId;
+      const seenStatus = msg.message?.seenByUser ? '✓ Read' : '✗ Unread';
+
+      if (!content) {
+        console.error('Message content is missing');
+        return;
+      }
+
+      const messageElement = document.createElement('div');
+      messageElement.className = 'message';
+      const timeString = new Date(timestamp).toLocaleString();
+
+      const isImage = content.startsWith('http') && (content.endsWith('.jpg') || content.endsWith('.png') || content.endsWith('.jpeg'));
+      messageElement.innerHTML = `
+        <strong>Sender: ${senderId}</strong>: ${isImage ? `<img src="${content}" alt="Image" />` : content}
+        <span class="message-time">(${timeString})</span>
+        <em class="message-status">${seenStatus}</em>
+      `;
+      messagesDiv.appendChild(messageElement);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function updateConnectionStatus(status) {
+      const statusElement = document.getElementById('connection-status');
+      if (statusElement) {
+        statusElement.textContent = status;
+        statusElement.className = status.toLowerCase();
+      }
+    }
+  });
+</script>
+</body>
+</html>

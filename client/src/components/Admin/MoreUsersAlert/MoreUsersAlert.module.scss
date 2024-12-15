@@ -1,0 +1,118 @@
+@import "../../../styles/variables";
+
+.root {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  opacity: 1;
+  pointer-events: none;
+  display: none;
+  overflow-y: hidden;
+
+  .wrapper {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 4% 2%;
+    color: $color-white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $color-darken-blue;
+    border-radius: 12px;
+    border: 1px solid $color-white;
+    z-index: 1007;
+    .users {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      margin-top: 2%;
+      div {
+        display: grid;
+        place-items: center;
+        width: 30%;
+        row-gap: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          color: $color-aqua;
+          .avatar {
+            opacity: 0.8;
+          }
+        }
+        p {
+          font-size: 14px;
+          max-width: 75%;
+          text-align: center;
+        }
+        .avatar {
+          width: 75px;
+          height: 75px;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: 50px;
+        }
+      }
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 3%;
+      font-weight: 400;
+    }
+    .avatar {
+      width: 75px;
+      height: 75px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 50px;
+      margin-bottom: 2%;
+    }
+    .p {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2%;
+      font-size: 14px;
+      margin-bottom: 1.5%;
+    }
+    .button {
+      width: 45%;
+      background-color: $color-aqua;
+      border-color: $color-white;
+      color: $color-white;
+      transition: all 0.3s;
+      font-size: 12px;
+      padding: 3% 0%;
+      margin-top: 2%;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.overlay {
+  z-index: 1005;
+  width: 100%;
+  height: 100svh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  backdrop-filter: blur(15px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.show_form {
+  opacity: 1;
+  pointer-events: auto;
+  display: grid;
+}

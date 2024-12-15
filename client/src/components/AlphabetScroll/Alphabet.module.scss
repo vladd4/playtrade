@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.root {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  right: 2%;
+  top: 12%;
+  row-gap: 1%;
+  max-height: 100svh;
+  a {
+    color: var(--button-active-color);
+    font-size: 1.7svh;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

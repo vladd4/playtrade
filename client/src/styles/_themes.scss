@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+html[data-theme="dark"] {
+  --background-color: #{$color-dark-blue};
+  --font-color: #{$color-white};
+
+  --button-active-color: #{$color-aqua};
+
+  --card-background-color: #{$color-darken-blue};
+  --hint-color: #{$color-light-hint};
+  --filter-overflow-color: #{$color-overflow-dark};
+  --disabled-btn: #{$color-dark-grey};
+}
+
+html[data-theme="light"] {
+  --background-color: #{$color-light-blue};
+  --font-color: #{$color-black};
+
+  --button-active-color: #{$color-blue};
+
+  --card-background-color: #{$color-white};
+  --hint-color: #{$color-light-grey};
+  --filter-overflow-color: #{$color-overflow-light};
+  --disabled-btn: #{$color-light-grey};
+}

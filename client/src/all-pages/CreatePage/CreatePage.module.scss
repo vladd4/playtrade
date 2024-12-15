@@ -1,0 +1,86 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  max-height: $page-height;
+  margin-top: 2%;
+  overflow-y: auto;
+  .wrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    h1 {
+      color: var(--button-active-color);
+      font-size: 30px;
+      font-weight: 600;
+      margin-bottom: 6%;
+      text-align: center;
+    }
+    .inputs_block {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      row-gap: 15px;
+      margin-bottom: 5%;
+      .image_block {
+        background-color: var(--card-background-color);
+        border-radius: 12px;
+        border: none;
+        padding: 25px 3%;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        cursor: pointer;
+        p {
+          font-size: 15px;
+          text-decoration: underline;
+          margin-top: 4%;
+        }
+      }
+      .btn {
+        width: 50%;
+        padding: 3% 0%;
+        margin-top: 2%;
+      }
+      .preview_images {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 2%;
+        flex-wrap: wrap;
+        row-gap: 5px;
+        .uploaded_image {
+          background-size: cover;
+          background-position: center;
+          border-radius: 12px;
+          border: none;
+          width: 60px;
+          height: 60px;
+        }
+        p {
+          font-size: 14px;
+          color: var(--hint-color);
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 2%;
+          width: 100%;
+          .delete {
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover {
+              opacity: 0.7;
+            }
+          }
+        }
+      }
+    }
+  }
+}

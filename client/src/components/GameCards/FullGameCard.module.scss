@@ -1,0 +1,97 @@
+.root {
+  width: 100%;
+  background-color: var(--card-background-color);
+  border-radius: 15px;
+  border: none;
+  padding: 4%;
+  color: var(--font-color);
+  margin-bottom: 5%;
+  h1 {
+    font-size: 20px;
+    margin-bottom: 2%;
+  }
+  .short_info {
+    width: 100%;
+    p {
+      font-size: 15px;
+    }
+    margin-bottom: 2%;
+  }
+  .full_info {
+    width: 100%;
+    p {
+      font-size: 15px;
+    }
+    margin-bottom: 2%;
+  }
+  .label {
+    font-size: 12px !important;
+    color: var(--hint-color);
+  }
+  .images {
+    width: 100%;
+    div {
+      width: 100%;
+      margin-top: 1%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 1%;
+      row-gap: 7px;
+      .image_div {
+        background-size: cover;
+        background-position: center;
+        border-radius: 12px;
+        border: none;
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+  .price {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 2%;
+  }
+  .buttons {
+    width: 100%;
+    gap: 5%;
+    margin-top: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .btn {
+      flex: 1;
+      padding: 3% 0%;
+    }
+    .btn_loader {
+      padding: 3% 0%;
+      flex: 1;
+      display: grid;
+      place-items: center;
+      svg {
+        height: auto;
+        width: 10%;
+      }
+    }
+    .disabled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  }
+}
+
+.non_active {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.active_btn {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}

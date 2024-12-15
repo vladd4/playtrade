@@ -1,0 +1,26 @@
+/* Basic Colors */
+$color-white: #fff;
+$color-black: #1f211f;
+$color-dark-grey: #999999;
+
+/* Light Theme Colors */
+$color-light-blue: #eeeff7;
+$color-blue: #7885ff;
+$color-light-grey: #1f211f99;
+$color-overflow-light: #f6f7ffb2;
+
+/* Dark Theme Colors */
+$color-dark-blue: #2c3646;
+$color-aqua: #5ec2c3;
+$color-darken-blue: #4f5a6b;
+$color-light-hint: #ffffffb2;
+$color-overflow-dark: #2c3646bf;
+
+/* Basic Page Height */
+$page-height: calc(100svh - 80px);
+
+/* Dynamic Font Size */
+$font-size: calc(1vh + 1vw);
+
+/* Admin Main Color */
+$color-admin-grey: #7989a3;

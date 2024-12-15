@@ -1,0 +1,55 @@
+@import "../../../styles/variables";
+
+.root {
+  width: 100%;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.2% 0%;
+  h1 {
+    font-size: calc(#{$font-size}* 1.7);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .buttons_block {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3%;
+    width: 50%;
+    .buttons_item {
+      border-radius: 50px;
+      background-color: $color-darken-blue;
+      border: none;
+      display: grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      border: none;
+      background-image: url("../../../../public/no-avatar.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+
+.active {
+  pointer-events: none;
+  background-color: $color-aqua !important;
+}
+.tooltip {
+  font-size: 11px !important;
+  background-color: $color-dark-blue !important;
+}

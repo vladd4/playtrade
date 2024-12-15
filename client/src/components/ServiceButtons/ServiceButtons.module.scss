@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.root {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 2%;
+  margin: 5% 0%;
+  row-gap: 10px;
+  margin-top: 5%;
+}
+
+.button {
+  border-radius: 50px;
+  border: 2px solid var(--font-color);
+  color: var(--font-color);
+  font-size: 11px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 32%;
+  font-weight: 600;
+  padding: 2% 0%;
+}
+
+.active_button {
+  background-color: var(--button-active-color);
+  color: $color-white;
+  // pointer-events: none;
+  border-color: var(--button-active-color);
+}
