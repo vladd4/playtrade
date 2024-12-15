@@ -47,5 +47,27 @@ services:
     depends_on:
       - db
 
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - nginx-data:/var/www/certbot
+      - certbot-etc:/etc/letsencrypt
+      - ~/dhparam.pem:/etc/nginx/dhparam.pem
+      - /home/ubuntu/playtrade/server/api/uploads:/usr/share/nginx/html/api/uploads
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+     - backend
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - nginx-data:/var/www/certbot
+
 volumes:
   postgres-data:
+  nginx-data:
+  certbot-etc:
