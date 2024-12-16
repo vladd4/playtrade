@@ -1,4 +1,5 @@
 import {
+  CreateTransaction,
   Transaction,
   TransactionsWithPagination,
 } from "@/types/transaction.type";
@@ -37,13 +38,10 @@ export async function getTransactionById(
 }
 
 export async function createTransaction(
-  newTransaction: Transaction
+  newTransaction: CreateTransaction
 ): Promise<Transaction | null> {
   try {
-    const { data } = await privateAxios.post<Transaction>(
-      "/transactions",
-      newTransaction
-    );
+    const { data } = await privateAxios.post("/transactions", newTransaction);
     return data;
   } catch (error: any) {
     console.log(

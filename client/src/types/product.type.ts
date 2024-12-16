@@ -18,6 +18,7 @@ export type Product = {
   gameId: string;
   latestReviews: Review[];
   ownerId: string;
+  buyerId: string;
   reviewsCount: number;
   createdAt: string;
   updatedAt: string;

@@ -7,8 +7,6 @@ export type Transaction = {
   sender: User;
   receiver: User;
   status: string;
-  productId: string;
-  productName: string;
 };
 
 export type TransactionsWithPagination = {
@@ -16,4 +14,11 @@ export type TransactionsWithPagination = {
   totalPages: number;
   currentPage: string;
   totalTransactions: number;
+};
+
+export type CreateTransaction = {
+  amount: number;
+  senderId: string;
+  receiverId: string;
+  status: string;
 };

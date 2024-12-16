@@ -33,6 +33,7 @@ import { Transaction } from "@/types/transaction.type";
 import AdminEditAlert from "../AdminEditAlert/AdminEditAlert";
 import { Game } from "@/types/game.type";
 import { thead_variants } from "@/static_store/admin_table_head";
+import { ProductTypeUrk } from "@/utils/constants";
 
 interface AdminTableProps {
   type: "operations" | "users" | "advertisement" | "games" | "managers";
@@ -48,6 +49,7 @@ export default function AdminTable({
   usersTableData,
   advertTableData,
   gamesTableData,
+  operationsTableData,
   page,
 }: AdminTableProps) {
   const headers = thead_variants[type] || [];
@@ -121,24 +123,12 @@ export default function AdminTable({
                 <tr key={user.id}>
                   <td>{user.id}</td>
                   <td>{user.email || "----"}</td>
+                  <td>{user.name || "----"}</td>
                   <td>
                     {user.isVerified ? "Підтверджено" : "Не підтверджено"}
                   </td>
-                  <td style={{ fontSize: "13px" }}>
-                    {user.transactions && user.transactions.length > 0
-                      ? user.transactions.map((trans) => {
-                          return ` ------------------------------------------------
-                            <br /> Товар: ${trans.productName} <br />
-                            id: ${trans.id} <br />
-                            дата: ${trans.createdAt} <br />
-                            вартість: ${trans.amount} GB coins <br />
-                            статус: ${trans.status} <br />
-                  ------------------------------------------------
-                    `;
-                        })
-                      : "----"}
-                  </td>
-                  <td>{user.balance ? user.balance : 0} GB coins</td>
+
+                  <td>{user.balance ? user.balance : 0}$</td>
 
                   <td className={styles.icons}>
                     {user.isBanned ? (
@@ -190,40 +180,48 @@ export default function AdminTable({
                 <tr key={row.id}>
                   <td>{row.name || "----"}</td>
                   <td>{row.game.name || "----"}</td>
-                  <td>{row.owner?.id || "----"}</td>
-                  <td>{row.price} GB coins</td>
-                  <td>0</td>
-                  <td className={styles.icons}>
-                    <div
-                      data-tooltip-id="tooltip"
-                      data-tooltip-content="Редагувати"
-                      onClick={() => {
-                        dispatch(setEditUsersAdminType("product"));
-                        dispatch(setShowEditUsersAdmin(true));
-                        dispatch(setAdminAdvertToEdit(row));
-                      }}
-                    >
-                      <Pencil />
-                    </div>
-                    {row.isActive ? (
+                  <td>{row.owner?.name || "----"}</td>
+                  <td>{row.price}$</td>
+                  <td>{ProductTypeUrk[row.type]}</td>
+                  {row.inProcess ? (
+                    <td>Продано</td>
+                  ) : (
+                    <td className={styles.icons}>
                       <div
                         data-tooltip-id="tooltip"
-                        data-tooltip-content="Деактивувати"
-                        onClick={() => handleChangeProductStatus(row.id, false)}
+                        data-tooltip-content="Редагувати"
+                        onClick={() => {
+                          dispatch(setEditUsersAdminType("product"));
+                          dispatch(setShowEditUsersAdmin(true));
+                          dispatch(setAdminAdvertToEdit(row));
+                        }}
                       >
-                        <ShieldMinus />
+                        <Pencil />
                       </div>
-                    ) : (
-                      <div
-                        data-tooltip-id="tooltip"
-                        data-tooltip-content="Активувати"
-                        className={styles.activate}
-                        onClick={() => handleChangeProductStatus(row.id, true)}
-                      >
-                        <ShieldCheck />
-                      </div>
-                    )}
-                  </td>
+                      {row.isActive ? (
+                        <div
+                          data-tooltip-id="tooltip"
+                          data-tooltip-content="Деактивувати"
+                          onClick={() =>
+                            handleChangeProductStatus(row.id, false)
+                          }
+                        >
+                          <ShieldMinus />
+                        </div>
+                      ) : (
+                        <div
+                          data-tooltip-id="tooltip"
+                          data-tooltip-content="Активувати"
+                          className={styles.activate}
+                          onClick={() =>
+                            handleChangeProductStatus(row.id, true)
+                          }
+                        >
+                          <ShieldCheck />
+                        </div>
+                      )}
+                    </td>
+                  )}
                 </tr>
               ))
             : type === "games" && gamesTableData
@@ -268,6 +266,18 @@ export default function AdminTable({
                       <Pencil />
                     </div>
                   </td>
+                </tr>
+              ))
+            : type === "operations" &&
+              operationsTableData &&
+              operationsTableData?.length > 0
+            ? operationsTableData.map((operation) => (
+                <tr key={operation.id}>
+                  <td>{operation.receiver.name || "----"}</td>
+                  <td>{operation.sender.name || "----"}</td>
+                  <td>{operation.id || "----"}</td>
+                  <td>{`${operation.amount}$` || "----"}</td>
+                  <td>{operation.status}</td>
                 </tr>
               ))
             : null}

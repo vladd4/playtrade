@@ -34,3 +34,11 @@ export const BLOCK_OPTIONS = [
     label: "назавжди",
   },
 ];
+
+export const ProductTypeUrk: { [key in ProductType]: string } = {
+  [ProductType.CURRENCY]: "Валюта",
+  [ProductType.ITEM]: "Предмет",
+  [ProductType.ACCOUNT]: "Аккаунт",
+  [ProductType.SERVICE]: "Послуга",
+  [ProductType.OTHER]: "Інше",
+};

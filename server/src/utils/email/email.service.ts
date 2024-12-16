@@ -26,7 +26,7 @@ export class EmailService {
     code: string,
   ): Promise<void> {
     const mailOptions = {
-      from: '"PlayTrade"',
+      from: '"PlayTrade" <maks.chell@ukr.net>',
       to: to,
       subject: 'Verification Code',
       text: `Your verification code is: ${code}`,
@@ -55,7 +55,7 @@ export class EmailService {
     temporaryPassword: string,
   ): Promise<void> {
     const mailOptions = {
-      from: '"PlayTrade"',
+      from: '"PlayTrade" <maks.chell@ukr.net>',
       to: to,
       subject: 'Temporary Password',
       text: `Dear ${username}, your temporary password is: ${temporaryPassword}. Please change it as soon as possible.`,

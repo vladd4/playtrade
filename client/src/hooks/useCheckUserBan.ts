@@ -17,7 +17,7 @@ const useCheckUserBan = () => {
     const checkIsBanned = async () => {
       const id =
         tgUser?.id ??
-        (process.env.NODE_ENV === "development" ? "490607899" : "");
+        (process.env.NODE_ENV === "development" ? "6215892022" : "");
 
       if (id) {
         const userData = await checkIsUserBanned(id.toString());

@@ -58,6 +58,7 @@
     margin-bottom: 1%;
     font-weight: 600;
   }
+
   p {
     font-size: 12px;
     margin-bottom: 3%;
@@ -84,6 +85,17 @@
     .btn {
       width: 45%;
       padding: 3% 0%;
+    }
+  }
+  .info {
+    width: 100%;
+    display: grid;
+    place-items: flex-start;
+    margin: 4% 0%;
+    p {
+      margin: 0;
+      padding: 0;
+      text-align: start;
     }
   }
 }

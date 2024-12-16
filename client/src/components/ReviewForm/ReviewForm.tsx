@@ -42,8 +42,9 @@ function ReviewForm({ productId, sellerId }: ReviewProps) {
           buyerId: userId,
           sellerId,
           productId,
-          reviewDate: new Date().toISOString(),
         };
+
+        console.log(newReview);
 
         const result = await createReview(newReview);
 
@@ -61,7 +62,7 @@ function ReviewForm({ productId, sellerId }: ReviewProps) {
   return (
     <div className={`${styles.root} ${jost.className}`}>
       <div className={styles.wrapper}>
-        <h1>Ваше замовлення оформлене</h1>
+        <h1>Ви успішно придбали товар!</h1>
         <div className={styles.stars_block}>
           {[1, 2, 3, 4, 5].map((starValue) => (
             <Star

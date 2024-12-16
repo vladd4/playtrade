@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -12,7 +12,7 @@ import {
   setToSessionStorage,
 } from "@/utils/sessionStorage_helper";
 import { checkChatExistance, createChat } from "@/http/chatController";
-import { updateProductStatus } from "@/http/productController";
+import { updateProduct, updateProductStatus } from "@/http/productController";
 import { Product } from "@/types/product.type";
 
 import styles from "./FullGameCard.module.scss";
@@ -21,6 +21,11 @@ import ServiceButton from "../ServiceButtons/ServiceButton";
 import ImageViewer from "../ImageViewer/ImageViewer";
 import { Loader } from "lucide-react";
 import { formatImageFromServer } from "@/utils/formatImageName";
+import useUserProfile from "@/hooks/useUserProfile";
+import { CreateTransaction } from "@/types/transaction.type";
+import { createTransaction } from "@/http/transactionController";
+import { updateBalance } from "@/http/userController";
+import { privateAxios } from "@/http/axios";
 
 interface FullGameCardProps {
   isMyProduct?: boolean;
@@ -41,6 +46,8 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
 
   const { userId } = useAppSelector((state) => state.user);
   const seller = JSON.parse(getFromSessionStorage("seller") ?? "{}");
+
+  const userData = useUserProfile({ id: userId! });
 
   const handleShowViewer = (currentImage: string) => {
     setCurrentImage(currentImage);
@@ -115,20 +122,78 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
     });
   };
 
-  const handleBuyClick = () => {
+  const handleBuyClick = async () => {
     if (!product) return;
 
-    const productInfo = {
-      productId: product.id,
-      ownerId: product.ownerId,
-      productName: product.name,
-      productPrice: product.price,
-      productDescription: product.description,
-    };
-    setToSessionStorage("product_buy_info", JSON.stringify(productInfo));
-    router.push(
-      `/feedback?productId=${product.id}&sellerId=${product.ownerId}`
-    );
+    const toastId = toast.loading("Processing...");
+
+    setTimeout(async () => {
+      if (userData.data && userData.data.id && userData.data.balance) {
+        if (userData.data.balance >= Number(product.price)) {
+          const productInfo = {
+            productId: product.id,
+            ownerId: product.ownerId,
+            buyerId: userData.data.id,
+            productName: product.name,
+            productPrice: product.price,
+            productDescription: product.description,
+          };
+
+          const formData = new FormData();
+          formData.append("buyerId", userData.data.id);
+
+          const newTransaction: CreateTransaction = {
+            amount: Number(product.price),
+            senderId: userData.data.id,
+            receiverId: product.ownerId,
+            status: "completed",
+          };
+
+          try {
+            const productResult = await privateAxios.put(
+              `/products/${product.id}`,
+              formData
+            );
+
+            if (productResult) {
+              const transactionResult = await createTransaction(newTransaction);
+
+              if (transactionResult) {
+                const userResult = await updateBalance(
+                  userData.data.id,
+                  Math.floor(
+                    Number(userData.data.balance - Number(product.price))
+                  )
+                );
+
+                if (userResult) {
+                  setToSessionStorage(
+                    "product_buy_info",
+                    JSON.stringify(productInfo)
+                  );
+                  router.push(
+                    `/feedback?productId=${product.id}&sellerId=${product.ownerId}`
+                  );
+                }
+              }
+            } else {
+              toast.error("Щось пішло не так. Спробуйте пізніше");
+            }
+          } catch (error) {
+            console.error(error);
+            toast.error("Щось пішло не так. Спробуйте пізніше");
+          } finally {
+            toast.dismiss(toastId);
+          }
+        } else {
+          toast.error("Недостатньо коштів!");
+          toast.dismiss(toastId);
+        }
+      } else {
+        toast.error("Недійсні дані користувача!");
+        toast.dismiss(toastId);
+      }
+    }, 1000);
   };
 
   const renderImages = () => {
@@ -224,7 +289,11 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
 
   return (
     <>
-      <div className={`${styles.root} ${jost.className}`}>
+      <div
+        className={`${styles.root} ${jost.className} ${
+          isMyProduct && product.inProcess ? styles.sold : ""
+        }`}
+      >
         <h1
           className={
             isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
@@ -269,7 +338,11 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
         >
           Ціна: {product?.price}$
         </p>
-        <div className={styles.buttons}>{renderButtons()}</div>
+        {isMyProduct && product.inProcess ? (
+          <p className={styles.sold_p}>Товар продано!</p>
+        ) : (
+          <div className={styles.buttons}>{renderButtons()}</div>
+        )}
       </div>
       <ImageViewer imageSrc={currentImage} setCurrentImage={setCurrentImage} />
     </>

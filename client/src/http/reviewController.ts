@@ -44,7 +44,7 @@ export async function createReview(
   newReview: Omit<Review, "id">
 ): Promise<Review | null> {
   try {
-    const { data } = await privateAxios.post<Review>(`/reviews`);
+    const { data } = await privateAxios.post<Review>(`/reviews`, newReview);
     return data;
   } catch (error: any) {
     console.log(

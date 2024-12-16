@@ -14,18 +14,14 @@ import { setToSessionStorage } from "@/utils/sessionStorage_helper";
 import { formatImageFromServer } from "@/utils/formatImageName";
 
 type SellerCardProps = {
-  isMyPurchases?: boolean;
   isNotification?: boolean;
   isActiveNotification?: boolean;
-  buttonLabel?: "Продати" | "Купити";
   product?: MiniProduct;
 };
 
 export default function SellerCard({
-  isMyPurchases,
   isNotification,
   isActiveNotification,
-  buttonLabel,
   product,
 }: SellerCardProps) {
   const router = useRouter();
@@ -90,38 +86,15 @@ export default function SellerCard({
           Ціна:
           <br /> {product?.price} $
         </h1>
-        {!isMyPurchases && (
-          <ServiceButton
-            className={styles.more_btn}
-            isActive
-            onClick={handleMoreClick}
-          >
-            Дивитись більше
-          </ServiceButton>
-        )}
+
+        <ServiceButton
+          className={styles.more_btn}
+          isActive
+          onClick={handleMoreClick}
+        >
+          Дивитись більше
+        </ServiceButton>
       </div>
-      {isMyPurchases && (
-        <div className={styles.purchases_btns}>
-          {isNotification ? (
-            <ServiceButton
-              className={styles.btn}
-              isActive
-              onClick={() => router.push("/profile/purchase-conditions")}
-            >
-              {buttonLabel!}
-            </ServiceButton>
-          ) : (
-            <ServiceButton className={styles.btn} isActive>
-              Історія чату
-            </ServiceButton>
-          )}
-          {isNotification ? (
-            <ServiceButton className={styles.btn}>Відкрити чат</ServiceButton>
-          ) : (
-            <ServiceButton className={styles.btn}>Допомога</ServiceButton>
-          )}
-        </div>
-      )}
     </div>
   );
 }

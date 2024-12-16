@@ -29,7 +29,7 @@ const useLogin = ({ password }: LoginProps) => {
     try {
       const userId =
         tgUser?.id ??
-        (process.env.NODE_ENV === "development" ? "490607899" : "");
+        (process.env.NODE_ENV === "development" ? "6215892022" : "");
 
       const userData = await loginUser({
         telegramId: userId.toString(),

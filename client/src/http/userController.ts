@@ -7,6 +7,7 @@ import {
 import { privateAxios } from "./axios";
 import { MiniProduct } from "@/types/product.type";
 import { UserRoles } from "@/utils/constants";
+import { MyPurchase } from "@/types/purchase.type";
 
 export async function getUsers(
   page: number
@@ -52,9 +53,9 @@ export async function checkIsUserBanned(telegramId: string) {
 
 export async function getUserPurchases(
   userId: string
-): Promise<MiniProduct[] | null> {
+): Promise<MyPurchase[] | null> {
   try {
-    const { data } = await privateAxios.get<MiniProduct[]>(
+    const { data } = await privateAxios.get<MyPurchase[]>(
       `/users/${userId}/purchases`
     );
     return data;

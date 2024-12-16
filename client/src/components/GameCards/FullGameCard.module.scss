@@ -95,3 +95,14 @@
   opacity: 1 !important;
   pointer-events: auto !important;
 }
+
+.sold {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.sold_p {
+  color: red;
+  opacity: 1 !important;
+  width: 100% !important;
+  text-align: start;
+}

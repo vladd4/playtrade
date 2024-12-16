@@ -22,7 +22,7 @@ export default function WalletHistoryCard(props: WalletCardProps) {
       <div className={styles.bottom_block}>
         <p>Сума</p>
         <p>
-          {props.type === "minus" ? "-" : "+"} {props.amount} GB coins
+          {props.type === "minus" ? "-" : "+"} {props.amount} $
         </p>
       </div>
     </div>
