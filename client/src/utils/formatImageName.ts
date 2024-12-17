@@ -26,19 +26,14 @@ export const formatMessages = (message: string) => {
 };
 
 export const formatImageFromServer = (image: string) => {
-  let formattedImage;
+  // Remove all leading slashes
+  const imagePath = image.replace(/^\/+/, "");
 
-  // If the image starts with "/api", replace "/api" with "/"
-  if (image.startsWith("/api")) {
-    formattedImage = image.replace("/api", "/");
-  }
-  // If the image starts with "api", replace "api" with "/"
-  else if (image.startsWith("api")) {
-    formattedImage = "/" + image.replace("api", "");
-  } else {
-    formattedImage = image;
-  }
+  // Remove 'api' prefix if present
+  const cleanPath = imagePath.startsWith("api/")
+    ? imagePath.slice(4)
+    : imagePath;
 
-  // Ensure that there is only one leading slash, if not add it.
-  return formattedImage.startsWith("/") ? formattedImage : `/${formattedImage}`;
+  // Add a single leading slash
+  return `/${cleanPath}`;
 };

@@ -168,17 +168,20 @@ export class ProductsService {
       product.imageUrls = [...(product.imageUrls || []), ...newImageUrls];
     }
 
-    const user = await this.userRepository.findOne({
-      where: { id: productDto.buyerId },
-    });
-    if (!user) {
-      throw new NotFoundException('Користувача не знайдено');
+    let user = null;
+    if (productDto.buyerId) {
+      user = await this.userRepository.findOne({
+        where: { id: productDto.buyerId },
+      });
+      if (!user) {
+        throw new NotFoundException('Користувача не знайдено');
+      }
     }
 
     const updatedProduct = {
       ...productDto,
       buyer: user,
-      inProcess: user && true,
+      inProcess: !!user,
     };
 
     Object.assign(product, updatedProduct);
