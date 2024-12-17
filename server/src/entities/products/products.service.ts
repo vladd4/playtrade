@@ -178,7 +178,7 @@ export class ProductsService {
     const updatedProduct = {
       ...productDto,
       buyer: user,
-      inProcess: true,
+      inProcess: user && true,
     };
 
     Object.assign(product, updatedProduct);

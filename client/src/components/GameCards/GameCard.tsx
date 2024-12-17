@@ -63,16 +63,15 @@ export default function GameCard({
     >
       <div
         className={styles.image_div}
-        // style={{
-        //   backgroundImage: `url(${
-        //     imageSrc
-        //       ? `${
-        //           process.env.NEXT_PUBLIC_BACKEND_API_URL
-        //         }${formatImageFromServer(imageSrc)}`
-        //       : No_image.src
-        //   })`,
-        // }}
-        style={{ backgroundImage: `url(${No_image.src})` }}
+        style={{
+          backgroundImage: `url(${
+            imageSrc
+              ? `${
+                  process.env.NEXT_PUBLIC_BACKEND_API_URL
+                }${formatImageFromServer(imageSrc)}`
+              : No_image.src
+          })`,
+        }}
       />
 
       <div className={styles.text_block}>

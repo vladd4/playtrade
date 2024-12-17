@@ -326,6 +326,7 @@ export class ProductsController {
       if (body.gameId) updateData.gameId = body.gameId;
       if (body.ownerId) updateData.ownerId = body.ownerId;
       if (body.buyerId) updateData.buyerId = body.buyerId;
+      // if (body.inProcess) updateData.buyerId = body.buyerId;
 
       if (images && images.length > 0) {
         const newImageUrls = images.map(
