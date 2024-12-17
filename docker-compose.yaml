@@ -24,8 +24,6 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_NAME: FunGames
-    volumes:
-      - ./server:/usr/src/app
     ports:
       - "2000:2000"
     expose:
