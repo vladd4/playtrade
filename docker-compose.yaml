@@ -62,6 +62,7 @@ services:
       - /home/ubuntu/playtrade/server/api/uploads:/usr/share/nginx/html/api/uploads
     ports:
       - "80:80"
+      - "443:443" 
     depends_on:
      - backend
 
