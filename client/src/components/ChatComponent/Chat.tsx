@@ -158,6 +158,24 @@ export default function Chat({ chatId }: ChatProps) {
           <div className={styles.avatar}>
             <div>
               <div
+                style={{
+                  backgroundColor: "#B0C4DE",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#fff",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                }}
+                className={styles.image_div}
+              >
+                <span>
+                  {chatInfo?.sellerName
+                    ? chatInfo?.sellerName[0]?.toUpperCase()
+                    : "U"}
+                </span>
+              </div>
+              <div
                 className={styles.image_div}
                 style={{
                   backgroundImage: `url(${
@@ -188,7 +206,7 @@ export default function Chat({ chatId }: ChatProps) {
             </div>
           ) : (
             <div className={styles.payment_block}>
-              <p>50 GB coins</p>
+              <p>50$</p>
               <div>
                 <p>
                   Підтвердіть отримання <span>15:00</span>

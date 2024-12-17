@@ -56,16 +56,20 @@ export default function SellerCard({
         <div className={styles.seller_info}>
           <div
             style={{
-              backgroundImage: `url(${
-                product?.imageUrl
-                  ? `${
-                      process.env.NEXT_PUBLIC_BACKEND_API_URL
-                    }${formatImageFromServer(product.imageUrl)}`
-                  : No_Avatar.src
-              })`,
+              backgroundColor: "#B0C4DE",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
+              fontSize: "12px",
+              fontWeight: "bold",
             }}
             className={styles.avatar_div}
-          />
+          >
+            <span>
+              {product?.seller ? product?.seller[0]?.toUpperCase() : "U"}
+            </span>
+          </div>
           <h1>Продавець {product?.seller}</h1>
           <StarRating
             rating={product?.rating ? product.rating : 0}

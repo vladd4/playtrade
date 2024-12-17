@@ -34,7 +34,9 @@ function DepositPage({ paymentType }: DepositPageProps) {
   const handleDepositMoney = async () => {
     if (userId) {
       if (cardNumber !== "" && balance !== 0) {
-        const updatedBalance = data?.balance ? data?.balance : 0 + balance;
+        const updatedBalance = data?.balance
+          ? data?.balance + balance
+          : balance;
         const result = await updateBalance(userId, updatedBalance);
         if (!result) {
           toast.error("Щось пішло не так. Спробуйте пізніше!");
@@ -50,10 +52,10 @@ function DepositPage({ paymentType }: DepositPageProps) {
   const handleWithdrawMoney = async () => {
     if (userId) {
       if (cardNumber !== "" && balance !== 0) {
-        if (data?.balance ? data?.balance : 0 < balance) {
+        if (data?.balance && data?.balance < balance) {
           toast.error("Невистачає коштів!");
         } else {
-          const updatedBalance = data?.balance ? data?.balance : 0 - balance;
+          const updatedBalance = data?.balance ? data?.balance - balance : 0;
           const result = await updateBalance(userId, updatedBalance);
           if (!result) {
             toast.error("Щось пішло не так. Спробуйте пізніше!");

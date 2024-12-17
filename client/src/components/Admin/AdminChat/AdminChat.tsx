@@ -144,33 +144,41 @@ export default function AdminChat() {
           <div className={styles.avatar}>
             <div className={styles.avatars_block}>
               <div
-                className={styles.avatar_div}
                 style={{
-                  backgroundImage: `url(${
-                    data.participants[0].avatarPhoto === null
-                      ? No_Avatar.src
-                      : `${
-                          process.env.NEXT_PUBLIC_BACKEND_API_URL
-                        }${formatImageFromServer(
-                          data.participants[0].avatarPhoto
-                        )}`
-                  })`,
+                  backgroundColor: "#B0C4DE",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#fff",
+                  fontSize: "20px",
+                  fontWeight: "bold",
                 }}
-              />
+                className={styles.avatar_div}
+              >
+                <span>
+                  {data.participants[0]?.name
+                    ? data.participants[0]?.name[0]?.toUpperCase()
+                    : "S"}
+                </span>
+              </div>
               <div
-                className={styles.avatar_div}
                 style={{
-                  backgroundImage: `url(${
-                    data.participants[1].avatarPhoto === null
-                      ? No_Avatar.src
-                      : `${
-                          process.env.NEXT_PUBLIC_BACKEND_API_URL
-                        }${formatImageFromServer(
-                          data.participants[1].avatarPhoto
-                        )}`
-                  })`,
+                  backgroundColor: "#B0C4DE",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#fff",
+                  fontSize: "20px",
+                  fontWeight: "bold",
                 }}
-              />
+                className={styles.avatar_div}
+              >
+                <span>
+                  {data.participants[1]?.name
+                    ? data.participants[1]?.name[0]?.toUpperCase()
+                    : "U"}
+                </span>
+              </div>
             </div>
             <div className={styles.text_block}>
               <h3>

@@ -16,22 +16,18 @@ function AdminMainPage() {
         <div className={styles.left_block}>
           <Notifications />
           <div className={styles.left_block_inner}>
-            <InfoCard
-              type="Прибуток платформи"
-              amount="+11000"
-              label="GB COINS"
-            />
+            <InfoCard type="Прибуток платформи" amount="+11000" label="$" />
             <div className={styles.balance_inner}>
               <InfoCard
                 type="Поповнення балансу"
                 amount="+5800"
-                label="GB COINS"
+                label="$"
                 className={styles.smaller_info}
               />
               <InfoCard
                 type="Виведення балансу"
                 amount="-2150"
-                label="GB COINS"
+                label="$"
                 className={styles.smaller_info}
               />
             </div>

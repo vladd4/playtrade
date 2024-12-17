@@ -28,12 +28,6 @@ export default function MoreUsersAlert() {
     dispatch(setAdminUsersInfoType("currentUser"));
   };
 
-  const handleChatOpen = () => {
-    handleCloseAlert();
-    dispatch(setAdminUsersInfoUsers(null));
-    dispatch(setAdminUsersInfoType("selectUser"));
-  };
-
   return (
     <>
       <div
@@ -49,36 +43,44 @@ export default function MoreUsersAlert() {
               <div className={styles.users}>
                 <div onClick={() => handleUserSelect(adminUsersInfoUsers[0])}>
                   <div
-                    className={styles.avatar}
                     style={{
-                      backgroundImage: `url(${
-                        !adminUsersInfoUsers[0]?.avatarPhoto
-                          ? No_Avatar.src
-                          : `${
-                              process.env.NEXT_PUBLIC_BACKEND_API_URL
-                            }${formatImageFromServer(
-                              adminUsersInfoUsers[0]?.avatarPhoto
-                            )}`
-                      })`,
+                      backgroundColor: "#B0C4DE",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "#fff",
+                      fontSize: "20px",
+                      fontWeight: "bold",
                     }}
-                  />
+                    className={styles.avatar}
+                  >
+                    <span>
+                      {adminUsersInfoUsers[0]?.name
+                        ? adminUsersInfoUsers[0]?.name[0]?.toUpperCase()
+                        : "S"}
+                    </span>
+                  </div>
                   <p>{adminUsersInfoUsers[0].name}</p>
                 </div>
                 <div onClick={() => handleUserSelect(adminUsersInfoUsers[1])}>
                   <div
-                    className={styles.avatar}
                     style={{
-                      backgroundImage: `url(${
-                        !adminUsersInfoUsers[1]?.avatarPhoto
-                          ? No_Avatar.src
-                          : `${
-                              process.env.NEXT_PUBLIC_BACKEND_API_URL
-                            }${formatImageFromServer(
-                              adminUsersInfoUsers[1]?.avatarPhoto
-                            )}`
-                      })`,
+                      backgroundColor: "#B0C4DE",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "#fff",
+                      fontSize: "20px",
+                      fontWeight: "bold",
                     }}
-                  />
+                    className={styles.avatar}
+                  >
+                    <span>
+                      {adminUsersInfoUsers[1]?.name
+                        ? adminUsersInfoUsers[1]?.name[0]?.toUpperCase()
+                        : "U"}
+                    </span>
+                  </div>
                   <p>{adminUsersInfoUsers[1].name}</p>
                 </div>
               </div>
@@ -86,18 +88,23 @@ export default function MoreUsersAlert() {
           ) : (
             <>
               <div
-                className={styles.avatar}
                 style={{
-                  backgroundImage: `url(${
-                    adminUsersInfoUsers[0].avatarPhoto
-                      ? process.env.NEXT_PUBLIC_BACKEND_API_URL +
-                        formatImageFromServer(
-                          adminUsersInfoUsers[0].avatarPhoto
-                        )
-                      : No_Avatar.src
-                  })`,
+                  backgroundColor: "#B0C4DE",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#fff",
+                  fontSize: "20px",
+                  fontWeight: "bold",
                 }}
-              />
+                className={styles.avatar}
+              >
+                <span>
+                  {adminUsersInfoUsers[0]?.name
+                    ? adminUsersInfoUsers[0]?.name[0]?.toUpperCase()
+                    : "S"}
+                </span>
+              </div>
               <p className={styles.p}>
                 Користувач: {adminUsersInfoUsers[0].name}
               </p>
@@ -106,9 +113,6 @@ export default function MoreUsersAlert() {
                 <StarRating rating={adminUsersInfoUsers[0].rating} size={11} />
               </p>
               <p className={styles.p}>E-mail: {adminUsersInfoUsers[0].email}</p>
-              <ServiceButton className={styles.button} onClick={handleChatOpen}>
-                Відкрити чат
-              </ServiceButton>
             </>
           )}
         </div>

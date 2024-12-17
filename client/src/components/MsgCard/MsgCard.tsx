@@ -46,17 +46,21 @@ export default function MsgCard({ chat, isAlert }: MsgCardProps) {
         {opponent && (
           <div className={styles.seller_info}>
             <div
-              className={styles.image_div}
               style={{
-                backgroundImage: `url(${
-                  opponent.avatarPhoto === null
-                    ? No_Avatar.src
-                    : `${
-                        process.env.NEXT_PUBLIC_BACKEND_API_URL
-                      }${formatImageFromServer(opponent.avatarPhoto)}`
-                })`,
+                backgroundColor: "#B0C4DE",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#fff",
+                fontSize: "12px",
+                fontWeight: "bold",
               }}
-            />
+              className={styles.image_div}
+            >
+              <span>
+                {opponent?.name ? opponent?.name[0]?.toUpperCase() : "U"}
+              </span>
+            </div>
             <div className={styles.info_block}>
               <h1>{opponent.name!}</h1>
               <p>Товар: {chat.product?.name}</p>

@@ -33,29 +33,41 @@ export default function AdminMessageItem({ chat }: AdminMessageProps) {
       <div className={styles.users_info}>
         <div className={styles.icons_block}>
           <div
-            className={styles.avatar}
             style={{
-              backgroundImage: `url(${
-                !chat.participants[1]?.avatar
-                  ? No_Avatar.src
-                  : `${
-                      process.env.NEXT_PUBLIC_BACKEND_API_URL
-                    }${formatImageFromServer(chat.participants[1].avatar)}`
-              })`,
+              backgroundColor: "#B0C4DE",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
+              fontSize: "20px",
+              fontWeight: "bold",
             }}
-          />
+            className={styles.avatar}
+          >
+            <span>
+              {chat.participants[1]?.name
+                ? chat.participants[1]?.name[0]?.toUpperCase()
+                : "U"}
+            </span>
+          </div>
           <div
-            className={styles.avatar}
             style={{
-              backgroundImage: `url(${
-                !chat.participants[0]?.avatar
-                  ? No_Avatar.src
-                  : `${
-                      process.env.NEXT_PUBLIC_BACKEND_API_URL
-                    }${formatImageFromServer(chat.participants[0].avatar)}`
-              })`,
+              backgroundColor: "#B0C4DE",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
+              fontSize: "20px",
+              fontWeight: "bold",
             }}
-          />
+            className={styles.avatar}
+          >
+            <span>
+              {chat.participants[0]?.name
+                ? chat.participants[0]?.name[0]?.toUpperCase()
+                : "S"}
+            </span>
+          </div>
         </div>
         <div className={styles.info_block}>
           <h1>

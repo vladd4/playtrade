@@ -234,7 +234,7 @@ function EditPage({ productId }: EditProps) {
             <InputBlock
               name="price"
               value={form.price}
-              placeholder="Наприклад: 50 GB coins"
+              placeholder="Наприклад: 50$"
               label="Ціна"
               setValue={(e) => handleEditFormChange(e, setForm)}
             />

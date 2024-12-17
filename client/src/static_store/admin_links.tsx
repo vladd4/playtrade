@@ -14,7 +14,7 @@ export const admin_links = [
   {
     label: "Угоди",
     icon: <Handshake size={20} />,
-    href: "/admin/operations",
+    href: "/admin",
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
   {

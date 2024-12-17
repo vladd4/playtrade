@@ -158,17 +158,22 @@ export default function AdminSupport() {
         <div className={styles.top_block}>
           <div className={styles.avatar}>
             <div
-              className={styles.support_avatar_div}
               style={{
-                backgroundImage: `url(${
-                  data.user.avatarPhoto === null
-                    ? No_Avatar.src
-                    : `${
-                        process.env.NEXT_PUBLIC_BACKEND_API_URL
-                      }${formatImageFromServer(data.user.avatarPhoto)}`
-                })`,
+                backgroundColor: "#B0C4DE",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#fff",
+                fontSize: "20px",
+                fontWeight: "bold",
               }}
-            />
+              className={styles.support_avatar_div}
+            >
+              <span>
+                {data?.user?.name ? data?.user?.name[0]?.toUpperCase() : "S"}
+              </span>
+            </div>
+
             <div className={styles.text_block}>
               <h3>Користувач: {data.user.name}</h3>
             </div>

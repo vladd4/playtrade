@@ -31,17 +31,21 @@ export default function AdminSupportItem({ chat }: AdminSupportProps) {
     >
       <div className={styles.users_info}>
         <div
-          className={styles.support_avatar}
           style={{
-            backgroundImage: `url(${
-              !chat.user.avatarPhoto
-                ? No_Avatar.src
-                : `${
-                    process.env.NEXT_PUBLIC_BACKEND_API_URL
-                  }${formatImageFromServer(chat.user.avatarPhoto)}`
-            })`,
+            backgroundColor: "#B0C4DE",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#fff",
+            fontSize: "20px",
+            fontWeight: "bold",
           }}
-        />
+          className={styles.support_avatar}
+        >
+          <span>
+            {chat?.user?.name ? chat?.user?.name[0]?.toUpperCase() : "U"}
+          </span>
+        </div>
         <div className={styles.info_block}>
           <h1>Користувач: {chat.user?.name}</h1>
           {chat.lastMessage !== null && chat.lastMessage.content !== null && (

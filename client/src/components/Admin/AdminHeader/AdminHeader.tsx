@@ -7,8 +7,6 @@ import { usePathname, useRouter } from "next/navigation";
 import useUserProfile from "@/hooks/useUserProfile";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 
-import No_image from "@/../public/no-avatar.jpg";
-import { formatImageFromServer } from "@/utils/formatImageName";
 import { Tooltip } from "react-tooltip";
 import { useEffect } from "react";
 import { setUserRole } from "@/redux/slices/userSlice";
@@ -61,19 +59,19 @@ export default function AdminHeader() {
               <Mail size={25} />
             </div>
             <div
-              className={styles.avatar}
-              // style={{
-              //   backgroundImage: `url(${
-              //     data?.avatarPhoto
-              //       ? process.env.NEXT_PUBLIC_BACKEND_API_URL! +
-              //         formatImageFromServer(data?.avatarPhoto)
-              //       : No_image.src
-              //   })`,
-              // }}
               style={{
-                backgroundImage: `url(${No_image.src})`,
+                backgroundColor: "#B0C4DE",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#fff",
+                fontSize: "20px",
+                fontWeight: "bold",
               }}
-            />
+              className={styles.avatar}
+            >
+              <span>{data?.name ? data?.name[0]?.toUpperCase() : "U"}</span>
+            </div>
             <div
               data-tooltip-id="tooltip"
               data-tooltip-content="Вийти"

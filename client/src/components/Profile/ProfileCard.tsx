@@ -36,15 +36,17 @@ export default function ProfileCard({ user }: ProfileProps) {
           <div
             className={styles.image_div}
             style={{
-              backgroundImage: `url(${
-                user.avatarPhoto === null
-                  ? No_Avatar.src
-                  : `${
-                      process.env.NEXT_PUBLIC_BACKEND_API_URL
-                    }${formatImageFromServer(user.avatarPhoto)}`
-              })`,
+              backgroundColor: "#B0C4DE",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
+              fontSize: "30px",
+              fontWeight: "bold",
             }}
-          />
+          >
+            <span>{user?.name ? user?.name[0]?.toUpperCase() : "U"}</span>
+          </div>
           <div className={styles.user_info}>
             <div className={styles.name}>
               <p>

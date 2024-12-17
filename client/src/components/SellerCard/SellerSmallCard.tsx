@@ -28,17 +28,19 @@ export default function SellerSmallCard({
       <div className={`${styles.top_block} ${jost.className}`}>
         <div className={styles.seller_info}>
           <div
-            className={styles.avatar_div}
             style={{
-              backgroundImage: `url(${
-                userAvatar
-                  ? `${
-                      process.env.NEXT_PUBLIC_BACKEND_API_URL
-                    }${formatImageFromServer(userAvatar)}`
-                  : No_Avatar.src
-              })`,
+              backgroundColor: "#B0C4DE",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#fff",
+              fontSize: "12px",
+              fontWeight: "bold",
             }}
-          />
+            className={styles.avatar_div}
+          >
+            <span>{userName ? userName[0]?.toUpperCase() : "U"}</span>
+          </div>
           <div className={styles.info_block}>
             <h1>{userName}</h1>
             <StarRating
