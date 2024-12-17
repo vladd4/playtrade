@@ -1,5 +1,6 @@
 services:
   db:
+    container_name: db
     image: postgres:15
     environment:
       POSTGRES_USER: postgres
@@ -10,6 +11,7 @@ services:
     ports:
       - "5432:5432"
   backend:
+    container_name: backend
     env_file:
       - ./server/.env
     build:
@@ -31,6 +33,7 @@ services:
     depends_on:
       - db
   frontend:
+    container_name: frontend
     build:
       context: ./client
       dockerfile: Dockerfile
