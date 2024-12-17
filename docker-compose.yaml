@@ -26,6 +26,8 @@ services:
       - ./server:/usr/src/app
     ports:
       - "2000:2000"
+    expose:
+      - "2000"
     depends_on:
       - db
   frontend:
@@ -36,6 +38,8 @@ services:
       NODE_ENV: production
     ports:
       - "3000:3000"
+    expose:
+      - "3000"
     depends_on:
       - backend
 
