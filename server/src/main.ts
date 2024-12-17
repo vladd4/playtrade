@@ -28,7 +28,7 @@ async function bootstrap() {
   app.useWebSocketAdapter(new IoAdapter(app));
 
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://playtrade.pp.ua'],
     credentials: true,
     allowedHeaders: [
       'Content-Type',

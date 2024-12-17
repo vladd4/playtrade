@@ -5,29 +5,29 @@ import { Markup } from 'telegraf';
 export class MenuService {
   createMainMenu() {
     return Markup.inlineKeyboard([
-      [Markup.button.webApp('📦 Магазин', 'https://gamebuzz.com.ua')],
+      [Markup.button.webApp('📦 Магазин', 'https://playtrade.pp.ua')],
       [
         Markup.button.webApp(
           '🔄 Продати ігровий товар',
-          'https://gamebuzz.com.ua/profile/products/create-product',
+          'https://playtrade.pp.ua/profile/products/create-product',
         ),
       ],
       [
         Markup.button.webApp(
           '💬 Мої листування',
-          'https://gamebuzz.com.ua/messages',
+          'https://playtrade.pp.ua/messages',
         ),
       ],
       [
         Markup.button.webApp(
           '👤 Мій аккаунт',
-          'https://gamebuzz.com.ua/profile',
+          'https://playtrade.pp.ua/profile',
         ),
       ],
       [
         Markup.button.webApp(
           '📃 Мої товари',
-          'https://gamebuzz.com.ua/profile/products',
+          'https://playtrade.pp.ua/profile/products',
         ),
       ],
     ]);

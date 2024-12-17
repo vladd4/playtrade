@@ -6,7 +6,8 @@ import {
   Req,
   UseGuards,
   UnauthorizedException,
-  InternalServerErrorException, Res,
+  InternalServerErrorException,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from '../../entities/users/users.service';
 import { OtpService } from '../../utils/otp.service';
@@ -39,38 +40,36 @@ export class AuthAdminController {
   })
   @ApiResponse({ status: 500, description: 'Ошибка сервера при логине' })
   async loginAdminRoles(
-      @Body() adminLoginDto: AdminLoginDto,
-      @Req() req: Request,
+    @Body() adminLoginDto: AdminLoginDto,
+    @Req() req: Request,
   ): Promise<any> {
     try {
       const user = await this.usersService.findByEmail(adminLoginDto.email);
       if (!user) {
         throw new UnauthorizedException(
-            'Неправильні облікові дані або доступ заборонено',
+          'Неправильні облікові дані або доступ заборонено',
         );
       }
 
       if (user.role === UserRole.USER) {
-        throw new UnauthorizedException(
-            'Доступ запрещен для роли USER',
-        );
+        throw new UnauthorizedException('Доступ запрещен для роли USER');
       }
 
       const isMatch = await bcrypt.compare(
-          adminLoginDto.password,
-          base64.decode(user.password),
+        adminLoginDto.password,
+        base64.decode(user.password),
       );
       if (!isMatch) {
         throw new UnauthorizedException(
-            'Неправильні облікові дані. Помилка з паролем',
+          'Неправильні облікові дані. Помилка з паролем',
         );
       }
 
       const { code, id } = this.otpService.generateOtp();
       await this.emailService.sendVerificationEmail(
-          user.email,
-          user.name,
-          code,
+        user.email,
+        user.name,
+        code,
       );
 
       this.usersService.saveUserOtp(id, user);
@@ -85,7 +84,6 @@ export class AuthAdminController {
       throw new InternalServerErrorException('Помилка при логіні');
     }
   }
-
 
   @Post('verify-otp')
   @ApiOperation({ summary: 'Проверка OTP' })
@@ -224,5 +222,4 @@ export class AuthAdminController {
       throw new InternalServerErrorException('Error during logout');
     }
   }
-
 }

@@ -11,7 +11,10 @@ import {
   UploadedFile,
   Put,
   Param,
-  Delete, NotFoundException, InternalServerErrorException, Query,
+  Delete,
+  NotFoundException,
+  InternalServerErrorException,
+  Query,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { GamesService } from './games.service';
@@ -24,13 +27,14 @@ import {
   ApiResponse,
   ApiConsumes,
   ApiParam,
-  ApiBody, ApiQuery,
+  ApiBody,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import {extname, join} from 'path';
+import { extname, join } from 'path';
 import { File as MulterFile } from 'multer';
-import {plainToInstance} from "class-transformer";
+import { plainToInstance } from 'class-transformer';
 
 @ApiTags('api/games')
 @ApiBearerAuth()
@@ -95,21 +99,28 @@ export class GamesController {
   })
   @ApiResponse({ status: 404, description: 'Игра не найдена' })
   async getGameById(
-      @Param('gameId') gameId: string,
-      @Res() res: Response,
+    @Param('gameId') gameId: string,
+    @Res() res: Response,
   ): Promise<Response> {
     this.logger.log(`Получение информации об игре с ID: ${gameId}`);
     try {
       const game = await this.gamesService.getGameById(gameId);
       if (!game) {
         this.logger.warn(`Игра с ID: ${gameId} не найдена`);
-        return res.status(HttpStatus.NOT_FOUND).json({ message: 'Игра не найдена' });
+        return res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'Игра не найдена' });
       }
       this.logger.log(`Игра с ID: ${gameId} успешно получена`);
       return res.status(HttpStatus.OK).json(game);
     } catch (error) {
-      this.logger.error(`Ошибка при получении игры с ID: ${gameId}`, error.stack);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Ошибка при получении игры' });
+      this.logger.error(
+        `Ошибка при получении игры с ID: ${gameId}`,
+        error.stack,
+      );
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Ошибка при получении игры' });
     }
   }
 
@@ -117,19 +128,24 @@ export class GamesController {
   @ApiOperation({ summary: 'Обновление игры с загрузкой одной картинки' })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
-      FileInterceptor('photo', {
-        storage: diskStorage({
-          destination: './api/uploads/gamePhoto',
-          filename: (req, file, callback) => {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-            const ext = extname(file.originalname);
-            const filename = `${file.fieldname}-${uniqueSuffix}${ext}`;
-            callback(null, filename);
-          },
-        }),
+    FileInterceptor('photo', {
+      storage: diskStorage({
+        destination: './api/uploads/gamePhoto',
+        filename: (req, file, callback) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const ext = extname(file.originalname);
+          const filename = `${file.fieldname}-${uniqueSuffix}${ext}`;
+          callback(null, filename);
+        },
       }),
+    }),
   )
-  @ApiResponse({ status: 200, description: 'Игра успешно обновлена', type: GameDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Игра успешно обновлена',
+    type: GameDto,
+  })
   @ApiResponse({ status: 404, description: 'Игра не найдена' })
   @ApiBody({
     schema: {
@@ -137,9 +153,21 @@ export class GamesController {
       properties: {
         name: { type: 'string', description: 'Название игры' },
         description: { type: 'string', description: 'Описание игры' },
-        platforms: { type: 'array', items: { type: 'string' }, description: 'Платформы' },
-        servers: { type: 'array', items: { type: 'string' }, description: 'Серверы' },
-        region: { type: 'array', items: { type: 'string' }, description: 'Регионы' },
+        platforms: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Платформы',
+        },
+        servers: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Серверы',
+        },
+        region: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Регионы',
+        },
         photo: {
           type: 'string',
           format: 'binary',
@@ -149,9 +177,9 @@ export class GamesController {
     },
   })
   async updateGame(
-      @Param('id') id: string,
-      @Body() updateGameDto: GameDto,
-      @UploadedFile() photo?: MulterFile,
+    @Param('id') id: string,
+    @Body() updateGameDto: GameDto,
+    @UploadedFile() photo?: MulterFile,
   ): Promise<GameDto> {
     try {
       const game = await this.gamesService.getGameById(id);
@@ -166,14 +194,17 @@ export class GamesController {
       }
 
       Object.assign(game, updateGameDto);
-      const updatedGame = await this.gamesService.updateGame(id, game, photo ? photo : undefined);
+      const updatedGame = await this.gamesService.updateGame(
+        id,
+        game,
+        photo ? photo : undefined,
+      );
 
       return updatedGame;
     } catch (error) {
       throw new InternalServerErrorException('Ошибка при обновлении игры');
     }
   }
-
 
   @Put(':id/platforms')
   @ApiOperation({ summary: 'Добавление новых платформ в игру' })
@@ -322,14 +353,14 @@ export class GamesController {
   @ApiResponse({ status: 200, description: 'Регионы успешно добавлены' })
   @ApiResponse({ status: 404, description: 'Игра не найдена' })
   async addRegions(
-      @Param('id') gameId: string,
-      @Body('regions') regions: string[],
-      @Res() res: Response,
+    @Param('id') gameId: string,
+    @Body('regions') regions: string[],
+    @Res() res: Response,
   ): Promise<Response> {
     try {
       const updatedGame = await this.gamesService.addRegionsToGame(
-          gameId,
-          regions,
+        gameId,
+        regions,
       );
       return res.status(HttpStatus.OK).json(updatedGame);
     } catch (error) {
@@ -358,14 +389,14 @@ export class GamesController {
         method: 'DELETE',
         url: '/games/8f6160c1-dbe4-48dd-ae32-f581ad8c5f1d/regions/Europe',
         description:
-            'Удаление региона Europe из игры с ID 8f6160c1-dbe4-48dd-ae32-f581ad8c5f1d',
+          'Удаление региона Europe из игры с ID 8f6160c1-dbe4-48dd-ae32-f581ad8c5f1d',
       },
     },
   })
   async removeRegion(
-      @Param('gameId') gameId: string,
-      @Param('region') region: string,
-      @Res() res: Response,
+    @Param('gameId') gameId: string,
+    @Param('region') region: string,
+    @Res() res: Response,
   ): Promise<Response> {
     try {
       const updatedGame = await this.gamesService.removeRegion(gameId, region);
@@ -391,9 +422,7 @@ export class GamesController {
   })
   @ApiResponse({ status: 404, description: 'Игры не найдены' })
   @ApiResponse({ status: 500, description: 'Ошибка при поиске игр' })
-  async searchGamesByName(
-      @Query('name') name: string
-  ): Promise<GameDto[]> {
+  async searchGamesByName(@Query('name') name: string): Promise<GameDto[]> {
     if (!name) {
       throw new NotFoundException('Название игры должно быть указано');
     }
@@ -420,7 +449,7 @@ export class GamesController {
   })
   @ApiResponse({ status: 500, description: 'Ошибка при сортировке игр' })
   async getGamesSortedAlphabetically(
-      @Query('order') order: 'ASC' | 'DESC' = 'ASC',
+    @Query('order') order: 'ASC' | 'DESC' = 'ASC',
   ): Promise<GameDto[]> {
     try {
       const games = await this.gamesService.findAllSortedByName(order);

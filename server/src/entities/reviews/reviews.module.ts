@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Review } from './review.entity';
 import { UsersModule } from '../users/users.module';
 import { ProductValidationService } from '../products/productValidation.service';
-import {Product} from "../products/product.entity";
-import {MessagesModule} from "../messages/messages.module"; // Добавляем зависимость
+import { Product } from '../products/product.entity';
+import { MessagesModule } from '../messages/messages.module'; // Добавляем зависимость
 
 @Module({
   imports: [

@@ -25,7 +25,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'Авторизация фронтенд-программы',
     description:
-        'Этот эндпоинт используется для авторизации программы фронтенда. При успешной авторизации возвращается access_token в теле ответа, и refresh_token устанавливается в httpOnly cookie.',
+      'Этот эндпоинт используется для авторизации программы фронтенда. При успешной авторизации возвращается access_token в теле ответа, и refresh_token устанавливается в httpOnly cookie.',
   })
   @ApiBody({
     description: 'Параметры для авторизации фронтенд-программы',
@@ -44,19 +44,16 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description:
-        'Успешная авторизация. В теле ответа возвращается access_token.',
+      'Успешная авторизация. В теле ответа возвращается access_token.',
   })
   @ApiResponse({
     status: 401,
     description: 'Неверные учетные данные или секрет.',
   })
-  async login(
-      @Body() body: LoginDto,
-      @Req() req: Request,
-  ) {
+  async login(@Body() body: LoginDto, @Req() req: Request) {
     const user = await this.authService.validateUser(
-        body.username,
-        body.password,
+      body.username,
+      body.password,
     );
 
     if (!user) {
@@ -84,7 +81,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'Обновление токена фронтенд-программы',
     description:
-        'Этот эндпоинт используется для обновления access_token фронтенд-программы, используя refresh_token, который хранится в HTTP-only cookie.',
+      'Этот эндпоинт используется для обновления access_token фронтенд-программы, используя refresh_token, который хранится в HTTP-only cookie.',
   })
   @ApiResponse({
     status: 200,
@@ -94,9 +91,7 @@ export class AuthController {
     status: 401,
     description: 'Неверный токен или отсутствует refresh token в cookie.',
   })
-  async refreshToken(
-      @Req() req: Request,
-  ) {
+  async refreshToken(@Req() req: Request) {
     try {
       const refresh_token = req.cookies['frontend_refresh_token'];
 
@@ -115,11 +110,11 @@ export class AuthController {
 
       // Генерация нового access_token
       const access_token = this.authService.jwtService.sign(
-          {},
-          {
-            secret: process.env.JWT_SECRET,
-            expiresIn: '15m',
-          },
+        {},
+        {
+          secret: process.env.JWT_SECRET,
+          expiresIn: '15m',
+        },
       );
 
       return { access_token };
@@ -128,5 +123,4 @@ export class AuthController {
       throw new UnauthorizedException('Invalid token');
     }
   }
-
 }

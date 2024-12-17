@@ -19,7 +19,10 @@ export class UserRateLimitMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    if (req.path === '/api/auth/login' || req.path === '/api/auth/refresh-token') {
+    if (
+      req.path === '/api/auth/login' ||
+      req.path === '/api/auth/refresh-token'
+    ) {
       return next();
     }
 

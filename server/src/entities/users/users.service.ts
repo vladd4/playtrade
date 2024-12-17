@@ -210,8 +210,6 @@ export class UsersService {
     return { users, totalCount };
   }
 
-  
-
   async invalidateSession(sessionId: string): Promise<void> {
     const user = await this.findUserBySessionId(sessionId);
     if (!user) {

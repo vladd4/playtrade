@@ -7,11 +7,9 @@ import { Chat } from '../chats/chat.entity';
 import { UserEntity } from '../users/user.entity';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([AdminComment, Chat, UserEntity]),
-    ],
-    controllers: [AdminCommentController],
-    providers: [AdminCommentService],
-    exports: [AdminCommentService],
+  imports: [TypeOrmModule.forFeature([AdminComment, Chat, UserEntity])],
+  controllers: [AdminCommentController],
+  providers: [AdminCommentService],
+  exports: [AdminCommentService],
 })
 export class AdminCommentModule {}

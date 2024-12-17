@@ -6,11 +6,8 @@ import { TransactionsController } from './transactions.controller';
 import { UsersModule } from '../users/users.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([TransactionEntity]),
-    UsersModule
-  ],
+  imports: [TypeOrmModule.forFeature([TransactionEntity]), UsersModule],
   providers: [TransactionsService],
-  controllers: [TransactionsController]
+  controllers: [TransactionsController],
 })
 export class TransactionsModule {}

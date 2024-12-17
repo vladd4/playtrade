@@ -1,4 +1,4 @@
 export enum MessageType {
-    SENT = 'sent',
-    RECEIVED = 'received',
+  SENT = 'sent',
+  RECEIVED = 'received',
 }

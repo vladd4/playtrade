@@ -90,15 +90,6 @@ export class TelegrafService {
       await this.technicalSupportScene.handleTechnicalSupportCommand(ctx); // Включаем режим техподдержки
     });
 
-    this.bot.command('drop', async (ctx) => {
-      try {
-        await this.entityManager.connection.dropDatabase();
-        ctx.reply('База данных успешно удалена.');
-      } catch (error) {
-        ctx.reply('Ошибка при удалении базы данных: ' + error.message);
-      }
-    });
-
     this.bot.start(async (ctx) => {
       const user = await this.usersService.findUser(ctx.from.id);
       if (user) {
@@ -120,7 +111,6 @@ export class TelegrafService {
 
     this.bot.telegram.setMyCommands([
       { command: 'start', description: 'Перезапуск бота' },
-      { command: 'drop', description: 'Удаление базы данных' },
       { command: 'technical_support', description: 'Технічна підтримка' },
     ]);
   }

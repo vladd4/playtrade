@@ -9,7 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { WebSocketChatService } from './webSocketChat.service';
-import {CreateMessageDto} from "../../entities/messages/createMessageDTO";
+import { CreateMessageDto } from '../../entities/messages/createMessageDTO';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -20,7 +20,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   handleConnection(client: Socket) {
     console.log(
-        `Client connected: ${client.id} at ${new Date().toISOString()}`,
+      `Client connected: ${client.id} at ${new Date().toISOString()}`,
     );
   }
 
@@ -30,13 +30,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('sendMessage')
   async handleMessage(
-      @ConnectedSocket() client: Socket,
-      @MessageBody() createMessageDto: CreateMessageDto,
+    @ConnectedSocket() client: Socket,
+    @MessageBody() createMessageDto: CreateMessageDto,
   ) {
     console.log(`Received sendMessage event from client: ${client.id}`);
     try {
       const { chat, message } =
-          await this.webSocketChatService.handleChatCreation(createMessageDto);
+        await this.webSocketChatService.handleChatCreation(createMessageDto);
 
       if (message) {
         this.server.to(chat.id).emit('message', {
@@ -64,8 +64,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('joinChat')
   async handleJoinChat(
-      @ConnectedSocket() client: Socket,
-      @MessageBody() data: { chatId: string },
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: { chatId: string },
   ) {
     const { chatId } = data;
 
@@ -82,8 +82,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('leaveChat')
   async handleLeaveChat(
-      @ConnectedSocket() client: Socket,
-      @MessageBody('chatId') chatId: string,
+    @ConnectedSocket() client: Socket,
+    @MessageBody('chatId') chatId: string,
   ) {
     client.leave(chatId);
   }

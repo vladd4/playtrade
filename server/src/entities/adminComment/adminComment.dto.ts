@@ -1,4 +1,4 @@
 export class CreateAdminCommentDto {
-    author: string;  // UUID автора
-    comment: string;
+  author: string; // UUID автора
+  comment: string;
 }

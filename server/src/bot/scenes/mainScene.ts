@@ -13,7 +13,7 @@ export class MainScene {
     scene.enter(async (ctx) => {
       console.log(`Entering main scene for user ${ctx.from.id}`);
       await ctx.reply(
-        'Вітаємо у нашому GameBuzz Marketplace! Як я можу допомогти вам сьогодні?',
+        'Вітаємо у нашому PlayTrade Marketplace! Як я можу допомогти вам сьогодні?',
         this.menuService.createMainMenu(),
       );
     });

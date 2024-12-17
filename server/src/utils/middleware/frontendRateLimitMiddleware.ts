@@ -15,7 +15,10 @@ export class FrontendRateLimitMiddleware implements NestMiddleware {
   constructor(@Inject('REDIS') private readonly redisClient: Redis) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    if (req.path === '/api/auth/login' || req.path === '/api/auth/refresh-token') {
+    if (
+      req.path === '/api/auth/login' ||
+      req.path === '/api/auth/refresh-token'
+    ) {
       const clientIp = req.ip;
 
       const key = `auth_rate_limit:${clientIp}`;

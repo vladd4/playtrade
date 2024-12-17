@@ -1,4 +1,4 @@
 export class LoginDto {
-    telegramId: number;
-    password: string;
+  telegramId: number;
+  password: string;
 }

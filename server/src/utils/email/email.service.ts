@@ -24,6 +24,7 @@ export class EmailService {
     to: string,
     username: string,
     code: string,
+    isRegistration?: boolean,
   ): Promise<void> {
     const mailOptions = {
       from: '"PlayTrade" <maks.chell@ukr.net>',
@@ -34,7 +35,7 @@ export class EmailService {
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
                 <h2 style="text-align: center; color: #4CAF50;">Verification Code</h2>
                 <p>Dear ${username},</p>
-                <p>Thank you for registering with PlayTrade. Please use the following verification code to complete your registration:</p>
+                ${isRegistration ? `<p>Thank you for registering with PlayTrade. Please use the following verification code to complete your registration:</p>` : `<p>Please use the following verification code to complete your authorization:</p>`}
                 <div style="text-align: center; margin: 20px 0;">
                     <span style="display: inline-block; padding: 10px 20px; font-size: 18px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; cursor: pointer;" onclick="navigator.clipboard.writeText('${code}'); alert('Verification code copied!');">
                         ${code}
