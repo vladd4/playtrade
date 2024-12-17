@@ -72,10 +72,9 @@ export class TechnicalSupportScene {
         response.data.pipe(writer);
 
         writer.on('finish', async () => {
-          const imageUrl = `https://playtrade.pp.ua/api/uploads/support-images/${uniqueFileName}`;
+          const imageUrl = `http://playtrade.pp.ua/api/uploads/support-images/${uniqueFileName}`;
           console.log(`Image successfully saved at ${filePath}`);
 
-          // Сохраняем фото в истории чатов
           await this.supportChatService.createOrUpdateChatWithLastMessage(
             user.id,
             imageUrl,

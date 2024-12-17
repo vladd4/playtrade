@@ -40,7 +40,6 @@ export class TelegrafService {
     this.setupMiddleware();
     this.setupCommands();
 
-    // Добавляем обработку всех сообщений
     this.setupMessageHandler();
 
     this.bot.launch();
@@ -87,7 +86,7 @@ export class TelegrafService {
   private setupCommands() {
     this.bot.command('technical_support', async (ctx) => {
       console.log(`User ${ctx.from.id} entering technical support`);
-      await this.technicalSupportScene.handleTechnicalSupportCommand(ctx); // Включаем режим техподдержки
+      await this.technicalSupportScene.handleTechnicalSupportCommand(ctx);
     });
 
     this.bot.start(async (ctx) => {
@@ -119,10 +118,8 @@ export class TelegrafService {
     this.bot.on('message', async (ctx) => {
       const user = await this.usersService.findUser(ctx.from.id);
       if (user && user.isSupportChatActive) {
-        // Если пользователь в режиме поддержки, передаем его сообщение в техподдержку
         await this.technicalSupportScene.handleUserMessage(ctx);
       } else {
-        // Обработка других сообщений, если пользователь не в режиме техподдержки
         await ctx.reply('Ви не в режимі технічної підтримки.');
       }
     });
