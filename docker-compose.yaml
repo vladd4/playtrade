@@ -58,7 +58,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - nginx-data:/var/www/certbot
       - certbot-etc:/etc/letsencrypt
-      - ~/dhparam.pem:/etc/nginx/dhparam.pem
+      - /home/ubuntu/playtrade/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
       - /home/ubuntu/playtrade/server/api/uploads:/usr/share/nginx/html/api/uploads
     ports:
       - "80:80"
