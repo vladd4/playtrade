@@ -62,8 +62,8 @@ export class TransactionsController {
   })
   async findAll(
     @Res() res: Response,
-    @Query('limit') limit: number = 10, // Лимит по умолчанию - 10 транзакций
-    @Query('page') page: number = 1, // Страница по умолчанию - 1
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
   ): Promise<Response> {
     try {
       const { transactions, totalCount } =

@@ -145,10 +145,10 @@ export class UsersService {
         user.isBanned = false;
         user.banUntil = null;
         await this.userRepository.save(user);
-        return true; // Пользователь разбанен
+        return true;
       }
     }
-    return false; // Пользователь не разбанен
+    return false;
   }
 
   async saveUserOtp(otpId: string, user: UserEntity) {

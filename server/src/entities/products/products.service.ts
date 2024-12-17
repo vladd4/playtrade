@@ -217,11 +217,11 @@ export class ProductsService {
   async findProductsByOwner(userId: string): Promise<Product[]> {
     try {
       const products = await this.productRepository.find({
-        where: { owner: { id: userId } }, // Поиск по полю owner
-        relations: ['owner', 'game'], // Загрузка связанных сущностей
+        where: { owner: { id: userId } },
+        relations: ['owner', 'game'],
         order: {
-          updatedAt: 'DESC', // Сортировка по времени обновления (сначала последние)
-          createdAt: 'DESC', // Сортировка по времени создания (если время обновления одинаковое)
+          updatedAt: 'DESC',
+          createdAt: 'DESC',
         },
       });
 
@@ -406,7 +406,7 @@ export class ProductsService {
   async findByName(name: string): Promise<Product[]> {
     return this.productRepository
       .createQueryBuilder('product')
-      .where('LOWER(product.name) LIKE :name', { name: `%${name}%` }) // Поиск по имени без учета регистра
+      .where('LOWER(product.name) LIKE :name', { name: `%${name}%` })
       .leftJoinAndSelect('product.owner', 'owner')
       .leftJoinAndSelect('product.game', 'game')
       .getMany();

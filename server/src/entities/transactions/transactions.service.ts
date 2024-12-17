@@ -47,7 +47,7 @@ export class TransactionsService {
     const [transactions, totalCount] =
       await this.transactionRepository.findAndCount({
         relations: ['sender', 'receiver'],
-        order: { createdAt: 'DESC' }, // Сортировка по новизне
+        order: { createdAt: 'DESC' },
         skip,
         take: limit,
       });

@@ -34,7 +34,7 @@ export class WebSocketBotGateway {
     await this.bot.telegram.sendMessage(
       user.telegramId,
       'Чат з ТП завершено. Натисніть /start щоб далі користуватись ботом',
-    ); // Используйте инъецированный бот
+    );
 
     this.server.emit('chatClosed', {
       status: 'success',

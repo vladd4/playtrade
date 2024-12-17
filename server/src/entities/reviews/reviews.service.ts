@@ -125,7 +125,6 @@ export class ReviewsService {
     return this.reviewRepository.findOne({ where: { id: id } });
   }
 
-  // Удаление отзыва
   async remove(id: string): Promise<void> {
     const review = await this.reviewRepository.findOne({ where: { id: id } });
     if (!review) {

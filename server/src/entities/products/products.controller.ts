@@ -67,7 +67,6 @@ export class ProductsController {
         await this.productsService.findAllWithPagination(limit, page);
       const totalPages = Math.ceil(totalCount / limit);
 
-      // Преобразование сущностей в DTO
       const result = plainToInstance(ProductDto, products);
 
       return {
@@ -155,7 +154,6 @@ export class ProductsController {
     @Query('limit') limit: number = 20,
   ): Promise<any> {
     try {
-      // Получаем продукты и общее количество
       const { products, total } =
         await this.productsService.findByTypeAndGameWithFilters(
           type,
@@ -169,10 +167,8 @@ export class ProductsController {
           limit,
         );
 
-      // Вычисляем общее количество страниц
       const totalPages = Math.ceil(total / limit);
 
-      // Возвращаем форматированный ответ
       return {
         products,
         totalPages,

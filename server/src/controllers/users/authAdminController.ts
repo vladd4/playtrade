@@ -110,18 +110,18 @@ export class AuthAdminController {
 
       req.res.cookie('session_id', sessionId, {
         httpOnly: true,
-        secure: true, // всегда использовать secure для HTTPS
-        maxAge: 24 * 60 * 60 * 1000, // 1 день
-        path: '/', // Установить путь '/' для глобальной доступности
-        sameSite: 'none', // Разрешает отправку куки в кросс-доменных запросах
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/',
+        sameSite: 'none',
       });
 
       req.res.cookie('admin_refresh_token', refresh_token, {
         httpOnly: true,
-        secure: true, // всегда использовать secure для HTTPS
-        maxAge: 24 * 60 * 60 * 1000, // 1 день
-        path: '/', // Установить путь '/' для глобальной доступности
-        sameSite: 'none', // Разрешает отправку куки в кросс-доменных запросах
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/',
+        sameSite: 'none',
       });
       user.sessionId = sessionId;
       await this.usersService.update(user.id, { sessionId });
@@ -132,7 +132,7 @@ export class AuthAdminController {
         role: user.role,
       };
     } catch (e) {
-      console.error('Error during admin login:', e); // Логирование ошибки
+      console.error('Error during admin login:', e);
       throw new InternalServerErrorException('Помилка при логіні');
     }
   }
@@ -160,21 +160,21 @@ export class AuthAdminController {
 
       req.res.cookie('session_id', sessionId, {
         httpOnly: true,
-        secure: true, // всегда использовать secure для HTTPS
-        maxAge: 24 * 60 * 60 * 1000, // 1 день
-        path: '/', // Установить путь '/' для глобальной доступности
-        sameSite: 'none', // Разрешает отправку куки в кросс-доменных запросах
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/',
+        sameSite: 'none',
       });
 
       req.res.cookie('admin_refresh_token', newRefreshToken, {
         httpOnly: true,
-        secure: true, // всегда использовать secure для HTTPS
-        maxAge: 24 * 60 * 60 * 1000, // 1 день
-        path: '/', // Установить путь '/' для глобальной доступности
-        sameSite: 'none', // Разрешает отправку куки в кросс-доменных запросах
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/',
+        sameSite: 'none',
       });
       user.sessionId = sessionId;
-      await this.usersService.update(user.id, { sessionId }); // Сохранение сессии
+      await this.usersService.update(user.id, { sessionId });
 
       return {
         message: 'Сесія продовжена',

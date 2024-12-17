@@ -61,7 +61,7 @@ export class ChatsService {
           .from(Chat, 'chat')
           .innerJoin('chat.participants', 'p')
           .where('p.id = :userId')
-          .orWhere('chat.ownerId = :userId') // Условие для владельца чата
+          .orWhere('chat.ownerId = :userId')
           .getQuery();
         return 'chat.id IN ' + subQuery;
       })
@@ -69,7 +69,6 @@ export class ChatsService {
       .orderBy('chat.id', 'DESC')
       .getMany();
 
-    // Обрабатываем чаты и подгружаем последние сообщения
     for (const chat of chats) {
       const latestMessage = await this.chatsRepository
         .createQueryBuilder('chat')
@@ -80,7 +79,6 @@ export class ChatsService {
         .limit(1)
         .getOne();
 
-      // Присваиваем последнее сообщение
       chat['latestMessage'] =
         latestMessage?.messages &&
         latestMessage.messages[0] &&
@@ -91,7 +89,6 @@ export class ChatsService {
             }
           : null;
 
-      // Владелец чата первым в списке участников
       if (chat.owner) {
         chat.participants = [
           chat.participants.find(
@@ -103,7 +100,6 @@ export class ChatsService {
         ];
       }
 
-      // Присваиваем продукт
       chat['product'] = chat.product
         ? ({
             id: chat.product.id,
