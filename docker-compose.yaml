@@ -66,13 +66,13 @@ services:
     depends_on:
      - backend
 
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - nginx-data:/var/www/certbot
+  # certbot:
+  #   image: certbot/certbot
+  #   volumes:
+  #     - certbot-etc:/etc/letsencrypt
+  #     - nginx-data:/var/www/certbot
 
 volumes:
   postgres-data:
   nginx-data:
-  certbot-etc:
+  # certbot-etc:
