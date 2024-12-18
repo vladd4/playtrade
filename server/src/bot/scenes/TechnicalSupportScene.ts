@@ -78,7 +78,7 @@ export class TechnicalSupportScene {
           await this.supportChatService.createOrUpdateChatWithLastMessage(
             user.id,
             imageUrl,
-            '550e8400-e29b-41d4-a716-446655440000',
+            TECH_PLACEHOLDER_ID,
           );
 
           const server = this.supportChatGateway.getServerInstance();
@@ -89,7 +89,7 @@ export class TechnicalSupportScene {
                 username: user.name,
               },
               receiver: {
-                id: '550e8400-e29b-41d4-a716-446655440000',
+                id: TECH_PLACEHOLDER_ID,
               },
               content: imageUrl,
               timestamp: new Date(),
@@ -115,7 +115,7 @@ export class TechnicalSupportScene {
         await this.supportChatService.createOrUpdateChatWithLastMessage(
           user.id,
           message,
-          '550e8400-e29b-41d4-a716-446655440000',
+          TECH_PLACEHOLDER_ID,
         );
         const server = this.supportChatGateway.getServerInstance();
         if (server) {
@@ -125,7 +125,7 @@ export class TechnicalSupportScene {
               username: user.name,
             },
             receiver: {
-              id: '550e8400-e29b-41d4-a716-446655440000',
+              id: TECH_PLACEHOLDER_ID,
             },
             content: message,
             timestamp: new Date(),

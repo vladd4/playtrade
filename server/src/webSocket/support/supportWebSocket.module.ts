@@ -5,8 +5,8 @@ import { SupportChatGateway } from './supportChatGateway';
 import { MessagesModule } from '../../entities/messages/messages.module';
 
 @Module({
-  imports: [forwardRef(() => SharedModule), MessagesModule], // Используйте forwardRef для SharedModule
+  imports: [forwardRef(() => SharedModule), MessagesModule],
   providers: [SupportChatGateway, WebSocketBotGateway],
-  exports: [WebSocketBotGateway], // Экспортируйте WebSocketBotGateway
+  exports: [WebSocketBotGateway],
 })
 export class WebSocketBotModule {}

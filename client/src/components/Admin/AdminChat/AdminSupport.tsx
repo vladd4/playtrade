@@ -21,6 +21,7 @@ import MoreUsersAlert from "../MoreUsersAlert/MoreUsersAlert";
 import { formatImageFromServer } from "@/utils/formatImageName";
 import useSupportChat from "@/hooks/useSupportChat";
 import { handleSupportFileChange } from "@/utils/chatImage_helper";
+import { USER_PLACEHOLDER_ID } from "@/utils/constants";
 import { randomUUID } from "crypto";
 
 export default function AdminSupport() {
@@ -154,7 +155,7 @@ export default function AdminSupport() {
       <article
         className={`${styles.root} ${jost.className} ${styles.support_root}`}
       >
-        {/* <div className={styles.top_block}>
+        <div className={styles.top_block}>
           <div className={styles.avatar}>
             <div
               style={{
@@ -253,7 +254,7 @@ export default function AdminSupport() {
               />
             </button>
           </div>
-        </form> */}
+        </form>
       </article>
       <Tooltip id="tooltip" place="bottom" className={styles.tooltip} />
       <MoreUsersAlert />

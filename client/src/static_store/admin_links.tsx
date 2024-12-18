@@ -1,6 +1,7 @@
 import { UserRoles } from "@/utils/constants";
 import {
   Handshake,
+  MessagesSquare,
   Shapes,
   TableCellsMerge,
   UserCog,
@@ -38,12 +39,12 @@ export const admin_links = [
     href: "/admin/category",
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
-  // {
-  //   label: "Технічна підтримка",
-  //   icon: <MessagesSquare size={20} />,
-  //   href: "/admin/support",
-  //   roles: [UserRoles.ADMIN, UserRoles.MANAGER],
-  // },
+  {
+    label: "Технічна підтримка",
+    icon: <MessagesSquare size={20} />,
+    href: "/admin/support",
+    roles: [UserRoles.ADMIN, UserRoles.MANAGER],
+  },
   {
     label: "Менеджери",
     icon: <UserCog size={20} />,

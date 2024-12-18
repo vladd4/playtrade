@@ -6,14 +6,14 @@ import { SupportChatController } from './supportChat.controller';
 import { SupportChatPhotoService } from './support-chat-photo.service';
 import { SharedModule } from '../../utils/SharedModule';
 import { MessagesModule } from '../messages/messages.module';
-import { WebSocketBotModule } from '../../webSocket/support/supportWebSocket.module'; // Импортируйте WebSocketBotModule
+import { WebSocketBotModule } from '../../webSocket/support/supportWebSocket.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([SupportChat]),
     SharedModule,
     MessagesModule,
-    WebSocketBotModule, // Импортируйте WebSocketBotModule
+    WebSocketBotModule,
   ],
   providers: [SupportChatService, SupportChatPhotoService],
   exports: [SupportChatService, TypeOrmModule],
