@@ -91,7 +91,7 @@ export async function changeUserPassword(
 export async function resetUserPassword(userId: string, userEmail: string) {
   try {
     const data = await privateAxios.post(`/password/${userId}/reset`, {
-      userEmail,
+      email: userEmail,
     });
     return data.status;
   } catch (error: any) {
