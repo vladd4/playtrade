@@ -8,6 +8,7 @@ import * as path from 'path';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { Message } from 'telegraf/typings/core/types/typegram';
+import { TECH_PLACEHOLDER_ID } from 'src/utils/constants';
 
 @Injectable()
 export class TechnicalSupportScene {
