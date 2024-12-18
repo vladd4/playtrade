@@ -12,7 +12,7 @@ import * as base64 from 'base-64';
 import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
 import * as fs from 'fs';
-import fetch from 'node-fetch'; // Используем node-fetch для запросов
+import fetch from 'node-fetch';
 
 @Injectable()
 export class RegistrationScene {

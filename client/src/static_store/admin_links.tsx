@@ -1,13 +1,10 @@
 import { UserRoles } from "@/utils/constants";
 import {
   Handshake,
-  House,
-  MessagesSquare,
   Shapes,
   TableCellsMerge,
   UserCog,
   Users,
-  Wallet,
 } from "lucide-react";
 
 export const admin_links = [
@@ -41,12 +38,12 @@ export const admin_links = [
     href: "/admin/category",
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
-  {
-    label: "Технічна підтримка",
-    icon: <MessagesSquare size={20} />,
-    href: "/admin/support",
-    roles: [UserRoles.ADMIN, UserRoles.MANAGER],
-  },
+  // {
+  //   label: "Технічна підтримка",
+  //   icon: <MessagesSquare size={20} />,
+  //   href: "/admin/support",
+  //   roles: [UserRoles.ADMIN, UserRoles.MANAGER],
+  // },
   {
     label: "Менеджери",
     icon: <UserCog size={20} />,

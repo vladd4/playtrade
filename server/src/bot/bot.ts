@@ -7,7 +7,7 @@ import { EntityManager } from 'typeorm';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { MenuService } from './service/menu.service';
 import { DeleteMessageService } from './service/delete.message.service';
-import { TechnicalSupportScene } from './scenes/TechnicalSupportScene';
+// import { TechnicalSupportScene } from './scenes/TechnicalSupportScene';
 import { MainScene } from './scenes/mainScene';
 
 export interface MyContext extends Context {
@@ -21,7 +21,7 @@ export class TelegrafService {
   constructor(
     private usersService: UsersService,
     private registrationScene: RegistrationScene,
-    private technicalSupportScene: TechnicalSupportScene,
+    // private technicalSupportScene: TechnicalSupportScene,
     private mainScene: MainScene,
     @InjectEntityManager() private entityManager: EntityManager,
     public menuService: MenuService,
@@ -40,7 +40,7 @@ export class TelegrafService {
     this.setupMiddleware();
     this.setupCommands();
 
-    this.setupMessageHandler();
+    // this.setupMessageHandler();
 
     this.bot.launch();
   }
@@ -84,10 +84,10 @@ export class TelegrafService {
   }
 
   private setupCommands() {
-    this.bot.command('technical_support', async (ctx) => {
-      console.log(`User ${ctx.from.id} entering technical support`);
-      await this.technicalSupportScene.handleTechnicalSupportCommand(ctx);
-    });
+    // this.bot.command('technical_support', async (ctx) => {
+    //   console.log(`User ${ctx.from.id} entering technical support`);
+    //   await this.technicalSupportScene.handleTechnicalSupportCommand(ctx);
+    // });
 
     this.bot.start(async (ctx) => {
       const user = await this.usersService.findUser(ctx.from.id);
@@ -114,16 +114,16 @@ export class TelegrafService {
     ]);
   }
 
-  private setupMessageHandler() {
-    this.bot.on('message', async (ctx) => {
-      const user = await this.usersService.findUser(ctx.from.id);
-      if (user && user.isSupportChatActive) {
-        await this.technicalSupportScene.handleUserMessage(ctx);
-      } else {
-        await ctx.reply('Ви не в режимі технічної підтримки.');
-      }
-    });
-  }
+  // private setupMessageHandler() {
+  //   this.bot.on('message', async (ctx) => {
+  //     const user = await this.usersService.findUser(ctx.from.id);
+  //     if (user && user.isSupportChatActive) {
+  //       await this.technicalSupportScene.handleUserMessage(ctx);
+  //     } else {
+  //       await ctx.reply('Ви не в режимі технічної підтримки.');
+  //     }
+  //   });
+  // }
 
   async sendMessageToUser(chatId: number, message: string) {
     try {
