@@ -1,82 +1,3 @@
-# services:
-#   db:
-#     container_name: db
-#     image: postgres:15
-#     environment:
-#       POSTGRES_USER: postgres
-#       POSTGRES_PASSWORD: postgres
-#       POSTGRES_DB: FunGames
-#     volumes:
-#       - postgres-data:/var/lib/postgresql/data
-#     ports:
-#       - "5432:5432"
-#   backend:
-#     container_name: backend
-#     env_file:
-#       - ./server/.env
-#     build:
-#       context: ./server
-#       dockerfile: Dockerfile
-#     environment:
-#       NODE_ENV: development
-#       DB_HOST: db
-#       DB_PORT: 5432
-#       DB_USERNAME: postgres
-#       DB_PASSWORD: postgres
-#       DB_NAME: FunGames
-#     ports:
-#       - "2000:2000"
-#     expose:
-#       - "2000"
-#     depends_on:
-#       - db
-#   frontend:
-#     container_name: frontend
-#     build:
-#       context: ./client
-#       dockerfile: Dockerfile
-#     environment:
-#       NODE_ENV: production
-#     ports:
-#       - "3000:3000"
-#     expose:
-#       - "3000"
-#     depends_on:
-#       - backend
-
-#   adminer:
-#     container_name: adminer
-#     image: adminer
-#     restart: always
-#     ports:
-#       - "8080:8080"
-#     depends_on:
-#       - db
-
-#   nginx:
-#     image: nginx:latest
-#     volumes:
-#       - ./nginx:/etc/nginx/conf.d
-#       - nginx-data:/var/www/certbot
-#       - certbot-etc:/etc/letsencrypt
-#       - /home/ubuntu/playtrade/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
-#       - /home/ubuntu/playtrade/server/api/uploads:/usr/share/nginx/html/api/uploads
-#     ports:
-#       - "80:80"
-#       - "443:443" 
-#     depends_on:
-#      - backend
-
-#   certbot:
-#     image: certbot/certbot
-#     volumes:
-#       - certbot-etc:/etc/letsencrypt
-#       - nginx-data:/var/www/certbot
-
-# volumes:
-#   postgres-data:
-#   nginx-data:
-#   certbot-etc:
 services:
   db:
     container_name: db
@@ -124,6 +45,7 @@ services:
       - backend
 
   adminer:
+    container_name: adminer
     image: adminer
     restart: always
     ports:
@@ -137,10 +59,11 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - nginx-data:/var/www/certbot
       - certbot-etc:/etc/letsencrypt
-      - ~/dhparam.pem:/etc/nginx/dhparam.pem
+      - /home/ubuntu/playtrade/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
       - /home/ubuntu/playtrade/server/api/uploads:/usr/share/nginx/html/api/uploads
     ports:
       - "80:80"
+      - "443:443" 
     depends_on:
      - backend
 
