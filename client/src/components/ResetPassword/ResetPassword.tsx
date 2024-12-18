@@ -38,7 +38,7 @@ function ResetPassword({ isEmail, link }: ResetPassProps) {
 
   return (
     <section className={`${styles.root} ${jost.className}`}>
-      <Logo className={styles.logo} fill="#000" />
+      <Logo className={styles.logo} fill="#7885ff" />
       <article className={styles.form_block}>
         <p>
           {isEmail

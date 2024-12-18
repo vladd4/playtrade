@@ -73,7 +73,7 @@ export class ChatImageUploadController {
       };
     }
 
-    const imageUrl = `https://gamebuzz.com.ua/api/uploads/chat-images/${file.filename}`;
+    const imageUrl = `https://playtrade.pp.ua/api/uploads/chat-images/${file.filename}`;
     return {
       statusCode: HttpStatus.CREATED,
       imageUrl,

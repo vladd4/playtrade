@@ -20,7 +20,7 @@ export class SupportChatPhotoService {
   ) {}
 
   async processPhoto(file: Multer.File, senderId: string, adminId: string) {
-    const imageUrl = `https://gamebuzz.com.ua/api/uploads/support-images/${file.filename}`;
+    const imageUrl = `https://playtrade.pp.ua/api/uploads/support-images/${file.filename}`;
     const localPath = `./api/uploads/support-images/${file.filename}`;
 
     try {

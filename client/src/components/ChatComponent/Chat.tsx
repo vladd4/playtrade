@@ -37,8 +37,6 @@ export default function Chat({ chatId }: ChatProps) {
   const chatRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const router = useRouter();
-
   const { userId } = useAppSelector((state) => state.user);
 
   const chatInfo = JSON.parse(getFromSessionStorage("chatInfo")!);
@@ -143,14 +141,6 @@ export default function Chat({ chatId }: ChatProps) {
     setFormatedMessages(groupMessagesByDate(messages));
   }, [messages]);
 
-  const handleBuyProduct = () => {
-    if (userId && messages && chatInfo) {
-      router.push(
-        `/feedback?productId=${chatInfo.productId}&sellerId=${chatInfo.sellerId}`
-      );
-    }
-  };
-
   return (
     <>
       <article className={`${styles.root} ${jost.className}`}>
@@ -175,46 +165,9 @@ export default function Chat({ chatId }: ChatProps) {
                     : "U"}
                 </span>
               </div>
-              <div
-                className={styles.image_div}
-                style={{
-                  backgroundImage: `url(${
-                    chatInfo.sellerAvatar === null
-                      ? No_Avatar.src
-                      : `${
-                          process.env.NEXT_PUBLIC_BACKEND_API_URL
-                        }${formatImageFromServer(chatInfo.sellerAvatar)}`
-                  })`,
-                }}
-              />
               <h3>{chatInfo?.sellerName}</h3>
             </div>
-            {isPayment && (
-              <ServiceButton className={styles.btn}>Допомога</ServiceButton>
-            )}
           </div>
-          {!isPayment ? (
-            <div className={styles.buttons}>
-              <ServiceButton className={styles.btn}>Допомога</ServiceButton>
-              <ServiceButton
-                isActive
-                className={styles.btn}
-                onClick={handleBuyProduct}
-              >
-                Купити
-              </ServiceButton>
-            </div>
-          ) : (
-            <div className={styles.payment_block}>
-              <p>50$</p>
-              <div>
-                <p>
-                  Підтвердіть отримання <span>15:00</span>
-                </p>
-                <ServiceButton isActive>Платіж отримано</ServiceButton>
-              </div>
-            </div>
-          )}
         </div>
         {isLoading ? null : (
           <div
