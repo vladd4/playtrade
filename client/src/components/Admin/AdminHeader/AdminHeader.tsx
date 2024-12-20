@@ -1,17 +1,24 @@
-"use client";
+'use client';
 
-import { LogOut, Mail } from "lucide-react";
-import styles from "./AdminHeader.module.scss";
-import { jost } from "@/font";
-import { usePathname, useRouter } from "next/navigation";
-import useUserProfile from "@/hooks/useUserProfile";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { LogOut, Mail } from 'lucide-react';
+import { Tooltip } from 'react-tooltip';
 
-import { Tooltip } from "react-tooltip";
-import { useEffect } from "react";
-import { setUserRole } from "@/redux/slices/userSlice";
-import { adminLogout } from "@/http/authController";
-import { useAuth } from "@/context/AuthContext";
+import styles from './AdminHeader.module.scss';
+
+import { useEffect } from 'react';
+
+import { usePathname, useRouter } from 'next/navigation';
+
+import { setUserRole } from '@/redux/slices/userSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import useUserProfile from '@/hooks/useUserProfile';
+
+import { adminLogout } from '@/http/authController';
+
+import { useAuth } from '@/context/AuthContext';
+
+import { jost } from '@/font';
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -51,26 +58,26 @@ export default function AdminHeader() {
             <div
               data-tooltip-id="tooltip"
               data-tooltip-content="Чати користувачів"
-              onClick={() => handleLinkClick("/admin/messages")}
+              onClick={() => handleLinkClick('/admin/messages')}
               className={`${styles.buttons_item} ${
-                pathname.includes("admin/messages") ? styles.active : ""
+                pathname.includes('admin/messages') ? styles.active : ''
               }`}
             >
               <Mail size={25} />
             </div>
             <div
               style={{
-                backgroundColor: "#B0C4DE",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "#fff",
-                fontSize: "20px",
-                fontWeight: "bold",
+                backgroundColor: '#B0C4DE',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                fontSize: '20px',
+                fontWeight: 'bold',
               }}
               className={styles.avatar}
             >
-              <span>{data?.name ? data?.name[0]?.toUpperCase() : "U"}</span>
+              <span>{data?.name ? data?.name[0]?.toUpperCase() : 'U'}</span>
             </div>
             <div
               data-tooltip-id="tooltip"

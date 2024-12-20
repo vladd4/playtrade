@@ -1,4 +1,4 @@
-import ReviewForm from "@/components/ReviewForm/ReviewForm";
+import ReviewForm from '@/components/ReviewForm/ReviewForm';
 
 export default function Feedback({ searchParams }: any) {
   const productId = searchParams.productId;

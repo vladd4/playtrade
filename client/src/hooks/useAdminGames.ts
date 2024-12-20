@@ -1,9 +1,10 @@
-import { getGames } from "@/http/gameController";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+
+import { getGames } from '@/http/gameController';
 
 const useAdmingames = () => {
   return useQuery({
-    queryKey: ["all-games"],
+    queryKey: ['all-games'],
     queryFn: getGames,
   });
 };

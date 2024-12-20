@@ -1,14 +1,15 @@
-"use client";
+'use client';
 
-import styles from "./MyPurchases.module.scss";
+import styles from './MyPurchases.module.scss';
 
-import { mont } from "@/font";
+import SellerPurchaseCard from '@/components/SellerCard/SellerPurchaseCard';
 
-import withAuth from "@/utils/withAuth";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import usePurchases from '@/hooks/usePurchases';
 
-import usePurchases from "@/hooks/usePurchases";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import SellerPurchaseCard from "@/components/SellerCard/SellerPurchaseCard";
+import withAuth from '@/utils/withAuth';
+
+import { mont } from '@/font';
 
 function MyPurchasesPage() {
   const { userId } = useAppSelector((state) => state.user);

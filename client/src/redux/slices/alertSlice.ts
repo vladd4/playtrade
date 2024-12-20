@@ -1,53 +1,54 @@
-import { AdminProducts, Product } from "@/types/product.type";
-import { User } from "@/types/user.type";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+import { AdminProducts, Product } from '@/types/product.type';
+import { User } from '@/types/user.type';
 
 type AlertrSlice = {
   showChangeAlert: boolean;
-  changeAlertType: "password" | "name";
+  changeAlertType: 'password' | 'name';
   showCreateGameAlert: boolean;
-  createGameAlertType: "create" | "edit";
+  createGameAlertType: 'create' | 'edit';
   editGameAlertGameId: string | null;
   showEditGameTypesAlert: boolean;
-  editGameTypesAlertType: "region" | "server" | "platform";
+  editGameTypesAlertType: 'region' | 'server' | 'platform';
   showBanAlert: boolean;
   userToBanId: string | null;
   showEditUsersAdmin: boolean;
-  editUsersAdminType: "user" | "product" | "manager";
+  editUsersAdminType: 'user' | 'product' | 'manager';
   adminUserToEdit: User | null;
   adminAdvertToEdit: AdminProducts | null;
   showAdminUsersInfo: boolean;
-  adminUsersInfoType: "selectUser" | "currentUser";
+  adminUsersInfoType: 'selectUser' | 'currentUser';
   adminUsersInfoUsers: User[] | null;
 };
 
 const initialState: AlertrSlice = {
   showChangeAlert: false,
-  changeAlertType: "password",
+  changeAlertType: 'password',
   showCreateGameAlert: false,
-  editGameTypesAlertType: "platform",
+  editGameTypesAlertType: 'platform',
   showEditGameTypesAlert: false,
   showBanAlert: false,
   userToBanId: null,
   showEditUsersAdmin: false,
-  editUsersAdminType: "user",
+  editUsersAdminType: 'user',
   adminUserToEdit: null,
   adminAdvertToEdit: null,
-  createGameAlertType: "create",
+  createGameAlertType: 'create',
   editGameAlertGameId: null,
   showAdminUsersInfo: false,
-  adminUsersInfoType: "selectUser",
+  adminUsersInfoType: 'selectUser',
   adminUsersInfoUsers: null,
 };
 
 export const alertrSlice = createSlice({
-  name: "alert",
+  name: 'alert',
   initialState,
   reducers: {
     setShowChangeAlert: (state, action: PayloadAction<boolean>) => {
       state.showChangeAlert = action.payload;
     },
-    setChangeAlertType: (state, action: PayloadAction<"password" | "name">) => {
+    setChangeAlertType: (state, action: PayloadAction<'password' | 'name'>) => {
       state.changeAlertType = action.payload;
     },
     setShowCreateGameAlert: (state, action: PayloadAction<boolean>) => {
@@ -58,7 +59,7 @@ export const alertrSlice = createSlice({
     },
     setEditGameTypesAlertType: (
       state,
-      action: PayloadAction<"region" | "server" | "platform">
+      action: PayloadAction<'region' | 'server' | 'platform'>,
     ) => {
       state.editGameTypesAlertType = action.payload;
     },
@@ -73,7 +74,7 @@ export const alertrSlice = createSlice({
     },
     setEditUsersAdminType: (
       state,
-      action: PayloadAction<"user" | "product" | "manager">
+      action: PayloadAction<'user' | 'product' | 'manager'>,
     ) => {
       state.editUsersAdminType = action.payload;
     },
@@ -83,10 +84,7 @@ export const alertrSlice = createSlice({
     setAdminAdvertToEdit: (state, action: PayloadAction<AdminProducts>) => {
       state.adminAdvertToEdit = action.payload;
     },
-    setCreateGameAlertType: (
-      state,
-      action: PayloadAction<"create" | "edit">
-    ) => {
+    setCreateGameAlertType: (state, action: PayloadAction<'create' | 'edit'>) => {
       state.createGameAlertType = action.payload;
     },
     setEditGameId: (state, action: PayloadAction<string>) => {
@@ -97,7 +95,7 @@ export const alertrSlice = createSlice({
     },
     setAdminUsersInfoType: (
       state,
-      action: PayloadAction<"selectUser" | "currentUser">
+      action: PayloadAction<'selectUser' | 'currentUser'>,
     ) => {
       state.adminUsersInfoType = action.payload;
     },

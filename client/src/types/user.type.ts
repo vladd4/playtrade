@@ -1,5 +1,6 @@
-import { UserRoles } from "@/utils/constants";
-import { Transaction } from "./transaction.type";
+import { UserRoles } from '@/utils/constants';
+
+import { Transaction } from './transaction.type';
 
 export type User = {
   id: string;
@@ -49,7 +50,7 @@ export type Seller = {
   id: string;
 };
 
-export type BlockTime = "24h" | "7d" | "forever";
+export type BlockTime = '24h' | '7d' | 'forever';
 
 export type AdminUsersWithPagination = {
   users: UserWithPurchases[];

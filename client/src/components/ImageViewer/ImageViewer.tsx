@@ -1,33 +1,31 @@
-"use client";
+'use client';
 
-import { X } from "lucide-react";
-import styles from "./ImageViewer.module.scss";
-import Image, { ImageLoader, ImageLoaderProps } from "next/image";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowImageViewer } from "@/redux/slices/imageViewerSlice";
+import { X } from 'lucide-react';
+
+import styles from './ImageViewer.module.scss';
+
+import Image, { ImageLoader, ImageLoaderProps } from 'next/image';
+
+import { setShowImageViewer } from '@/redux/slices/imageViewerSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 
 interface ViewerProps {
   imageSrc: string;
   setCurrentImage: (arg: string) => void;
 }
 
-const contentfulImageLoader: ImageLoader = ({
-  src,
-  width,
-}: ImageLoaderProps) => {
+const contentfulImageLoader: ImageLoader = ({ src, width }: ImageLoaderProps) => {
   return `${src}?w=${width}`;
 };
 
-export default function ImageViewer({
-  imageSrc,
-  setCurrentImage,
-}: ViewerProps) {
+export default function ImageViewer({ imageSrc, setCurrentImage }: ViewerProps) {
   const { showImageViewer } = useAppSelector((state) => state.imageViewer);
 
   const dispatch = useAppDispatch();
 
   const handleCloseViewer = () => {
-    setCurrentImage("");
+    setCurrentImage('');
     dispatch(setShowImageViewer(false));
   };
 
@@ -35,7 +33,7 @@ export default function ImageViewer({
 
   return (
     <div
-      className={`${styles.root} ${showImageViewer ? styles.show : ""}`}
+      className={`${styles.root} ${showImageViewer ? styles.show : ''}`}
       onClick={handleCloseViewer}
     >
       <X

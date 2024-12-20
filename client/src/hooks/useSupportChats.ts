@@ -1,5 +1,6 @@
-import { getAllSupportChats } from "@/http/supportController";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+
+import { getAllSupportChats } from '@/http/supportController';
 
 const useSupportChats = ({ page }: { page: number }) => {
   return useQuery({

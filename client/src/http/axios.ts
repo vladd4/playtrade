@@ -1,14 +1,12 @@
-import axios, {
-  AxiosError,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from "axios";
-import { refreshClient } from "./sessioController";
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+
 import {
   getFromSessionStorage,
   removeFromSessionStorage,
   setToSessionStorage,
-} from "@/utils/sessionStorage_helper";
+} from '@/utils/sessionStorage_helper';
+
+import { refreshClient } from './sessioController';
 
 const publicAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_API_URL!,
@@ -21,13 +19,13 @@ const privateAxios = axios.create({
 });
 
 const handleRefreshError = () => {
-  removeFromSessionStorage("accessToken");
+  removeFromSessionStorage('accessToken');
 };
 
 const authInterceptor = (
-  config: InternalAxiosRequestConfig
+  config: InternalAxiosRequestConfig,
 ): InternalAxiosRequestConfig => {
-  const token = getFromSessionStorage("accessToken");
+  const token = getFromSessionStorage('accessToken');
 
   if (token) {
     config.headers = config.headers ?? {};
@@ -45,8 +43,8 @@ privateAxios.interceptors.response.use(
     };
 
     const isLoginRequest =
-      originalRequest.url?.includes("/auth-admin") ||
-      originalRequest.url?.includes("/auth-user");
+      originalRequest.url?.includes('/auth-admin') ||
+      originalRequest.url?.includes('/auth-user');
 
     if (
       error.response?.status === 401 &&
@@ -62,7 +60,7 @@ privateAxios.interceptors.response.use(
         if (data !== null) {
           const newAccessToken = data.access_token;
 
-          setToSessionStorage("accessToken", newAccessToken);
+          setToSessionStorage('accessToken', newAccessToken);
           originalRequest.headers = originalRequest.headers ?? {};
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
@@ -77,7 +75,7 @@ privateAxios.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 privateAxios.interceptors.request.use(authInterceptor);

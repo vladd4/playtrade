@@ -1,20 +1,21 @@
-"use client";
+'use client';
 
-import styles from "./AdminUsers.module.scss";
+import 'rc-pagination/assets/index.css';
+import Pagination from 'rc-pagination/lib/Pagination';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
-import AdminTable from "@/components/Admin/AdminTable/AdminTable";
-import SearchBar from "@/components/Admin/SearchBar/SearchBar";
-import useAllUsers from "@/hooks/useAllUsers";
-import { ITEMS_PER_PAGE_COUNT } from "@/utils/constants";
+import styles from './AdminUsers.module.scss';
 
-import Pagination from "rc-pagination/lib/Pagination";
+import AdminBanAlert from '@/components/Admin/AdminBanAlert/AdminBanAlert';
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import AdminTable from '@/components/Admin/AdminTable/AdminTable';
+import SearchBar from '@/components/Admin/SearchBar/SearchBar';
 
-import "rc-pagination/assets/index.css";
-import AdminBanAlert from "@/components/Admin/AdminBanAlert/AdminBanAlert";
-import usePagination from "@/hooks/usePagination";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import withManagerAuth from "@/utils/withManagerAuth";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useAllUsers from '@/hooks/useAllUsers';
+import usePagination from '@/hooks/usePagination';
+
+import { ITEMS_PER_PAGE_COUNT } from '@/utils/constants';
+import withManagerAuth from '@/utils/withManagerAuth';
 
 function AdminUsersPage() {
   const { page, handlePageChange } = usePagination();
@@ -33,16 +34,10 @@ function AdminUsersPage() {
         {filteredUsers !== null ? (
           filteredUsers.length > 0 ? (
             <article className={styles.table_block}>
-              <AdminTable
-                type="users"
-                usersTableData={filteredUsers}
-                page={page}
-              />
+              <AdminTable type="users" usersTableData={filteredUsers} page={page} />
             </article>
           ) : (
-            <p className={styles.no_data}>
-              За вашим пошуком нічого не знайдено.
-            </p>
+            <p className={styles.no_data}>За вашим пошуком нічого не знайдено.</p>
           )
         ) : isLoading ? null : data && data.users && data.users.length > 0 ? (
           <article className={styles.table_block}>

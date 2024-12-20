@@ -1,19 +1,23 @@
-import { jost } from "@/font";
-import styles from "./CreateForms.module.scss";
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowEditGameTypesAlert } from "@/redux/slices/alertSlice";
-import {
-  addGamePlatform,
-  addGameRegion,
-  addGameServer,
-} from "@/http/gameController";
-import { TOAST_DURATION } from "@/utils/constants";
-import { useQueryClient } from "@tanstack/react-query";
-import { Game } from "@/types/game.type";
+import styles from './CreateForms.module.scss';
+
+import { Game } from '@/types/game.type';
+
+import React, { useEffect, useState } from 'react';
+
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import { setShowEditGameTypesAlert } from '@/redux/slices/alertSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+
+import { TOAST_DURATION } from '@/utils/constants';
+
+import { addGamePlatform, addGameRegion, addGameServer } from '@/http/gameController';
+
+import { jost } from '@/font';
 
 interface PlatformProps {
   games: Game[];
@@ -21,31 +25,29 @@ interface PlatformProps {
 
 export default function CreatePlatformForm({ games }: PlatformProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [selectedGame, setSelectedGame] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [selectedGame, setSelectedGame] = useState('');
 
-  const [gameOptions, setGameOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
+  const [gameOptions, setGameOptions] = useState<{ label: string; value: string }[]>([]);
 
   const dispatch = useAppDispatch();
   const { showEditGameTypesAlert, editGameTypesAlertType } = useAppSelector(
-    (state) => state.alert
+    (state) => state.alert,
   );
 
   const queryClient = useQueryClient();
 
   const label =
-    editGameTypesAlertType === "platform"
-      ? "платформу"
-      : editGameTypesAlertType === "region"
-      ? "регіон"
-      : "сервер";
+    editGameTypesAlertType === 'platform'
+      ? 'платформу'
+      : editGameTypesAlertType === 'region'
+        ? 'регіон'
+        : 'сервер';
 
   const handleCloseAlert = () => {
     dispatch(setShowEditGameTypesAlert(false));
-    setInputValue("");
-    setSelectedGame("");
+    setInputValue('');
+    setSelectedGame('');
   };
 
   const handleSubmitForm = async (e: React.FormEvent) => {
@@ -55,28 +57,28 @@ export default function CreatePlatformForm({ games }: PlatformProps) {
       setIsLoading(true);
 
       const createController =
-        editGameTypesAlertType === "platform"
+        editGameTypesAlertType === 'platform'
           ? addGamePlatform
-          : editGameTypesAlertType === "server"
-          ? addGameServer
-          : addGameRegion;
+          : editGameTypesAlertType === 'server'
+            ? addGameServer
+            : addGameRegion;
 
-      if (selectedGame !== "" && inputValue !== "") {
+      if (selectedGame !== '' && inputValue !== '') {
         const result = await createController(selectedGame, [
           inputValue.toUpperCase().trim(),
         ]);
 
         if (result) {
-          toast.success("Успішно додано!");
+          toast.success('Успішно додано!');
           queryClient.invalidateQueries({ queryKey: [`all-games`] });
           setTimeout(() => {
             handleCloseAlert();
           }, TOAST_DURATION);
         } else {
-          toast.error("Щось пішло не так. Спробуйте пізніше!");
+          toast.error('Щось пішло не так. Спробуйте пізніше!');
         }
       } else {
-        toast.error("Заповніть всі неохідні поля!");
+        toast.error('Заповніть всі неохідні поля!');
       }
     } catch (error) {
     } finally {
@@ -99,7 +101,7 @@ export default function CreatePlatformForm({ games }: PlatformProps) {
     <>
       <section
         className={`${styles.edit_root} ${jost.className} ${
-          showEditGameTypesAlert ? styles.show_form : ""
+          showEditGameTypesAlert ? styles.show_form : ''
         }`}
       >
         <article className={styles.edit_wrapper}>
@@ -136,16 +138,14 @@ export default function CreatePlatformForm({ games }: PlatformProps) {
               type="submit"
               disabled={isLoading}
             >
-              {isLoading ? "Завантаження..." : "Додати"}
+              {isLoading ? 'Завантаження...' : 'Додати'}
             </ServiceButton>
           </form>
         </article>
       </section>
       <div
         onClick={handleCloseAlert}
-        className={`${styles.overlay} ${
-          showEditGameTypesAlert ? styles.show_form : ""
-        }`}
+        className={`${styles.overlay} ${showEditGameTypesAlert ? styles.show_form : ''}`}
       />
     </>
   );

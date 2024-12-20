@@ -1,19 +1,24 @@
-"use client";
+'use client';
 
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import styles from "./Admin.module.scss";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from 'lucide-react';
 
-import { useState } from "react";
-import { jost } from "@/font";
-import Logo from "@/components/Logo/Logo";
-import withAdminGuest from "@/utils/withAdminGuest";
-import useAdminLogin from "@/hooks/useAdminLogin";
+import styles from './Admin.module.scss';
+
+import { useState } from 'react';
+
+import Logo from '@/components/Logo/Logo';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import useAdminLogin from '@/hooks/useAdminLogin';
+
+import withAdminGuest from '@/utils/withAdminGuest';
+
+import { jost } from '@/font';
 
 function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
 
   const { isLoading, handleAdminLogin } = useAdminLogin({
     email: login,
@@ -38,7 +43,7 @@ function AdminLogin() {
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Пароль"
             />
             {showPassword ? (
@@ -58,7 +63,7 @@ function AdminLogin() {
             )}
           </div>
           <ServiceButton disabled={isLoading} type="submit">
-            {isLoading ? "Завантаження..." : "Увійти"}
+            {isLoading ? 'Завантаження...' : 'Увійти'}
           </ServiceButton>
         </form>
       </article>

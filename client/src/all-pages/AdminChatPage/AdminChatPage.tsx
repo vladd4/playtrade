@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import AdminChat from "@/components/Admin/AdminChat/AdminChat";
-import styles from "./AdminChat.module.scss";
+import styles from './AdminChat.module.scss';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
+import AdminChat from '@/components/Admin/AdminChat/AdminChat';
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
 
-import withManagerAuth from "@/utils/withManagerAuth";
+import withManagerAuth from '@/utils/withManagerAuth';
 
 function AdminChatPage() {
   return (

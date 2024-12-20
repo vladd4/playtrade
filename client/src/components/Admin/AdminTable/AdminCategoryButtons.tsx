@@ -1,20 +1,24 @@
-"use client";
+'use client';
 
-import { jost } from "@/font";
-import styles from "./AdminTable.module.scss";
-import React from "react";
-import { useAppDispatch } from "@/hooks/redux-hooks";
+import styles from './AdminTable.module.scss';
+
+import React from 'react';
+
 import {
   setCreateGameAlertType,
   setEditGameTypesAlertType,
   setShowCreateGameAlert,
   setShowEditGameTypesAlert,
-} from "@/redux/slices/alertSlice";
+} from '@/redux/slices/alertSlice';
+
+import { useAppDispatch } from '@/hooks/redux-hooks';
+
+import { jost } from '@/font';
 
 export default function AdminCategoryButtons() {
   const dispatch = useAppDispatch();
 
-  const handleOpenTypesAlert = (type: "platform" | "region" | "server") => {
+  const handleOpenTypesAlert = (type: 'platform' | 'region' | 'server') => {
     dispatch(setEditGameTypesAlertType(type));
     dispatch(setShowEditGameTypesAlert(true));
   };
@@ -24,20 +28,14 @@ export default function AdminCategoryButtons() {
       <button
         onClick={() => {
           dispatch(setShowCreateGameAlert(true));
-          dispatch(setCreateGameAlertType("create"));
+          dispatch(setCreateGameAlertType('create'));
         }}
       >
         Додати гру
       </button>
-      <button onClick={() => handleOpenTypesAlert("region")}>
-        Додати регіон
-      </button>
-      <button onClick={() => handleOpenTypesAlert("server")}>
-        Додати сервер
-      </button>
-      <button onClick={() => handleOpenTypesAlert("platform")}>
-        Додати платформу
-      </button>
+      <button onClick={() => handleOpenTypesAlert('region')}>Додати регіон</button>
+      <button onClick={() => handleOpenTypesAlert('server')}>Додати сервер</button>
+      <button onClick={() => handleOpenTypesAlert('platform')}>Додати платформу</button>
     </div>
   );
 }

@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import styles from "./AdminAdvert.module.scss";
+import Pagination from 'rc-pagination';
+import 'rc-pagination/assets/index.css';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
-import AdminTable from "@/components/Admin/AdminTable/AdminTable";
-import SearchBar from "@/components/Admin/SearchBar/SearchBar";
-import useAdminProducts from "@/hooks/useAdminProducts";
+import styles from './AdminAdvert.module.scss';
 
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
-import { ITEMS_PER_PAGE_COUNT } from "@/utils/constants";
-import usePagination from "@/hooks/usePagination";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import withManagerAuth from "@/utils/withManagerAuth";
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import AdminTable from '@/components/Admin/AdminTable/AdminTable';
+import SearchBar from '@/components/Admin/SearchBar/SearchBar';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useAdminProducts from '@/hooks/useAdminProducts';
+import usePagination from '@/hooks/usePagination';
+
+import { ITEMS_PER_PAGE_COUNT } from '@/utils/constants';
+import withManagerAuth from '@/utils/withManagerAuth';
 
 function AdminAdvertPage() {
   const { page, handlePageChange } = usePagination();
 
   const { data, isLoading } = useAdminProducts(page);
 
-  const { filteredProducts } = useAppSelector(
-    (state) => state.filteredAdminItems
-  );
+  const { filteredProducts } = useAppSelector((state) => state.filteredAdminItems);
 
   return (
     <section className={styles.root}>
@@ -41,15 +41,9 @@ function AdminAdvertPage() {
         ) : (
           <p className={styles.no_data}>За вашим пошуком нічого не знайдено.</p>
         )
-      ) : isLoading ? null : data &&
-        data.products &&
-        data.products.length > 0 ? (
+      ) : isLoading ? null : data && data.products && data.products.length > 0 ? (
         <article className={styles.table_block}>
-          <AdminTable
-            type="advertisement"
-            advertTableData={data.products}
-            page={page}
-          />
+          <AdminTable type="advertisement" advertTableData={data.products} page={page} />
           {data.totalProducts <= ITEMS_PER_PAGE_COUNT ? null : (
             <Pagination
               current={page}

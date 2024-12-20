@@ -1,5 +1,5 @@
-import imageCompression from "browser-image-compression";
-import { EImageType, compress } from "image-conversion";
+import imageCompression from 'browser-image-compression';
+import { EImageType, compress } from 'image-conversion';
 
 export const compressAndConvert = async (file: File) => {
   if (file) {
@@ -16,12 +16,12 @@ export const compressAndConvert = async (file: File) => {
         quality: 0.9,
         type: EImageType.JPEG,
       });
-      const newFileName = `${compressedFile.name.split(".")[0]}.jpg`;
-      const jpgFile = new File([jpgBlob], newFileName, { type: "image/jpeg" });
+      const newFileName = `${compressedFile.name.split('.')[0]}.jpg`;
+      const jpgFile = new File([jpgBlob], newFileName, { type: 'image/jpeg' });
 
       return jpgFile;
     } catch (error) {
-      console.error("Error compressing or converting image:", error);
+      console.error('Error compressing or converting image:', error);
     }
   }
 };

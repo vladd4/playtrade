@@ -1,28 +1,32 @@
-"use client";
+'use client';
 
-import { Search } from "lucide-react";
-import styles from "./SearchBar.module.scss";
-import { mont } from "@/font";
-import { useEffect, useState } from "react";
-import useSearchDebounce from "@/hooks/useSearchDebounce";
-import { searchGameByName } from "@/utils/searchGamesByName";
-import { Game } from "@/types/game.type";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { Search } from 'lucide-react';
+
+import styles from './SearchBar.module.scss';
+
+import { Game } from '@/types/game.type';
+
+import { useEffect, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import useSearchDebounce from '@/hooks/useSearchDebounce';
+
+import { searchGameByName } from '@/utils/searchGamesByName';
+
+import { mont } from '@/font';
 
 interface SearchProps {
   games: Record<string, Game[]>;
 }
 
 export default function SearchBar({ games }: SearchProps) {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useAppDispatch();
 
   const { searchedValue } = useAppSelector((state) => state.filteredGames);
 
-  useSearchDebounce(searchValue, () =>
-    searchGameByName(searchValue, games, dispatch)
-  );
+  useSearchDebounce(searchValue, () => searchGameByName(searchValue, games, dispatch));
 
   useEffect(() => {
     setSearchValue(searchedValue);

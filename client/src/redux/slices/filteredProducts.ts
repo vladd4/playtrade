@@ -1,5 +1,6 @@
-import { MiniProduct } from "@/types/product.type";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+import { MiniProduct } from '@/types/product.type';
 
 type FilteredProducts = {
   filteredProducts: {
@@ -16,7 +17,7 @@ const initialState: FilteredProducts = {
 };
 
 export const filteredProductsSlice = createSlice({
-  name: "filteredProducts",
+  name: 'filteredProducts',
   initialState,
   reducers: {
     setFilteredProducts: (
@@ -25,7 +26,7 @@ export const filteredProductsSlice = createSlice({
         products: MiniProduct[];
         totalPages: number;
         currentPage: number;
-      } | null>
+      } | null>,
     ) => {
       state.filteredProducts = action.payload;
     },
@@ -35,6 +36,5 @@ export const filteredProductsSlice = createSlice({
   },
 });
 
-export const { setFilteredProducts, setFiltersCount } =
-  filteredProductsSlice.actions;
+export const { setFilteredProducts, setFiltersCount } = filteredProductsSlice.actions;
 export default filteredProductsSlice.reducer;

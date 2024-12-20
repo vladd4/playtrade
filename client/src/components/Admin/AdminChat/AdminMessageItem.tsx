@@ -1,6 +1,8 @@
-import { User } from "@/types/user.type";
-import styles from "./AdminChat.module.scss";
-import { parseAndFormatDate } from "@/utils/formatTimestamp";
+import styles from './AdminChat.module.scss';
+
+import { User } from '@/types/user.type';
+
+import { parseAndFormatDate } from '@/utils/formatTimestamp';
 
 interface CommentProps {
   comment: { id: string; author: User; comment: string; createdAt: string };

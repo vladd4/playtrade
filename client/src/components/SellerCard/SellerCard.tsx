@@ -1,17 +1,23 @@
-"use client";
+'use client';
 
-import styles from "./SellerCard.module.scss";
-import ServiceButton from "../ServiceButtons/ServiceButton";
+import StarRating from '../GameCards/StarRating';
+import ServiceButton from '../ServiceButtons/ServiceButton';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import { jost, mont } from "@/font";
-import { useRouter } from "next/navigation";
-import StarRating from "../GameCards/StarRating";
-import { MiniProduct } from "@/types/product.type";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import { setSeller } from "@/redux/slices/sellerSlice";
-import { setToSessionStorage } from "@/utils/sessionStorage_helper";
-import { formatImageFromServer } from "@/utils/formatImageName";
+import styles from './SellerCard.module.scss';
+
+import { MiniProduct } from '@/types/product.type';
+
+import { useRouter } from 'next/navigation';
+
+import { setSeller } from '@/redux/slices/sellerSlice';
+
+import { useAppDispatch } from '@/hooks/redux-hooks';
+
+import { formatImageFromServer } from '@/utils/formatImageName';
+import { setToSessionStorage } from '@/utils/sessionStorage_helper';
+
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost, mont } from '@/font';
 
 type SellerCardProps = {
   isNotification?: boolean;
@@ -36,12 +42,12 @@ export default function SellerCard({
       rating: product?.rating!,
     };
     setToSessionStorage(
-      "seller",
+      'seller',
       JSON.stringify({
         name: product?.seller!,
         imageUrl: product?.imageUrl!,
         rating: product?.rating!,
-      })
+      }),
     );
 
     dispatch(setSeller(sellerData));
@@ -49,26 +55,22 @@ export default function SellerCard({
 
   return (
     <div className={styles.root}>
-      {isNotification && isActiveNotification && (
-        <div className={styles.notification} />
-      )}
+      {isNotification && isActiveNotification && <div className={styles.notification} />}
       <div className={`${styles.top_block} ${jost.className}`}>
         <div className={styles.seller_info}>
           <div
             style={{
-              backgroundColor: "#B0C4DE",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#fff",
-              fontSize: "12px",
-              fontWeight: "bold",
+              backgroundColor: '#B0C4DE',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#fff',
+              fontSize: '12px',
+              fontWeight: 'bold',
             }}
             className={styles.avatar_div}
           >
-            <span>
-              {product?.seller ? product?.seller[0]?.toUpperCase() : "U"}
-            </span>
+            <span>{product?.seller ? product?.seller[0]?.toUpperCase() : 'U'}</span>
           </div>
           <h1>Продавець {product?.seller}</h1>
           <StarRating
@@ -81,9 +83,7 @@ export default function SellerCard({
       <p className={`${styles.platform} ${jost.className}`}>
         Платформа : {product?.platform}
       </p>
-      <p className={`${styles.platform} ${jost.className}`}>
-        Сервер : {product?.server}
-      </p>
+      <p className={`${styles.platform} ${jost.className}`}>Сервер : {product?.server}</p>
       <p className={jost.className}>{product?.description}</p>
       <div className={styles.bottom_block}>
         <h1 className={`${styles.price} ${mont.className}`}>
@@ -91,11 +91,7 @@ export default function SellerCard({
           <br /> {product?.price} $
         </h1>
 
-        <ServiceButton
-          className={styles.more_btn}
-          isActive
-          onClick={handleMoreClick}
-        >
+        <ServiceButton className={styles.more_btn} isActive onClick={handleMoreClick}>
           Дивитись більше
         </ServiceButton>
       </div>

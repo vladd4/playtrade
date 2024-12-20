@@ -1,19 +1,28 @@
-"use client";
+'use client';
 
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import styles from "./AdminBanAlert.module.scss";
-import { BLOCK_OPTIONS } from "@/utils/constants";
-import { useState } from "react";
-import { BlockTime } from "@/types/user.type";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowBanAlert } from "@/redux/slices/alertSlice";
-import { banUser } from "@/http/userController";
-import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
-import { jost } from "@/font";
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
+import styles from './AdminBanAlert.module.scss';
+
+import { BlockTime } from '@/types/user.type';
+
+import { useState } from 'react';
+
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import { setShowBanAlert } from '@/redux/slices/alertSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+
+import { BLOCK_OPTIONS } from '@/utils/constants';
+
+import { banUser } from '@/http/userController';
+
+import { jost } from '@/font';
 
 export default function AdminBanAlert() {
-  const [optionValue, setOptionValue] = useState<BlockTime>("24h");
+  const [optionValue, setOptionValue] = useState<BlockTime>('24h');
 
   const { showBanAlert, userToBanId } = useAppSelector((state) => state.alert);
 
@@ -27,7 +36,7 @@ export default function AdminBanAlert() {
 
   const handleCloseAlert = () => {
     dispatch(setShowBanAlert(false));
-    setOptionValue("24h");
+    setOptionValue('24h');
   };
 
   const handleBanUser = async (e: React.FormEvent) => {
@@ -36,14 +45,10 @@ export default function AdminBanAlert() {
       const result = await banUser(userToBanId, optionValue);
 
       if (result) {
-        toast.success(
-          `Користувач ${userToBanId} був заблокований на ${optionValue}.`
-        );
+        toast.success(`Користувач ${userToBanId} був заблокований на ${optionValue}.`);
         queryClient.invalidateQueries({ queryKey: [`all-users`] });
       } else {
-        toast.error(
-          `Користувач ${userToBanId} не був заблокований. Спробуйте пізніше!`
-        );
+        toast.error(`Користувач ${userToBanId} не був заблокований. Спробуйте пізніше!`);
       }
       handleCloseAlert();
     }
@@ -52,7 +57,7 @@ export default function AdminBanAlert() {
   return (
     <>
       <section
-        className={`${styles.root} ${showBanAlert ? styles.show_form : ""} ${
+        className={`${styles.root} ${showBanAlert ? styles.show_form : ''} ${
           jost.className
         }`}
       >
@@ -64,7 +69,7 @@ export default function AdminBanAlert() {
                 <ServiceButton
                   key={option.value}
                   onClick={() => handleOptionChange(option.value as BlockTime)}
-                  className={optionValue === option.value ? styles.active : ""}
+                  className={optionValue === option.value ? styles.active : ''}
                   type="button"
                 >
                   {option.label}
@@ -79,7 +84,7 @@ export default function AdminBanAlert() {
       </section>
       <div
         onClick={handleCloseAlert}
-        className={`${styles.overlay} ${showBanAlert ? styles.show_form : ""}`}
+        className={`${styles.overlay} ${showBanAlert ? styles.show_form : ''}`}
       />
     </>
   );

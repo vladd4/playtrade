@@ -1,29 +1,35 @@
-"use client";
+'use client';
 
-import { mont } from "@/font";
-import styles from "./SearchBar.module.scss";
-import { Search } from "lucide-react";
-import { useState } from "react";
-import { searchProductsByName } from "@/http/productController";
-import { searchUsersByName } from "@/http/userController";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import useSearchDebounce from "@/hooks/useSearchDebounce";
+import { Search } from 'lucide-react';
+
+import styles from './SearchBar.module.scss';
+
+import { useState } from 'react';
+
 import {
   setFilteredChat,
+  setFilteredGames,
   setFilteredProducts,
   setFilteredUsers,
-  setFilteredGames,
-} from "@/redux/slices/filteredAdminItems";
-import { searchChatByChatId } from "@/http/chatController";
-import { searchGamesByName } from "@/http/gameController";
+} from '@/redux/slices/filteredAdminItems';
+
+import { useAppDispatch } from '@/hooks/redux-hooks';
+import useSearchDebounce from '@/hooks/useSearchDebounce';
+
+import { searchChatByChatId } from '@/http/chatController';
+import { searchGamesByName } from '@/http/gameController';
+import { searchProductsByName } from '@/http/productController';
+import { searchUsersByName } from '@/http/userController';
+
+import { mont } from '@/font';
 
 interface SearchBarProps {
   placeholder?: string;
-  type: "users" | "products" | "chats" | "games";
+  type: 'users' | 'products' | 'chats' | 'games';
 }
 
 export default function SearchBar({ placeholder, type }: SearchBarProps) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -57,13 +63,13 @@ export default function SearchBar({ placeholder, type }: SearchBarProps) {
   };
 
   const searchContoller =
-    type === "products"
+    type === 'products'
       ? searchProducts
-      : type === "users"
-      ? searchUsers
-      : type === "chats"
-      ? searchChat
-      : searchGames;
+      : type === 'users'
+        ? searchUsers
+        : type === 'chats'
+          ? searchChat
+          : searchGames;
 
   useSearchDebounce(value, searchContoller);
 

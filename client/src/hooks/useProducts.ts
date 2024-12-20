@@ -1,6 +1,8 @@
-import { getProductsByGameId } from "@/http/productController";
-import { ProductType } from "@/utils/constants";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+import { ProductType } from '@/utils/constants';
+
+import { getProductsByGameId } from '@/http/productController';
 
 interface useProductsProps {
   gameId: string;

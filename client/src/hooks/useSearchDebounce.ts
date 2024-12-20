@@ -1,12 +1,14 @@
-import { useEffect } from "react";
-import { useAppDispatch } from "./redux-hooks";
+import { useEffect } from 'react';
+
 import {
+  setFilteredGames as setFilteredAdminGames,
   setFilteredChat,
   setFilteredProducts,
   setFilteredUsers,
-  setFilteredGames as setFilteredAdminGames,
-} from "@/redux/slices/filteredAdminItems";
-import { setFilteredGames } from "@/redux/slices/filteredGames";
+} from '@/redux/slices/filteredAdminItems';
+import { setFilteredGames } from '@/redux/slices/filteredGames';
+
+import { useAppDispatch } from './redux-hooks';
 
 const useSearchDebounce = (searchValue: string, getData: () => void) => {
   const dispatch = useAppDispatch();

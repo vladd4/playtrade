@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import styles from "./AdminMainPage.module.scss";
+import styles from './AdminMainPage.module.scss';
 
-import Notifications from "@/components/Admin/Notifications/Notifications";
-import InfoCard from "@/components/Admin/InfoCard/InfoCard";
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import InfoCard from '@/components/Admin/InfoCard/InfoCard';
+import Notifications from '@/components/Admin/Notifications/Notifications';
 
-import withAdminAuth from "@/utils/withAdminAuth";
+import withAdminAuth from '@/utils/withAdminAuth';
 
 function AdminMainPage() {
   return (

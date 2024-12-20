@@ -1,23 +1,21 @@
-"use client";
+'use client';
 
-import styles from "./MainPage.module.scss";
+import styles from './MainPage.module.scss';
 
-import Logo from "@/components/Logo/Logo";
-import SearchBar from "@/components/SearchBar/SearchBar";
-import Alphabet from "@/components/AlphabetScroll/Alphabet";
-import GameCardBlock from "@/components/GameCards/GameCardBlock";
+import Alphabet from '@/components/AlphabetScroll/Alphabet';
+import GameCardBlock from '@/components/GameCards/GameCardBlock';
+import Logo from '@/components/Logo/Logo';
+import SearchBar from '@/components/SearchBar/SearchBar';
 
-import withAuth from "@/utils/withAuth";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useGames from '@/hooks/useGames';
 
-import useGames from "@/hooks/useGames";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import withAuth from '@/utils/withAuth';
 
 function MainPage() {
   const { data, isLoading } = useGames();
 
-  const { filteredGames, searchedValue } = useAppSelector(
-    (state) => state.filteredGames
-  );
+  const { filteredGames, searchedValue } = useAppSelector((state) => state.filteredGames);
 
   return (
     <div className={styles.root}>
@@ -30,11 +28,7 @@ function MainPage() {
         {isLoading ? null : filteredGames === null ? (
           data ? (
             Object.keys(data).map((letter) => (
-              <GameCardBlock
-                key={letter}
-                letter={letter}
-                cards={data[letter]}
-              />
+              <GameCardBlock key={letter} letter={letter} cards={data[letter]} />
             ))
           ) : (
             <p className={styles.no_games}>Ігри скоро з'являться, очікуйте!</p>
@@ -42,9 +36,7 @@ function MainPage() {
         ) : filteredGames.length > 0 ? (
           <GameCardBlock letter={searchedValue} cards={filteredGames} />
         ) : (
-          <p className={styles.no_games}>
-            За вашим пошуком нічого не знайдено!
-          </p>
+          <p className={styles.no_games}>За вашим пошуком нічого не знайдено!</p>
         )}
       </div>
     </div>

@@ -1,18 +1,23 @@
-"use client";
+'use client';
 
-import styles from "./Admin.module.scss";
-import { useState } from "react";
+import styles from './Admin.module.scss';
 
-import { jost } from "@/font";
-import Logo from "@/components/Logo/Logo";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import withAdminGuest from "@/utils/withAdminGuest";
-import useAdminLogin from "@/hooks/useAdminLogin";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import Logo from '@/components/Logo/Logo';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useAdminLogin from '@/hooks/useAdminLogin';
+
+import withAdminGuest from '@/utils/withAdminGuest';
+
+import { jost } from '@/font';
 
 function AdminVerifyOtp() {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
 
   const router = useRouter();
 
@@ -23,7 +28,7 @@ function AdminVerifyOtp() {
   });
 
   if (!adminOtpId) {
-    router.push("/admin-login");
+    router.push('/admin-login');
   }
 
   return (
@@ -41,7 +46,7 @@ function AdminVerifyOtp() {
             />
           </div>
           <ServiceButton disabled={isLoading} type="submit">
-            {isLoading ? "Завантаження..." : "Увійти"}
+            {isLoading ? 'Завантаження...' : 'Увійти'}
           </ServiceButton>
         </form>
       </article>

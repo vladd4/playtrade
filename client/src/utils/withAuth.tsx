@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import LoaderComponent from "@/components/LoaderComponent/LoaderComponent";
+import { useRouter } from 'next/navigation';
 
-const withAuth = <P extends object>(
-  WrappedComponent: React.ComponentType<P>
-) => {
+import LoaderComponent from '@/components/LoaderComponent/LoaderComponent';
+
+import { useAuth } from '@/context/AuthContext';
+
+const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const AuthHOC = (props: P) => {
     const { isUserAuthenticated, loading } = useAuth();
 
@@ -16,7 +16,7 @@ const withAuth = <P extends object>(
 
     useEffect(() => {
       if (!loading && !isUserAuthenticated) {
-        router.push("/login");
+        router.push('/login');
       }
     }, [isUserAuthenticated, loading, router]);
 

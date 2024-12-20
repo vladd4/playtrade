@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import styles from "./Profile.module.scss";
+import styles from './Profile.module.scss';
+
+import { useRouter } from 'next/navigation';
 
 type ProfileButtonProps = {
   label: string;
@@ -9,11 +10,7 @@ type ProfileButtonProps = {
   href: string;
 };
 
-export default function ProfileButton({
-  label,
-  icon,
-  href,
-}: ProfileButtonProps) {
+export default function ProfileButton({ label, icon, href }: ProfileButtonProps) {
   const router = useRouter();
   return (
     <div onClick={() => router.push(href)} className={styles.btn_root}>

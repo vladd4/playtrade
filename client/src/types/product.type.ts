@@ -1,7 +1,8 @@
-import { ProductType } from "@/utils/constants";
-import { Review } from "./review.type";
-import { User } from "./user.type";
-import { Game } from "./game.type";
+import { ProductType } from '@/utils/constants';
+
+import { Game } from './game.type';
+import { Review } from './review.type';
+import { User } from './user.type';
 
 export type Product = {
   id: string;
@@ -52,7 +53,7 @@ export type AdminProductsWithPagination = {
 
 export type ChatProduct = Omit<
   Product,
-  "gameId" | "latestReviews" | "ownerId" | "reviewsCount"
+  'gameId' | 'latestReviews' | 'ownerId' | 'reviewsCount'
 >;
 
 export type MiniProduct = {
@@ -74,7 +75,7 @@ export type AllMiniProducts = {
 
 export type NewProduct = Omit<
   Product,
-  "id" | "inProcess" | "latestReviews" | "reviewsCount" | "imageUrls"
+  'id' | 'inProcess' | 'latestReviews' | 'reviewsCount' | 'imageUrls'
 > & {
   images: [];
 };

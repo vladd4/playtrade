@@ -1,30 +1,24 @@
-"use client";
+'use client';
 
-import LoaderComponent from "@/components/LoaderComponent/LoaderComponent";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import useTelegramWebApp from "@/hooks/useTelegramWebApp";
-import { refreshAdmin, refreshUser } from "@/http/authController";
-import { loginClient } from "@/http/sessioController";
-import {
-  setAdminId,
-  setUser,
-  setUserId,
-  setUserRole,
-} from "@/redux/slices/userSlice";
-import { UserRoles } from "@/utils/constants";
+import { ReactNode, createContext, useContext, useEffect, useRef, useState } from 'react';
+
+import { usePathname } from 'next/navigation';
+
+import LoaderComponent from '@/components/LoaderComponent/LoaderComponent';
+
+import { setAdminId, setUser, setUserId, setUserRole } from '@/redux/slices/userSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import useTelegramWebApp from '@/hooks/useTelegramWebApp';
+
+import { UserRoles } from '@/utils/constants';
 import {
   getFromSessionStorage,
   setToSessionStorage,
-} from "@/utils/sessionStorage_helper";
-import { usePathname } from "next/navigation";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-  useRef,
-} from "react";
+} from '@/utils/sessionStorage_helper';
+
+import { refreshAdmin, refreshUser } from '@/http/authController';
+import { loginClient } from '@/http/sessioController';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -45,24 +39,22 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(
-    getFromSessionStorage("accessToken")
+    getFromSessionStorage('accessToken'),
   );
   const [accessUserToken, setAccessUserToken] = useState<string | null>(null);
   const [adminToken, setAdminToken] = useState<string | null>(null);
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isUserBanned, setIsUserBanned] = useState<boolean>(false);
-  const [isUserAuthenticated, setIsUserAuthenticated] =
-    useState<boolean>(false);
-  const [isAdminAuthenticated, setIsAdminAuthenticated] =
-    useState<boolean>(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState<boolean>(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
@@ -94,25 +86,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    const isAdminPath = pathName.includes("admin");
+    const isAdminPath = pathName.includes('admin');
 
     const initAdminAuth = async () => {
       try {
         const data = await refreshAdmin();
-        if (
-          data &&
-          data.message === "Сесія продовжена" &&
-          data.role !== UserRoles.USER
-        ) {
+        if (data && data.message === 'Сесія продовжена' && data.role !== UserRoles.USER) {
           setIsAdminAuthenticated(true);
           dispatch(setAdminId(data.userId));
           dispatch(setUserRole(data.role));
           setAdminAccessToken(data.userId);
 
-          console.log("Admin authenticated successfully");
+          console.log('Admin authenticated successfully');
         }
       } catch (error) {
-        console.log("Failed to refresh admin token:", error);
+        console.log('Failed to refresh admin token:', error);
       } finally {
         setLoading(false);
       }
@@ -124,7 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    const isAdminPath = pathName.includes("admin");
+    const isAdminPath = pathName.includes('admin');
 
     if (!initialized.current && tg) {
       initialized.current = true;
@@ -133,15 +121,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
           if (!isUserBanned) {
             const data = await refreshUser();
-            if (data && data.message === "Сесія подовжена") {
+            if (data && data.message === 'Сесія подовжена') {
               dispatch(setUserId(data.userId));
               setAccessUserToken(data.userId);
               setIsUserAuthenticated(true);
-              console.log("User authenticated successfully");
+              console.log('User authenticated successfully');
             }
           }
         } catch (error) {
-          console.log("Failed to refresh user token:", error);
+          console.log('Failed to refresh user token:', error);
         } finally {
           setLoading(false);
         }
@@ -174,7 +162,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [loading, adminToken]);
 
   const setClientAccessToken = (token: string) => {
-    setToSessionStorage("accessToken", token);
+    setToSessionStorage('accessToken', token);
     setAccessToken(token);
     setIsAuthenticated(!!token);
   };

@@ -3,14 +3,14 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "api.telegram.org",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'api.telegram.org',
+        pathname: '/**',
       },
       {
-        protocol: "http",
-        hostname: "localhost",
-        pathname: "/**",
+        protocol: 'http',
+        hostname: 'localhost',
+        pathname: '/**',
       },
     ],
   },

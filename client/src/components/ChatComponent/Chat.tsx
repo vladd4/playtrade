@@ -1,23 +1,30 @@
-"use client";
+'use client';
 
-import styles from "./Chat.module.scss";
-import ServiceButton from "../ServiceButtons/ServiceButton";
+import ImageViewer from '../ImageViewer/ImageViewer';
+import ServiceButton from '../ServiceButtons/ServiceButton';
+import { CircleX, Paperclip, SendHorizontal } from 'lucide-react';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import { jost } from "@/font";
-import { CircleX, Paperclip, SendHorizontal } from "lucide-react";
-import ChatMsg from "./ChatMsg";
-import React, { useEffect, useRef, useState } from "react";
-import { getFromSessionStorage } from "@/utils/sessionStorage_helper";
-import { socket } from "@/websocket/socket";
-import type { FormattedMessages, HistoryMessage } from "@/types/message.type";
-import { deleteChatImage, markMessageAsRead } from "@/http/chatController";
-import { useRouter } from "next/navigation";
-import { groupMessagesByDate } from "@/utils/groupMessagesByDate";
-import ImageViewer from "../ImageViewer/ImageViewer";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import { formatImageFromServer } from "@/utils/formatImageName";
-import { handleFileChange } from "@/utils/chatImage_helper";
+import styles from './Chat.module.scss';
+
+import type { FormattedMessages, HistoryMessage } from '@/types/message.type';
+
+import React, { useEffect, useRef, useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+
+import { handleFileChange } from '@/utils/chatImage_helper';
+import { formatImageFromServer } from '@/utils/formatImageName';
+import { groupMessagesByDate } from '@/utils/groupMessagesByDate';
+import { getFromSessionStorage } from '@/utils/sessionStorage_helper';
+
+import { deleteChatImage, markMessageAsRead } from '@/http/chatController';
+
+import ChatMsg from './ChatMsg';
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost } from '@/font';
+import { socket } from '@/websocket/socket';
 
 interface ChatProps {
   chatId: string;
@@ -25,13 +32,11 @@ interface ChatProps {
 
 export default function Chat({ chatId }: ChatProps) {
   const [messages, setMessages] = useState<HistoryMessage[]>([]);
-  const [formatedMessages, setFormatedMessages] = useState<FormattedMessages>(
-    []
-  );
-  const [inputValue, setInputValue] = useState("");
+  const [formatedMessages, setFormatedMessages] = useState<FormattedMessages>([]);
+  const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
-  const [currentImage, setCurrentImage] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
+  const [currentImage, setCurrentImage] = useState('');
   const [isPayment, setIsPayment] = useState(false);
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -39,15 +44,15 @@ export default function Chat({ chatId }: ChatProps) {
 
   const { userId } = useAppSelector((state) => state.user);
 
-  const chatInfo = JSON.parse(getFromSessionStorage("chatInfo")!);
+  const chatInfo = JSON.parse(getFromSessionStorage('chatInfo')!);
 
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!userId || !chatInfo) return;
-    let content = "";
+    let content = '';
 
-    if (inputValue !== "") {
+    if (inputValue !== '') {
       content += inputValue;
     }
     if (uploadedImageUrl) {
@@ -65,18 +70,18 @@ export default function Chat({ chatId }: ChatProps) {
         receiverId: chatInfo.sellerId,
         productId: chatInfo.productId,
       };
-      socket.emit("sendMessage", messageData);
-      console.log("msg chat sent");
+      socket.emit('sendMessage', messageData);
+      console.log('msg chat sent');
 
-      setInputValue("");
-      setUploadedImageUrl("");
+      setInputValue('');
+      setUploadedImageUrl('');
     }
   };
 
   const handleLeaveChat = () => {
     if (chatId) {
-      socket.emit("leaveChat", { chatId: chatId });
-      console.log("Leaving chat:", chatId);
+      socket.emit('leaveChat', { chatId: chatId });
+      console.log('Leaving chat:', chatId);
     }
   };
 
@@ -85,9 +90,9 @@ export default function Chat({ chatId }: ChatProps) {
   };
 
   const handleDeleteImage = async () => {
-    const uploadedImageName = uploadedImageUrl.split("/").pop();
+    const uploadedImageName = uploadedImageUrl.split('/').pop();
 
-    setUploadedImageUrl("");
+    setUploadedImageUrl('');
     if (uploadedImageName) {
       await deleteChatImage(uploadedImageName);
     }
@@ -109,31 +114,31 @@ export default function Chat({ chatId }: ChatProps) {
   }, [formatedMessages]);
 
   useEffect(() => {
-    socket.emit("joinChat", { chatId });
+    socket.emit('joinChat', { chatId });
 
-    socket.on("chatHistory", (messages) => {
-      console.log("chat history");
+    socket.on('chatHistory', (messages) => {
+      console.log('chat history');
       setMessages(messages);
       setIsLoading(false);
     });
 
-    socket.on("message", async (newMessage) => {
-      console.log("new msg");
+    socket.on('message', async (newMessage) => {
+      console.log('new msg');
       setMessages((prev) => [...prev, newMessage]);
       if (chatId && userId) {
         await markMessageAsRead({ chatId: chatId, userId });
       }
     });
 
-    socket.on("error", (error) => {
-      console.error("Failed to send message:", error);
+    socket.on('error', (error) => {
+      console.error('Failed to send message:', error);
     });
 
     return () => {
       handleLeaveChat();
-      socket.off("message");
-      socket.off("chatHistory");
-      socket.off("error");
+      socket.off('message');
+      socket.off('chatHistory');
+      socket.off('error');
     };
   }, [chatId]);
 
@@ -149,20 +154,18 @@ export default function Chat({ chatId }: ChatProps) {
             <div>
               <div
                 style={{
-                  backgroundColor: "#B0C4DE",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  color: "#fff",
-                  fontSize: "12px",
-                  fontWeight: "bold",
+                  backgroundColor: '#B0C4DE',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#fff',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
                 }}
                 className={styles.image_div}
               >
                 <span>
-                  {chatInfo?.sellerName
-                    ? chatInfo?.sellerName[0]?.toUpperCase()
-                    : "U"}
+                  {chatInfo?.sellerName ? chatInfo?.sellerName[0]?.toUpperCase() : 'U'}
                 </span>
               </div>
               <h3>{chatInfo?.sellerName}</h3>
@@ -174,9 +177,7 @@ export default function Chat({ chatId }: ChatProps) {
             className={styles.main_block}
             ref={chatRef}
             style={
-              uploadedImageUrl
-                ? { marginBottom: "125px" }
-                : { marginBottom: "65px" }
+              uploadedImageUrl ? { marginBottom: '125px' } : { marginBottom: '65px' }
             }
           >
             {formatedMessages && formatedMessages.length > 0 ? (
@@ -190,7 +191,7 @@ export default function Chat({ chatId }: ChatProps) {
                           key={msg.id}
                           message={msg.content}
                           time={msg.timestamp}
-                          position={msg.sender.id === userId ? "me" : "you"}
+                          position={msg.sender.id === userId ? 'me' : 'you'}
                           setCurrentImage={setCurrentImage}
                         />
                       );
@@ -229,7 +230,7 @@ export default function Chat({ chatId }: ChatProps) {
                 type="file"
                 accept=".jpg,.jpeg,.png"
                 ref={fileInputRef}
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 onChange={(e) => handleFileChange(e, setUploadedImageUrl)}
               />
               <input

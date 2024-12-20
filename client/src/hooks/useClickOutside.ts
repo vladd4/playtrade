@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const useClickOutside = (
   componentRef: any,
   componentState: boolean,
   handleComponentState: (v: boolean) => void,
-  nodeElement: HTMLElement | null
+  nodeElement: HTMLElement | null,
 ) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -17,10 +17,10 @@ const useClickOutside = (
         handleComponentState(false);
       }
     };
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [componentState, componentRef, handleComponentState, nodeElement]);
 };

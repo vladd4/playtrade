@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type TgSice = {
   tg: WebApp | null;
@@ -13,7 +13,7 @@ const initialState: TgSice = {
 };
 
 export const tgSlice = createSlice({
-  name: "tg",
+  name: 'tg',
   initialState,
   reducers: {
     setTg: (state, action: PayloadAction<WebApp>) => {

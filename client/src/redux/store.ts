@@ -1,14 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
-import filterSlice from "./slices/filterSlice";
-import tgSlice from "./slices/tgSlice";
-import userSlice from "./slices/userSlice";
-import imageViewerSlice from "./slices/imageViewerSlice";
-import sellerSlice from "./slices/sellerSlice";
-import alertSlice from "./slices/alertSlice";
-import filteredGamesSlice from "./slices/filteredGames";
-import chatHistory from "./slices/chatHistory";
-import filteredProductsSlice from "./slices/filteredProducts";
-import filteredAdminItemsSlice from "./slices/filteredAdminItems";
+import { configureStore } from '@reduxjs/toolkit';
+
+import alertSlice from './slices/alertSlice';
+import chatHistory from './slices/chatHistory';
+import filterSlice from './slices/filterSlice';
+import filteredAdminItemsSlice from './slices/filteredAdminItems';
+import filteredGamesSlice from './slices/filteredGames';
+import filteredProductsSlice from './slices/filteredProducts';
+import imageViewerSlice from './slices/imageViewerSlice';
+import sellerSlice from './slices/sellerSlice';
+import tgSlice from './slices/tgSlice';
+import userSlice from './slices/userSlice';
 
 const store = configureStore({
   reducer: {

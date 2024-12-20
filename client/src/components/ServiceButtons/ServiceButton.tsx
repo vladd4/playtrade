@@ -1,11 +1,10 @@
-import styles from "./ServiceButtons.module.scss";
+import styles from './ServiceButtons.module.scss';
 
-import { mont } from "@/font";
+import React from 'react';
 
-import React from "react";
+import { mont } from '@/font';
 
-interface ServButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ServButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isActive?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -21,7 +20,7 @@ export default function ServiceButton({
     <button
       {...props}
       className={`${styles.button} ${
-        isActive ? styles.active_button : ""
+        isActive ? styles.active_button : ''
       } ${className} ${mont.className}`}
     >
       {children}

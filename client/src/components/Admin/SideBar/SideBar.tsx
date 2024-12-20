@@ -1,6 +1,8 @@
-import Logo from "@/components/Logo/Logo";
-import styles from "./SideBar.module.scss";
-import SideBarLinks from "./SideBarLinks";
+import styles from './SideBar.module.scss';
+
+import Logo from '@/components/Logo/Logo';
+
+import SideBarLinks from './SideBarLinks';
 
 export default function SideBar() {
   return (

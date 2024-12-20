@@ -1,4 +1,4 @@
-import { UserRoles } from "@/utils/constants";
+import { UserRoles } from '@/utils/constants';
 
 export type LoginSessionBody = {
   username: string;

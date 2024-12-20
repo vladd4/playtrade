@@ -1,19 +1,20 @@
-"use client";
+'use client';
 
-import styles from "./Messages.module.scss";
+import styles from './Messages.module.scss';
 
-import { mont } from "@/font";
+import { ChatWithLatestMsg } from '@/types/chat.type';
 
-import MsgCard from "@/components/MsgCard/MsgCard";
+import { useEffect, useState } from 'react';
 
-import withAuth from "@/utils/withAuth";
+import MsgCard from '@/components/MsgCard/MsgCard';
 
-import useChats from "@/hooks/useChats";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useChats from '@/hooks/useChats';
 
-import { useEffect, useState } from "react";
-import { ChatWithLatestMsg } from "@/types/chat.type";
-import { socket } from "@/websocket/socket";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import withAuth from '@/utils/withAuth';
+
+import { mont } from '@/font';
+import { socket } from '@/websocket/socket';
 
 function MessagesPage() {
   const { userId } = useAppSelector((state) => state.user);
@@ -36,12 +37,12 @@ function MessagesPage() {
         .sort(
           (a, b) =>
             new Date(b.latestMessage?.timestamp).getTime() -
-            new Date(a.latestMessage?.timestamp).getTime()
+            new Date(a.latestMessage?.timestamp).getTime(),
         );
 
       setChats(sortedChats);
       sortedChats.forEach((chat) => {
-        socket.emit("joinChat", { chatId: chat.id });
+        socket.emit('joinChat', { chatId: chat.id });
       });
     }
     setLoading(false);
@@ -65,17 +66,17 @@ function MessagesPage() {
           .sort(
             (a, b) =>
               new Date(b.latestMessage?.timestamp).getTime() -
-              new Date(a.latestMessage?.timestamp).getTime()
+              new Date(a.latestMessage?.timestamp).getTime(),
           );
         setLoading(false);
         return updatedChats;
       });
     };
 
-    socket.on("message", handleNewMessage);
+    socket.on('message', handleNewMessage);
 
     return () => {
-      socket.off("message", handleNewMessage);
+      socket.off('message', handleNewMessage);
     };
   }, [userId]);
 

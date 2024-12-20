@@ -1,5 +1,6 @@
-import { Game } from "@/types/game.type";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+import { Game } from '@/types/game.type';
 
 type FilteredGames = {
   filteredGames: Game[] | null;
@@ -8,11 +9,11 @@ type FilteredGames = {
 
 const initialState: FilteredGames = {
   filteredGames: null,
-  searchedValue: "",
+  searchedValue: '',
 };
 
 export const filteredGamesSlice = createSlice({
-  name: "filteredGames",
+  name: 'filteredGames',
   initialState,
   reducers: {
     setFilteredGames: (state, action: PayloadAction<Game[] | null>) => {
@@ -24,6 +25,5 @@ export const filteredGamesSlice = createSlice({
   },
 });
 
-export const { setFilteredGames, setSearchedValue } =
-  filteredGamesSlice.actions;
+export const { setFilteredGames, setSearchedValue } = filteredGamesSlice.actions;
 export default filteredGamesSlice.reducer;

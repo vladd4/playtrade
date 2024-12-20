@@ -1,5 +1,6 @@
-import { getUsers } from "@/http/userController";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+import { getUsers } from '@/http/userController';
 
 const useAllUsers = (page: number) => {
   return useQuery({

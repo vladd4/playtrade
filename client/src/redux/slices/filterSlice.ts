@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type FiltersType = {
   regions: string[];
@@ -17,7 +17,7 @@ const initialState: FilterSlice = {
 };
 
 export const filterSlice = createSlice({
-  name: "alert",
+  name: 'alert',
   initialState,
   reducers: {
     setShowFilter: (state, action: PayloadAction<boolean>) => {

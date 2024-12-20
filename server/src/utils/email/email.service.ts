@@ -7,12 +7,12 @@ export class EmailService {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: 'smtp.ukr.net',
+      host: 'smtp.gmail.com',
       port: 465,
       secure: true,
       auth: {
-        user: 'maks.chell@ukr.net',
-        pass: 'Q1CAXW9F7iCxrnYz',
+        user: 'donetsvlad44@gmail.com',
+        pass: 'srix zdom zfjo ucmo',
       },
       tls: {
         rejectUnauthorized: false,
@@ -27,7 +27,7 @@ export class EmailService {
     isRegistration?: boolean,
   ): Promise<void> {
     const mailOptions = {
-      from: '"PlayTrade" <maks.chell@ukr.net>',
+      from: '"PlayTrade" <donetsvlad44@gmail.com>',
       to: to,
       subject: 'Verification Code',
       text: `Your verification code is: ${code}`,
@@ -56,7 +56,7 @@ export class EmailService {
     temporaryPassword: string,
   ): Promise<void> {
     const mailOptions = {
-      from: '"PlayTrade" <maks.chell@ukr.net>',
+      from: '"PlayTrade" <donetsvlad44@gmail.com>',
       to: to,
       subject: 'Temporary Password',
       text: `Dear ${username}, your temporary password is: ${temporaryPassword}. Please change it as soon as possible.`,

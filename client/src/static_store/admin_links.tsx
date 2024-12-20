@@ -1,4 +1,3 @@
-import { UserRoles } from "@/utils/constants";
 import {
   Handshake,
   MessagesSquare,
@@ -6,25 +5,27 @@ import {
   TableCellsMerge,
   UserCog,
   Users,
-} from "lucide-react";
+} from 'lucide-react';
+
+import { UserRoles } from '@/utils/constants';
 
 export const admin_links = [
   {
-    label: "Угоди",
+    label: 'Угоди',
     icon: <Handshake size={20} />,
-    href: "/admin",
+    href: '/admin',
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
   {
-    label: "Користувачі",
+    label: 'Користувачі',
     icon: <Users size={20} />,
-    href: "/admin/users",
+    href: '/admin/users',
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
   {
-    label: "Оголошення",
+    label: 'Оголошення',
     icon: <TableCellsMerge size={20} />,
-    href: "/admin/advertisement",
+    href: '/admin/advertisement',
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
   // {
@@ -34,21 +35,21 @@ export const admin_links = [
   //   roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   // },
   {
-    label: "Ігри",
+    label: 'Ігри',
     icon: <Shapes size={20} />,
-    href: "/admin/category",
+    href: '/admin/category',
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
   {
-    label: "Технічна підтримка",
+    label: 'Технічна підтримка',
     icon: <MessagesSquare size={20} />,
-    href: "/admin/support",
+    href: '/admin/support',
     roles: [UserRoles.ADMIN, UserRoles.MANAGER],
   },
   {
-    label: "Менеджери",
+    label: 'Менеджери',
     icon: <UserCog size={20} />,
-    href: "/admin/managers",
+    href: '/admin/managers',
     roles: [UserRoles.ADMIN],
   },
 ];

@@ -1,5 +1,6 @@
-import { getUserById } from "@/http/userController";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+
+import { getUserById } from '@/http/userController';
 
 const useUserProfile = ({ id }: { id: string }) => {
   return useQuery({

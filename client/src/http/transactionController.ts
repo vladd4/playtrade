@@ -2,51 +2,47 @@ import {
   CreateTransaction,
   Transaction,
   TransactionsWithPagination,
-} from "@/types/transaction.type";
-import { privateAxios } from "./axios";
+} from '@/types/transaction.type';
+
+import { privateAxios } from './axios';
 
 export async function getTransactions(
-  page: number
+  page: number,
 ): Promise<TransactionsWithPagination | null> {
   try {
     const { data } = await privateAxios.get<TransactionsWithPagination>(
-      `/transactions?page=${page}`
+      `/transactions?page=${page}`,
     );
     return data;
   } catch (error: any) {
-    console.log(
-      "Error getting transactions:",
-      error.response?.data || error.message
-    );
+    console.log('Error getting transactions:', error.response?.data || error.message);
     return null;
   }
 }
 
-export async function getTransactionById(
-  id: string
-): Promise<Transaction | null> {
+export async function getTransactionById(id: string): Promise<Transaction | null> {
   try {
     const { data } = await privateAxios.get<Transaction>(`/transactions/${id}`);
     return data;
   } catch (error: any) {
     console.log(
       `Error getting transaction by id ${id}:`,
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     return null;
   }
 }
 
 export async function createTransaction(
-  newTransaction: CreateTransaction
+  newTransaction: CreateTransaction,
 ): Promise<Transaction | null> {
   try {
-    const { data } = await privateAxios.post("/transactions", newTransaction);
+    const { data } = await privateAxios.post('/transactions', newTransaction);
     return data;
   } catch (error: any) {
     console.log(
       `Error creating transaction ${JSON.stringify(newTransaction)}:`,
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     return null;
   }

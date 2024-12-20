@@ -1,10 +1,10 @@
 export const verify_options = [
   {
-    label: "Підтверджено",
-    value: "yes",
+    label: 'Підтверджено',
+    value: 'yes',
   },
   {
-    label: "Не підтверджено",
-    value: "no",
+    label: 'Не підтверджено',
+    value: 'no',
   },
 ];

@@ -1,43 +1,45 @@
-"use client";
+'use client';
 
-import { jost } from "@/font";
-import styles from "./AdminChat.module.scss";
+import MoreUsersAlert from '../MoreUsersAlert/MoreUsersAlert';
+import { randomUUID } from 'crypto';
+import { CircleCheck, Paperclip, SendHorizontal } from 'lucide-react';
+import { Tooltip } from 'react-tooltip';
 
-import React, { useEffect, useRef, useState } from "react";
+import styles from './AdminChat.module.scss';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import ChatMsg from "@/components/ChatComponent/ChatMsg";
-import { CircleCheck, Paperclip, SendHorizontal } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { socket } from "@/websocket/socket";
-import { FormattedMessages, HistoryMessage } from "@/types/message.type";
-import { groupMessagesByDate } from "@/utils/groupMessagesByDate";
-import ImageViewer from "@/components/ImageViewer/ImageViewer";
-import { Tooltip } from "react-tooltip";
+import { FormattedMessages, HistoryMessage } from '@/types/message.type';
 
-import { useAppSelector } from "@/hooks/redux-hooks";
+import React, { useEffect, useRef, useState } from 'react';
 
-import MoreUsersAlert from "../MoreUsersAlert/MoreUsersAlert";
-import { formatImageFromServer } from "@/utils/formatImageName";
-import useSupportChat from "@/hooks/useSupportChat";
-import { handleSupportFileChange } from "@/utils/chatImage_helper";
-import { USER_PLACEHOLDER_ID } from "@/utils/constants";
-import { randomUUID } from "crypto";
+import { useSearchParams } from 'next/navigation';
+
+import ChatMsg from '@/components/ChatComponent/ChatMsg';
+import ImageViewer from '@/components/ImageViewer/ImageViewer';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useSupportChat from '@/hooks/useSupportChat';
+
+import { handleSupportFileChange } from '@/utils/chatImage_helper';
+import { USER_PLACEHOLDER_ID } from '@/utils/constants';
+import { formatImageFromServer } from '@/utils/formatImageName';
+import { groupMessagesByDate } from '@/utils/groupMessagesByDate';
+
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost } from '@/font';
+import { socket } from '@/websocket/socket';
 
 export default function AdminSupport() {
-  const [currentImage, setCurrentImage] = useState("");
+  const [currentImage, setCurrentImage] = useState('');
   const [isPending, setIsPending] = useState(true);
   const [messages, setMessages] = useState<HistoryMessage[]>([]);
-  const [formatedMessages, setFormatedMessages] = useState<FormattedMessages>(
-    []
-  );
-  const [inputValue, setInputValue] = useState("");
+  const [formatedMessages, setFormatedMessages] = useState<FormattedMessages>([]);
+  const [inputValue, setInputValue] = useState('');
   const [isClosedChat, setIsClosedChat] = useState(false);
   const [disabledInput, setDisabledInput] = useState(false);
 
   const searchParams = useSearchParams();
 
-  const chatId = searchParams.get("id");
+  const chatId = searchParams.get('id');
 
   const { data, isLoading } = useSupportChat({ id: chatId! });
 
@@ -48,7 +50,7 @@ export default function AdminSupport() {
 
   const handleLeaveChat = () => {
     if (chatId) {
-      socket.emit("leaveSupportChat", { chatId });
+      socket.emit('leaveSupportChat', { chatId });
     }
   };
 
@@ -57,21 +59,21 @@ export default function AdminSupport() {
 
     if (!adminId || !data?.user.id || isClosedChat) return;
 
-    let content = "";
+    let content = '';
 
-    if (inputValue !== "") {
+    if (inputValue !== '') {
       content += inputValue;
     }
 
     if (content) {
-      socket.emit("sendMessageToBot", {
+      socket.emit('sendMessageToBot', {
         content: content,
         senderId: data?.user.id,
         chatId: chatId,
         adminId: adminId,
       });
 
-      setInputValue("");
+      setInputValue('');
     }
   };
 
@@ -83,7 +85,7 @@ export default function AdminSupport() {
 
   const handleDoneSupportChat = async () => {
     if (adminId && data?.user.id && !data.isClosed && !disabledInput) {
-      socket.emit("closeSupportChat", { senderId: data?.user.id });
+      socket.emit('closeSupportChat', { senderId: data?.user.id });
       setIsClosedChat(true);
     }
   };
@@ -95,33 +97,33 @@ export default function AdminSupport() {
   }, [formatedMessages]);
 
   useEffect(() => {
-    socket.emit("joinSupportChat", { chatId });
+    socket.emit('joinSupportChat', { chatId });
 
-    socket.on("supportChatHistory", (messages) => {
+    socket.on('supportChatHistory', (messages) => {
       setMessages(messages);
       setIsPending(false);
     });
 
-    socket.on("supportMessage", async (newMessage) => {
+    socket.on('supportMessage', async (newMessage) => {
       setMessages((prev) => [...prev, newMessage]);
-      console.log("support", newMessage);
+      console.log('support', newMessage);
     });
 
-    socket.on("messageSent", async (newMessage) => {
+    socket.on('messageSent', async (newMessage) => {
       setMessages((prev) => [...prev, newMessage]);
-      console.log("message sent", newMessage);
+      console.log('message sent', newMessage);
     });
 
-    socket.on("error", (error) => {
-      console.error("Failed to send message:", error);
+    socket.on('error', (error) => {
+      console.error('Failed to send message:', error);
     });
 
     return () => {
       handleLeaveChat();
-      socket.off("supportMessage");
-      socket.off("messageSent");
-      socket.off("supportChatHistory");
-      socket.off("error");
+      socket.off('supportMessage');
+      socket.off('messageSent');
+      socket.off('supportChatHistory');
+      socket.off('error');
     };
   }, [chatId]);
 
@@ -146,32 +148,26 @@ export default function AdminSupport() {
   if (isLoading) return null;
 
   if (!data?.user)
-    return (
-      <p className={styles.no_data}>Щось пішло не так. Спробуйте пізніше!</p>
-    );
+    return <p className={styles.no_data}>Щось пішло не так. Спробуйте пізніше!</p>;
 
   return (
     <>
-      <article
-        className={`${styles.root} ${jost.className} ${styles.support_root}`}
-      >
+      <article className={`${styles.root} ${jost.className} ${styles.support_root}`}>
         <div className={styles.top_block}>
           <div className={styles.avatar}>
             <div
               style={{
-                backgroundColor: "#B0C4DE",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "#fff",
-                fontSize: "20px",
-                fontWeight: "bold",
+                backgroundColor: '#B0C4DE',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                fontSize: '20px',
+                fontWeight: 'bold',
               }}
               className={styles.support_avatar_div}
             >
-              <span>
-                {data?.user?.name ? data?.user?.name[0]?.toUpperCase() : "S"}
-              </span>
+              <span>{data?.user?.name ? data?.user?.name[0]?.toUpperCase() : 'S'}</span>
             </div>
 
             <div className={styles.text_block}>
@@ -181,10 +177,10 @@ export default function AdminSupport() {
           <div className={styles.buttons}>
             <div
               data-tooltip-id="tooltip"
-              data-tooltip-content={"Завершити чат"}
+              data-tooltip-content={'Завершити чат'}
               onClick={handleDoneSupportChat}
             >
-              <CircleCheck fill={isClosedChat ? "green" : "transparent"} />
+              <CircleCheck fill={isClosedChat ? 'green' : 'transparent'} />
             </div>
           </div>
         </div>
@@ -203,9 +199,7 @@ export default function AdminSupport() {
                           time={msg?.timestamp}
                           setCurrentImage={setCurrentImage}
                           position={
-                            msg.receiver.id === USER_PLACEHOLDER_ID
-                              ? "you"
-                              : "me"
+                            msg.receiver.id === USER_PLACEHOLDER_ID ? 'you' : 'me'
                           }
                         />
                       );
@@ -232,7 +226,7 @@ export default function AdminSupport() {
                 type="file"
                 accept=".jpg,.jpeg,.png"
                 ref={fileInputRef}
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 onChange={(e) => {
                   handleSupportFileChange(e, data.user.id, adminId!);
                 }}

@@ -1,7 +1,8 @@
-import { Seller } from "@/types/user.type";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-type ShortSellerType = Omit<Seller, "id">;
+import { Seller } from '@/types/user.type';
+
+type ShortSellerType = Omit<Seller, 'id'>;
 
 type SellerSlice = {
   seller: ShortSellerType | null;
@@ -12,7 +13,7 @@ const initialState: SellerSlice = {
 };
 
 export const sellerSlice = createSlice({
-  name: "seller",
+  name: 'seller',
   initialState,
   reducers: {
     setSeller: (state, action: PayloadAction<ShortSellerType>) => {

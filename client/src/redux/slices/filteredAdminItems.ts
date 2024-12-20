@@ -1,9 +1,10 @@
-import { AdminChat } from "@/types/chat.type";
-import { Game } from "@/types/game.type";
-import { AdminProducts } from "@/types/product.type";
-import { SupportChat } from "@/types/support.type";
-import { UserWithPurchases } from "@/types/user.type";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+import { AdminChat } from '@/types/chat.type';
+import { Game } from '@/types/game.type';
+import { AdminProducts } from '@/types/product.type';
+import { SupportChat } from '@/types/support.type';
+import { UserWithPurchases } from '@/types/user.type';
 
 type FilteredAdminItems = {
   filteredProducts: AdminProducts[] | null;
@@ -23,30 +24,21 @@ const initialState: FilteredAdminItems = {
 };
 
 export const filteredAdminItemsSlice = createSlice({
-  name: "filteredAdminItems",
+  name: 'filteredAdminItems',
   initialState,
   reducers: {
-    setFilteredProducts: (
-      state,
-      action: PayloadAction<AdminProducts[] | null>
-    ) => {
+    setFilteredProducts: (state, action: PayloadAction<AdminProducts[] | null>) => {
       state.filteredProducts = action.payload;
     },
-    setFilteredUsers: (
-      state,
-      action: PayloadAction<UserWithPurchases[] | null>
-    ) => {
+    setFilteredUsers: (state, action: PayloadAction<UserWithPurchases[] | null>) => {
       state.filteredUsers = action.payload;
     },
-    setFilteredChat: (
-      state,
-      action: PayloadAction<AdminChat | null | undefined>
-    ) => {
+    setFilteredChat: (state, action: PayloadAction<AdminChat | null | undefined>) => {
       state.filteredChat = action.payload;
     },
     setFilteredSupportChat: (
       state,
-      action: PayloadAction<SupportChat | null | undefined>
+      action: PayloadAction<SupportChat | null | undefined>,
     ) => {
       state.filteredSupportChat = action.payload;
     },

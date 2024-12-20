@@ -1,5 +1,6 @@
-import { getProductById } from "@/http/productController";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+
+import { getProductById } from '@/http/productController';
 
 const useProduct = ({ id }: { id: string }) => {
   return useQuery({

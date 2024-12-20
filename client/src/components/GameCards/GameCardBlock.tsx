@@ -1,7 +1,9 @@
-import GameCard from "./GameCard";
-import styles from "./GameCards.module.scss";
-import { days } from "@/font";
-import { Game } from "@/types/game.type";
+import styles from './GameCards.module.scss';
+
+import { Game } from '@/types/game.type';
+
+import GameCard from './GameCard';
+import { days } from '@/font';
 
 type CardBlockProps = {
   letter?: string;

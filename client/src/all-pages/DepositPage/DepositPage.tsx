@@ -1,28 +1,32 @@
-"use client";
+'use client';
 
-import styles from "./Deposit.module.scss";
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-import { jost } from "@/font";
+import styles from './Deposit.module.scss';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
-import withAuth from "@/utils/withAuth";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import toast from "react-hot-toast";
-import { updateBalance } from "@/http/userController";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import useUserProfile from "@/hooks/useUserProfile";
-import { useRouter } from "next/navigation";
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useUserProfile from '@/hooks/useUserProfile';
+
+import withAuth from '@/utils/withAuth';
+
+import { updateBalance } from '@/http/userController';
+
+import { jost } from '@/font';
 
 type DepositPageProps = {
-  paymentType?: "deposit" | "withdraw";
+  paymentType?: 'deposit' | 'withdraw';
 };
 
 function DepositPage({ paymentType }: DepositPageProps) {
   const [isClicked, setIsClicked] = useState(false);
-  const [cardNumber, setCardNumber] = useState("");
+  const [cardNumber, setCardNumber] = useState('');
   const [balance, setBalance] = useState(0);
 
   const { userId } = useAppSelector((state) => state.user);
@@ -33,38 +37,36 @@ function DepositPage({ paymentType }: DepositPageProps) {
 
   const handleDepositMoney = async () => {
     if (userId) {
-      if (cardNumber !== "" && balance !== 0) {
-        const updatedBalance = data?.balance
-          ? data?.balance + balance
-          : balance;
+      if (cardNumber !== '' && balance !== 0) {
+        const updatedBalance = data?.balance ? data?.balance + balance : balance;
         const result = await updateBalance(userId, updatedBalance);
         if (!result) {
-          toast.error("Щось пішло не так. Спробуйте пізніше!");
+          toast.error('Щось пішло не так. Спробуйте пізніше!');
         } else {
-          router.push("/profile/wallet");
+          router.push('/profile/wallet');
         }
       } else {
-        toast.error("Виберіть спосіб оплати та введіть номер карти");
+        toast.error('Виберіть спосіб оплати та введіть номер карти');
       }
     }
   };
 
   const handleWithdrawMoney = async () => {
     if (userId) {
-      if (cardNumber !== "" && balance !== 0) {
+      if (cardNumber !== '' && balance !== 0) {
         if (data?.balance && data?.balance < balance) {
-          toast.error("Невистачає коштів!");
+          toast.error('Невистачає коштів!');
         } else {
           const updatedBalance = data?.balance ? data?.balance - balance : 0;
           const result = await updateBalance(userId, updatedBalance);
           if (!result) {
-            toast.error("Щось пішло не так. Спробуйте пізніше!");
+            toast.error('Щось пішло не так. Спробуйте пізніше!');
           } else {
-            router.push("/profile/wallet");
+            router.push('/profile/wallet');
           }
         }
       } else {
-        toast.error("Виберіть спосіб оплати та введіть номер карти");
+        toast.error('Виберіть спосіб оплати та введіть номер карти');
       }
     }
   };
@@ -81,11 +83,7 @@ function DepositPage({ paymentType }: DepositPageProps) {
         <p className={styles.label}>*курс 1:1 до долару</p>
         <div className={styles.bottom_block}>
           {paymentType && (
-            <p>
-              {paymentType === "withdraw"
-                ? "Виведення коштів"
-                : "Поповнення коштів"}
-            </p>
+            <p>{paymentType === 'withdraw' ? 'Виведення коштів' : 'Поповнення коштів'}</p>
           )}
           <div className={styles.select}>
             <div
@@ -97,7 +95,7 @@ function DepositPage({ paymentType }: DepositPageProps) {
             </div>
             <div
               className={`${styles.options_block} ${
-                isClicked ? styles.show_options : ""
+                isClicked ? styles.show_options : ''
               }`}
             >
               <div className={styles.option}>
@@ -133,13 +131,9 @@ function DepositPage({ paymentType }: DepositPageProps) {
           <ServiceButton
             isActive
             className={styles.submit_btn}
-            onClick={
-              paymentType === "deposit"
-                ? handleDepositMoney
-                : handleWithdrawMoney
-            }
+            onClick={paymentType === 'deposit' ? handleDepositMoney : handleWithdrawMoney}
           >
-            {paymentType === "deposit" ? "Поповнити" : "Вивести"}
+            {paymentType === 'deposit' ? 'Поповнити' : 'Вивести'}
           </ServiceButton>
         </div>
       </article>

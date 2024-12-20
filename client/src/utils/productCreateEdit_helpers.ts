@@ -1,6 +1,8 @@
-import { Dispatch, RefObject, SetStateAction } from "react";
-import imageCompression from "browser-image-compression";
-import { compressAndConvert } from "./compressAndConvertImage";
+import imageCompression from 'browser-image-compression';
+
+import { Dispatch, RefObject, SetStateAction } from 'react';
+
+import { compressAndConvert } from './compressAndConvertImage';
 
 export const handleImageClick = (fileInputRef: RefObject<HTMLInputElement>) => {
   if (fileInputRef.current) {
@@ -10,7 +12,7 @@ export const handleImageClick = (fileInputRef: RefObject<HTMLInputElement>) => {
 
 export const handleFileChange = async (
   e: React.ChangeEvent<HTMLInputElement>,
-  setUploadedImages: Dispatch<SetStateAction<File[]>>
+  setUploadedImages: Dispatch<SetStateAction<File[]>>,
 ) => {
   const files = e.target.files;
   if (!files) return;
@@ -27,9 +29,7 @@ export const handleFileChange = async (
 };
 
 export const handleCreateFormChange = (
-  e: React.ChangeEvent<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >,
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   setForm: Dispatch<
     SetStateAction<{
       name: string;
@@ -42,7 +42,7 @@ export const handleCreateFormChange = (
       fullDescription: string;
       price: string;
     }>
-  >
+  >,
 ) => {
   const { name, value } = e.target;
   setForm((prevForm) => ({
@@ -52,9 +52,7 @@ export const handleCreateFormChange = (
 };
 
 export const handleEditFormChange = (
-  e: React.ChangeEvent<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >,
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   setForm: Dispatch<
     SetStateAction<{
       name: string;
@@ -62,7 +60,7 @@ export const handleEditFormChange = (
       detailDescription: string;
       price: string;
     }>
-  >
+  >,
 ) => {
   const { name, value } = e.target;
   setForm((prevForm) => ({
@@ -84,18 +82,18 @@ export const resetCreateFormState = (
       fullDescription: string;
       price: string;
     }>
-  >
+  >,
 ) => {
   setForm({
-    name: "",
-    game: "",
-    productType: "",
-    server: "",
-    region: "",
-    platform: "",
-    description: "",
-    fullDescription: "",
-    price: "",
+    name: '',
+    game: '',
+    productType: '',
+    server: '',
+    region: '',
+    platform: '',
+    description: '',
+    fullDescription: '',
+    price: '',
   });
 };
 
@@ -107,12 +105,12 @@ export const resetEditFormState = (
       fullDescription: string;
       price: string;
     }>
-  >
+  >,
 ) => {
   setForm({
-    name: "",
-    description: "",
-    fullDescription: "",
-    price: "",
+    name: '',
+    description: '',
+    fullDescription: '',
+    price: '',
   });
 };

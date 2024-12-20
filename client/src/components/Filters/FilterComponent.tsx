@@ -1,23 +1,27 @@
-"use client";
+'use client';
 
-import { ChevronDown, ChevronUp, X } from "lucide-react";
-import styles from "./Filter.module.scss";
-import { jost } from "@/font";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowFilter } from "@/redux/slices/filterSlice";
-import { game_filters } from "@/static_store/game_filters";
-import { NUMBER_REGEX, ProductType } from "@/utils/constants";
-import ServiceButton from "../ServiceButtons/ServiceButton";
-import { getFilteredProductsByGameId } from "@/http/productController";
+import ServiceButton from '../ServiceButtons/ServiceButton';
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
-import {
-  setFilteredProducts,
-  setFiltersCount,
-} from "@/redux/slices/filteredProducts";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { buildQueryString } from "@/utils/queryBuilder";
-import { getFromSessionStorage } from "@/utils/sessionStorage_helper";
+import styles from './Filter.module.scss';
+
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { setShowFilter } from '@/redux/slices/filterSlice';
+import { setFilteredProducts, setFiltersCount } from '@/redux/slices/filteredProducts';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+
+import { NUMBER_REGEX, ProductType } from '@/utils/constants';
+import { buildQueryString } from '@/utils/queryBuilder';
+import { getFromSessionStorage } from '@/utils/sessionStorage_helper';
+
+import { getFilteredProductsByGameId } from '@/http/productController';
+
+import { jost } from '@/font';
+import { game_filters } from '@/static_store/game_filters';
 
 interface FilterProps {
   gameId: string;
@@ -37,8 +41,8 @@ const filtersInitialState = {
 };
 
 const priceInitialState = {
-  from: "",
-  to: "",
+  from: '',
+  to: '',
 };
 
 export default function FilterComponent({ gameId, productType }: FilterProps) {
@@ -62,16 +66,16 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
   const { filtersCount } = useAppSelector((state) => state.filteredProducts);
 
   // Static Data
-  const filterOptions = JSON.parse(getFromSessionStorage("game-filters")!);
+  const filterOptions = JSON.parse(getFromSessionStorage('game-filters')!);
 
   // Memoized Values
   const hasFilters = useMemo(() => {
     return [
-      searchParams.has("platforms"),
-      searchParams.has("servers"),
-      searchParams.has("regions"),
-      searchParams.has("minPrice"),
-      searchParams.has("maxPrice"),
+      searchParams.has('platforms'),
+      searchParams.has('servers'),
+      searchParams.has('regions'),
+      searchParams.has('minPrice'),
+      searchParams.has('maxPrice'),
     ].some(Boolean);
   }, [searchParams]);
 
@@ -102,12 +106,12 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
         });
         dispatch(setFilteredProducts(result));
       } catch (error) {
-        console.error("Filter error:", error);
+        console.error('Filter error:', error);
       } finally {
         setLoading(false);
       }
     },
-    [gameId, productType, dispatch]
+    [gameId, productType, dispatch],
   );
 
   // URL Sync Effect
@@ -115,16 +119,16 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
     if (!hasFilters) return;
 
     const params = {
-      platforms: searchParams.getAll("platforms"),
-      servers: searchParams.getAll("servers"),
-      regions: searchParams.getAll("regions"),
-      minPrice: Number(searchParams.get("minPrice")) || undefined,
-      maxPrice: Number(searchParams.get("maxPrice")) || undefined,
+      platforms: searchParams.getAll('platforms'),
+      servers: searchParams.getAll('servers'),
+      regions: searchParams.getAll('regions'),
+      minPrice: Number(searchParams.get('minPrice')) || undefined,
+      maxPrice: Number(searchParams.get('maxPrice')) || undefined,
     };
 
     setPrice({
-      from: searchParams.get("minPrice")?.trim() || "",
-      to: searchParams.get("maxPrice")?.trim() || "",
+      from: searchParams.get('minPrice')?.trim() || '',
+      to: searchParams.get('maxPrice')?.trim() || '',
     });
 
     setFilters({
@@ -146,50 +150,47 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
       setFiltersCount(
         filters.platforms.length +
           filters.servers.length +
-          (JSON.stringify(price) !== JSON.stringify(priceInitialState) ? 1 : 0)
-      )
+          (JSON.stringify(price) !== JSON.stringify(priceInitialState) ? 1 : 0),
+      ),
     );
   }, [filters, price, dispatch, currentFiltersAreEmpty]);
 
   // Event Handlers
   const handleFilterToggle = useCallback(
-    (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
-      (arg: string) => {
-        setter((prev) =>
-          prev.includes(arg)
-            ? prev.filter((item) => item !== arg)
-            : [...prev, arg]
-        );
-      },
-    []
+    (setter: React.Dispatch<React.SetStateAction<string[]>>) => (arg: string) => {
+      setter((prev) =>
+        prev.includes(arg) ? prev.filter((item) => item !== arg) : [...prev, arg],
+      );
+    },
+    [],
   );
 
   const handleFilterClick = useCallback(
     (heading: string) => {
       handleFilterToggle(setIsClicked)(heading);
     },
-    [handleFilterToggle]
+    [handleFilterToggle],
   );
 
   const handleMoreClick = useCallback(
     (heading: string) => {
       handleFilterToggle(setIsMoreClicked)(heading);
     },
-    [handleFilterToggle]
+    [handleFilterToggle],
   );
 
   const handlePriceChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, type: "to" | "from") => {
+    (e: React.ChangeEvent<HTMLInputElement>, type: 'to' | 'from') => {
       const targetValue = e.target.value;
       if (NUMBER_REGEX.test(targetValue)) {
         setPrice((prev) => ({ ...prev, [type]: targetValue }));
       }
     },
-    []
+    [],
   );
 
   const handleFiltersChange = useCallback(
-    (value: string, type: "platforms" | "servers" | "regions") => {
+    (value: string, type: 'platforms' | 'servers' | 'regions') => {
       setFilters((prev) => ({
         ...prev,
         [type]: prev[type].includes(value)
@@ -197,7 +198,7 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
           : [...prev[type], value],
       }));
     },
-    []
+    [],
   );
 
   const resetState = useCallback(() => {
@@ -231,14 +232,12 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
   return (
     <>
       <div
-        className={`${styles.overflow} ${
-          showFilter ? styles.show_overlay : ""
-        }`}
+        className={`${styles.overflow} ${showFilter ? styles.show_overlay : ''}`}
         onClick={() => dispatch(setShowFilter(false))}
       />
       <article
         className={`${styles.root} ${jost.className} ${
-          showFilter ? styles.show_root : ""
+          showFilter ? styles.show_root : ''
         }`}
       >
         <article className={styles.wrapper}>
@@ -263,10 +262,10 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
                   )}
                 </div>
                 {isClicked.includes(filter.heading) &&
-                  (filter.type === "platforms" ? (
+                  (filter.type === 'platforms' ? (
                     <div className={styles.input_block}>
                       {filterOptions &&
-                        filterOptions[filter.type as "platforms"].map(
+                        filterOptions[filter.type as 'platforms'].map(
                           (option: string) => {
                             return (
                               <div key={option} className={styles.checkbox}>
@@ -276,20 +275,20 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
                                   value={option}
                                   checked={filters.platforms.includes(option)}
                                   onChange={() =>
-                                    handleFiltersChange(option, "platforms")
+                                    handleFiltersChange(option, 'platforms')
                                   }
                                 />
                                 <label htmlFor={option}>{option}</label>
                               </div>
                             );
-                          }
+                          },
                         )}
                     </div>
                   ) : (
                     <>
                       <div className={styles.input_block}>
                         {filterOptions &&
-                          filterOptions[filter.type as "regions" | "servers"]
+                          filterOptions[filter.type as 'regions' | 'servers']
                             .slice(0, 6)
                             .map((option: string) => {
                               return (
@@ -302,7 +301,7 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
                                     onChange={() =>
                                       handleFiltersChange(
                                         option,
-                                        filter.type as "servers" | "regions"
+                                        filter.type as 'servers' | 'regions',
                                       )
                                     }
                                   />
@@ -315,11 +314,11 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
                         className={`${styles.hidden_input_block} ${
                           isMoreClicked.includes(filter.heading)
                             ? `${styles.show_hidden_block}`
-                            : ""
+                            : ''
                         }`}
                       >
                         {filterOptions &&
-                          filterOptions[filter.type as "regions" | "servers"]
+                          filterOptions[filter.type as 'regions' | 'servers']
                             .slice(6)
                             .map((option: string) => {
                               return (
@@ -332,7 +331,7 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
                                     onChange={() =>
                                       handleFiltersChange(
                                         option,
-                                        filter.type as "servers" | "regions"
+                                        filter.type as 'servers' | 'regions',
                                       )
                                     }
                                   />
@@ -347,8 +346,8 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
                           onClick={() => handleMoreClick(filter.heading)}
                         >
                           {isMoreClicked.includes(filter.heading)
-                            ? "Згорнути"
-                            : "Дивитись більше"}
+                            ? 'Згорнути'
+                            : 'Дивитись більше'}
                         </p>
                       )}
                     </>
@@ -359,30 +358,24 @@ export default function FilterComponent({ gameId, productType }: FilterProps) {
           <div className={styles.price_filter}>
             <p>Ціна (UAH)</p>
             <div>
-              <input
-                value={price.from}
-                onChange={(e) => handlePriceChange(e, "from")}
-              />
+              <input value={price.from} onChange={(e) => handlePriceChange(e, 'from')} />
               <p>—</p>
-              <input
-                value={price.to}
-                onChange={(e) => handlePriceChange(e, "to")}
-              />
+              <input value={price.to} onChange={(e) => handlePriceChange(e, 'to')} />
             </div>
           </div>
           <ServiceButton
             className={`${styles.use_filters_btn} ${
-              filtersCount <= 0 ? styles.disabled_btn : ""
+              filtersCount <= 0 ? styles.disabled_btn : ''
             }`}
             isActive
             disabled={loading}
             onClick={handleFilterProducts}
           >
-            {loading ? "Завантаження..." : "Застосувати"}
+            {loading ? 'Завантаження...' : 'Застосувати'}
           </ServiceButton>
           <ServiceButton
             className={`${styles.reset_filters_btn} ${
-              filtersCount <= 0 ? styles.disabled_btn : ""
+              filtersCount <= 0 ? styles.disabled_btn : ''
             }`}
             onClick={resetState}
           >

@@ -1,24 +1,31 @@
-"use client";
+'use client';
 
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import styles from "./CreateForms.module.scss";
+import { useQueryClient } from '@tanstack/react-query';
+import { CircleX, Image, X } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-import React, { useEffect, useRef, useState } from "react";
-import { jost } from "@/font";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowCreateGameAlert } from "@/redux/slices/alertSlice";
-import { createGame, editGame, getGameById } from "@/http/gameController";
-import toast from "react-hot-toast";
-import { ENGLISH_ONLY_REGEX, TOAST_DURATION } from "@/utils/constants";
-import MultiInput from "./MultiInput";
-import { CircleX, Image, X } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
-import { handleImageClick } from "@/utils/productCreateEdit_helpers";
-import { formatImageFromServer } from "@/utils/formatImageName";
+import styles from './CreateForms.module.scss';
+
+import React, { useEffect, useRef, useState } from 'react';
+
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import { setShowCreateGameAlert } from '@/redux/slices/alertSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+
+import { ENGLISH_ONLY_REGEX, TOAST_DURATION } from '@/utils/constants';
+import { formatImageFromServer } from '@/utils/formatImageName';
+import { handleImageClick } from '@/utils/productCreateEdit_helpers';
+
+import { createGame, editGame, getGameById } from '@/http/gameController';
+
+import MultiInput from './MultiInput';
+import { jost } from '@/font';
 
 const initialFormValues = {
-  name: "",
-  description: "",
+  name: '',
+  description: '',
   image: null as File | null,
 };
 
@@ -33,7 +40,7 @@ export default function CreateGameForm() {
   const [platformTags, setPlatformTags] = useState<string[]>([]);
   const [regionTags, setRegionTags] = useState<string[]>([]);
   const [serverTags, setServerTags] = useState<string[]>([]);
-  const [oldGameImageSrc, setOldGameImageSrc] = useState("");
+  const [oldGameImageSrc, setOldGameImageSrc] = useState('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -53,10 +60,7 @@ export default function CreateGameForm() {
 
   const appendTags = (formData: FormData, key: string, tags: string[]) => {
     if (tags.length > 0) {
-      formData.append(
-        key,
-        JSON.stringify(tags.map((tag) => tag.toUpperCase().trim()))
-      );
+      formData.append(key, JSON.stringify(tags.map((tag) => tag.toUpperCase().trim())));
     }
   };
 
@@ -64,22 +68,20 @@ export default function CreateGameForm() {
     e.preventDefault();
 
     const toastLabel =
-      createGameAlertType === "create"
-        ? "Гра успішно створена"
-        : "Гра успішно збережена";
+      createGameAlertType === 'create' ? 'Гра успішно створена' : 'Гра успішно збережена';
 
     setIsLoading(true);
 
     if (!ENGLISH_ONLY_REGEX.test(formValues.name.trim())) {
-      toast.error("Назва гри повинна містити тільки англійські літери!");
+      toast.error('Назва гри повинна містити тільки англійські літери!');
       setIsLoading(false);
       return;
     }
 
-    const isFormValid = (type: "create" | "edit") => {
+    const isFormValid = (type: 'create' | 'edit') => {
       return (
         Object.values(formValues).every((field) => {
-          if (type === "edit" && field === initialFormValues.image) {
+          if (type === 'edit' && field === initialFormValues.image) {
             return true;
           }
           return field;
@@ -91,25 +93,25 @@ export default function CreateGameForm() {
     };
 
     if (!isFormValid(createGameAlertType)) {
-      toast.error("Заповніть всі поля будь-ласка!");
+      toast.error('Заповніть всі поля будь-ласка!');
       setIsLoading(false);
       return;
     }
 
     const formData = new FormData();
-    formData.append("name", formValues.name.trim());
-    formData.append("description", formValues.description.trim());
-    appendTags(formData, "platforms", platformTags);
-    appendTags(formData, "servers", serverTags);
-    appendTags(formData, "region", regionTags);
+    formData.append('name', formValues.name.trim());
+    formData.append('description', formValues.description.trim());
+    appendTags(formData, 'platforms', platformTags);
+    appendTags(formData, 'servers', serverTags);
+    appendTags(formData, 'region', regionTags);
 
     if (formValues.image) {
-      formData.append("photo", formValues.image);
+      formData.append('photo', formValues.image);
     }
 
     try {
       let result;
-      if (editGameAlertGameId && createGameAlertType === "edit") {
+      if (editGameAlertGameId && createGameAlertType === 'edit') {
         result = await editGame(formData, editGameAlertGameId);
       } else {
         result = await createGame(formData);
@@ -124,14 +126,14 @@ export default function CreateGameForm() {
         }, TOAST_DURATION);
       }
     } catch (error) {
-      toast.error("Щось пішло не так. Спробуйте пізніше!");
+      toast.error('Щось пішло не так. Спробуйте пізніше!');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
@@ -158,11 +160,7 @@ export default function CreateGameForm() {
   useEffect(() => {
     setIsPageLoading(true);
     const getGame = async () => {
-      if (
-        createGameAlertType === "edit" &&
-        editGameAlertGameId &&
-        showCreateGameAlert
-      ) {
+      if (createGameAlertType === 'edit' && editGameAlertGameId && showCreateGameAlert) {
         const result = await getGameById(editGameAlertGameId);
 
         if (result) {
@@ -178,7 +176,7 @@ export default function CreateGameForm() {
           setOldGameImageSrc(result.photoPath);
         }
       } else {
-        setOldGameImageSrc("");
+        setOldGameImageSrc('');
       }
       setIsPageLoading(false);
     };
@@ -187,22 +185,20 @@ export default function CreateGameForm() {
   }, [showCreateGameAlert]);
 
   useEffect(() => {
-    if (createGameAlertType === "create") {
+    if (createGameAlertType === 'create') {
       handleResetState();
-      setOldGameImageSrc("");
+      setOldGameImageSrc('');
     }
   }, [createGameAlertType]);
 
   return (
     <section
       className={`${styles.root} ${jost.className} ${
-        showCreateGameAlert ? styles.show_form : ""
+        showCreateGameAlert ? styles.show_form : ''
       }`}
     >
       <article className={styles.wrapper}>
-        <h1>
-          {createGameAlertType === "create" ? "Створити гру" : "Редагувати гру"}
-        </h1>
+        <h1>{createGameAlertType === 'create' ? 'Створити гру' : 'Редагувати гру'}</h1>
         <X className={styles.close_span} onClick={handleCloseAlert} />
         {!isPageLoading && (
           <form onSubmit={handleSubmitForm}>
@@ -256,7 +252,7 @@ export default function CreateGameForm() {
                         size={20}
                         fill="red"
                         color="#fff"
-                        onClick={() => setOldGameImageSrc("")}
+                        onClick={() => setOldGameImageSrc('')}
                       />
                     </div>
                   </div>
@@ -275,7 +271,7 @@ export default function CreateGameForm() {
                   accept="image/*"
                   onChange={handleImageChange}
                   ref={fileInputRef}
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                 />
               </div>
             </div>
@@ -286,10 +282,8 @@ export default function CreateGameForm() {
               disabled={isLoading}
             >
               {isLoading
-                ? "Завантаження..."
-                : `${
-                    createGameAlertType === "create" ? "Створити" : "Зберегти"
-                  }`}
+                ? 'Завантаження...'
+                : `${createGameAlertType === 'create' ? 'Створити' : 'Зберегти'}`}
             </ServiceButton>
           </form>
         )}

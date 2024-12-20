@@ -1,38 +1,32 @@
-"use client";
+'use client';
 
-import styles from "./EditPage.module.scss";
+import { CircleX, Plus, X } from 'lucide-react';
+import toast from 'react-hot-toast';
+import isNumeric from 'validator/lib/isNumeric';
 
-import { jost, mont } from "@/font";
+import styles from './EditPage.module.scss';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-import InputBlock from "@/components/InputBlock/InputBlock";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
+import { useRouter } from 'next/navigation';
 
-import toast from "react-hot-toast";
+import InputBlock from '@/components/InputBlock/InputBlock';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
 
-import { CircleX, Plus, X } from "lucide-react";
+import useProduct from '@/hooks/useProduct';
 
-import withAuth from "@/utils/withAuth";
+import { MAX_IMAGES, TOAST_DURATION } from '@/utils/constants';
+import { formatImageFromServer, formatImageName } from '@/utils/formatImageName';
 import {
-  handleFileChange,
   handleEditFormChange,
-} from "@/utils/productCreateEdit_helpers";
+  handleFileChange,
+} from '@/utils/productCreateEdit_helpers';
+import withAuth from '@/utils/withAuth';
 
-import isNumeric from "validator/lib/isNumeric";
+import { privateAxios } from '@/http/axios';
+import { deleteProductImage } from '@/http/productController';
 
-import { privateAxios } from "@/http/axios";
-
-import useProduct from "@/hooks/useProduct";
-
-import {
-  formatImageFromServer,
-  formatImageName,
-} from "@/utils/formatImageName";
-
-import { useRouter } from "next/navigation";
-import { MAX_IMAGES, TOAST_DURATION } from "@/utils/constants";
-import { deleteProductImage } from "@/http/productController";
+import { jost, mont } from '@/font';
 
 interface EditProps {
   productId: string;
@@ -44,10 +38,10 @@ function EditPage({ productId }: EditProps) {
   const [loading, setLoading] = useState(false);
   const [editIsLoading, setEditIsLoading] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    description: "",
-    detailDescription: "",
-    price: "",
+    name: '',
+    description: '',
+    detailDescription: '',
+    price: '',
   });
 
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
@@ -89,18 +83,18 @@ function EditPage({ productId }: EditProps) {
           return updatedImages;
         });
       } else {
-        toast.error("Щось пішло не так. Спробуйте пізніше.");
+        toast.error('Щось пішло не так. Спробуйте пізніше.');
       }
     }
   };
 
   const validateForm = (): boolean => {
-    if (Object.values(form).some((field) => field === "")) {
-      toast.error("Заповніть всі поля будь-ласка!");
+    if (Object.values(form).some((field) => field === '')) {
+      toast.error('Заповніть всі поля будь-ласка!');
       return false;
     }
     if (!isNumeric(form.price) || parseFloat(form.price) <= 0) {
-      toast.error("Некоректне значення ціни!");
+      toast.error('Некоректне значення ціни!');
       return false;
     }
     return true;
@@ -113,27 +107,23 @@ function EditPage({ productId }: EditProps) {
 
     try {
       const formData = new FormData();
-      Object.entries(form).forEach(([key, value]) =>
-        formData.append(key, value.trim())
-      );
-      formData.append("ownerId", data.ownerId);
-      formData.append("gameId", data.gameId);
-      formData.append("productType", data.type);
+      Object.entries(form).forEach(([key, value]) => formData.append(key, value.trim()));
+      formData.append('ownerId', data.ownerId);
+      formData.append('gameId', data.gameId);
+      formData.append('productType', data.type);
 
-      uploadedImages.forEach((file) =>
-        formData.append("images", file, file.name)
-      );
+      uploadedImages.forEach((file) => formData.append('images', file, file.name));
 
       const result = await privateAxios.put(`/products/${productId}`, formData);
 
       if (result.data !== null && result.status === 200) {
-        toast.success("Продукт успішно змінено!");
-        setTimeout(() => router.push("/profile/products"), TOAST_DURATION);
+        toast.success('Продукт успішно змінено!');
+        setTimeout(() => router.push('/profile/products'), TOAST_DURATION);
       } else {
-        throw new Error("Server responded with an error");
+        throw new Error('Server responded with an error');
       }
     } catch (error) {
-      toast.error("Щось пішло не так! Спробуйте пізніше");
+      toast.error('Щось пішло не так! Спробуйте пізніше');
     } finally {
       setLoading(false);
     }
@@ -204,7 +194,7 @@ function EditPage({ productId }: EditProps) {
                       type="file"
                       accept="image/*"
                       ref={fileInputRef}
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                       onChange={(e) => handleFileChange(e, setUploadedImages)}
                     />
                   </div>
@@ -215,14 +205,14 @@ function EditPage({ productId }: EditProps) {
                   uploadedImages.map((image) => {
                     return (
                       <p key={image.name}>
-                        {formatImageName(image.name)}{" "}
+                        {formatImageName(image.name)}{' '}
                         <X
                           color="red"
                           size={16}
                           className={styles.delete}
                           onClick={() => {
                             setUploadedImages((prev) =>
-                              prev.filter((img) => img !== image)
+                              prev.filter((img) => img !== image),
                             );
                           }}
                         />
@@ -244,7 +234,7 @@ function EditPage({ productId }: EditProps) {
               onClick={handleEditProduct}
               disabled={loading}
             >
-              {loading ? "Завантаження..." : "Зберегти"}
+              {loading ? 'Завантаження...' : 'Зберегти'}
             </ServiceButton>
           </div>
         )}

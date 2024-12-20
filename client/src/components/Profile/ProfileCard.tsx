@@ -1,21 +1,23 @@
-"use client";
+'use client';
 
-import { Pencil } from "lucide-react";
-import styles from "./Profile.module.scss";
-import ProfileButton from "./ProfileButton";
+import AlertChangeForm from '../AlertChangeForm/AlertChangeForm';
+import StarRating from '../GameCards/StarRating';
+import { Pencil } from 'lucide-react';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import { jost } from "@/font";
-import { profile_links } from "@/static_store/profile_links";
-import StarRating from "../GameCards/StarRating";
-import { User } from "@/types/user.type";
-import AlertChangeForm from "../AlertChangeForm/AlertChangeForm";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import {
-  setChangeAlertType,
-  setShowChangeAlert,
-} from "@/redux/slices/alertSlice";
-import { formatImageFromServer } from "@/utils/formatImageName";
+import styles from './Profile.module.scss';
+
+import { User } from '@/types/user.type';
+
+import { setChangeAlertType, setShowChangeAlert } from '@/redux/slices/alertSlice';
+
+import { useAppDispatch } from '@/hooks/redux-hooks';
+
+import { formatImageFromServer } from '@/utils/formatImageName';
+
+import ProfileButton from './ProfileButton';
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost } from '@/font';
+import { profile_links } from '@/static_store/profile_links';
 
 interface ProfileProps {
   user: User;
@@ -24,7 +26,7 @@ interface ProfileProps {
 export default function ProfileCard({ user }: ProfileProps) {
   const dispatch = useAppDispatch();
 
-  const handleAlertOpen = (alertType: "name" | "password") => {
+  const handleAlertOpen = (alertType: 'name' | 'password') => {
     dispatch(setShowChangeAlert(true));
     dispatch(setChangeAlertType(alertType));
   };
@@ -36,16 +38,16 @@ export default function ProfileCard({ user }: ProfileProps) {
           <div
             className={styles.image_div}
             style={{
-              backgroundColor: "#B0C4DE",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#fff",
-              fontSize: "30px",
-              fontWeight: "bold",
+              backgroundColor: '#B0C4DE',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#fff',
+              fontSize: '30px',
+              fontWeight: 'bold',
             }}
           >
-            <span>{user?.name ? user?.name[0]?.toUpperCase() : "U"}</span>
+            <span>{user?.name ? user?.name[0]?.toUpperCase() : 'U'}</span>
           </div>
           <div className={styles.user_info}>
             <div className={styles.name}>
@@ -55,16 +57,12 @@ export default function ProfileCard({ user }: ProfileProps) {
               <Pencil
                 size={16}
                 className={styles.svg}
-                onClick={() => handleAlertOpen("name")}
+                onClick={() => handleAlertOpen('name')}
               />
             </div>
             <div className={styles.name}>
               <p>Рейтинг:</p>
-              <StarRating
-                size={14}
-                rating={user.rating}
-                className={styles.stars}
-              />
+              <StarRating size={14} rating={user.rating} className={styles.stars} />
             </div>
             <div className={styles.name}>
               <p>
@@ -78,7 +76,7 @@ export default function ProfileCard({ user }: ProfileProps) {
               <Pencil
                 size={16}
                 className={styles.svg}
-                onClick={() => handleAlertOpen("password")}
+                onClick={() => handleAlertOpen('password')}
               />
             </div>
           </div>

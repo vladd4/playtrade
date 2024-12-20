@@ -1,5 +1,6 @@
-import FilterComponent from "@/components/Filters/FilterComponent";
-import GamePage from "@/all-pages/GamePage/GamePage";
+import FilterComponent from '@/components/Filters/FilterComponent';
+
+import GamePage from '@/all-pages/GamePage/GamePage';
 
 export default function GameDetailsPage({ searchParams }: any) {
   const gameId = searchParams.id;

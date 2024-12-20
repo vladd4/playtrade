@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import styles from "./MyProducts.module.scss";
+import { Plus } from 'lucide-react';
 
-import { jost, mont } from "@/font";
+import styles from './MyProducts.module.scss';
 
-import FullGameCard from "@/components/GameCards/FullGameCard";
+import { useRouter } from 'next/navigation';
 
-import { Plus } from "lucide-react";
+import FullGameCard from '@/components/GameCards/FullGameCard';
 
-import { useRouter } from "next/navigation";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useMyProducts from '@/hooks/useMyProducts';
 
-import withAuth from "@/utils/withAuth";
+import withAuth from '@/utils/withAuth';
 
-import useMyProducts from "@/hooks/useMyProducts";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { jost, mont } from '@/font';
 
 function MyProductsPage() {
   const router = useRouter();
@@ -37,7 +37,7 @@ function MyProductsPage() {
         <div className={`${styles.add_product} ${jost.className}`}>
           <p>
             {data && data.length > 0 ? (
-              "Натисніть + щоб додати товар"
+              'Натисніть + щоб додати товар'
             ) : (
               <>
                 У вас поки нема товарів!
@@ -46,7 +46,7 @@ function MyProductsPage() {
               </>
             )}
           </p>
-          <div onClick={() => router.push("/profile/products/create-product")}>
+          <div onClick={() => router.push('/profile/products/create-product')}>
             <Plus color="#fff" size={18} />
           </div>
         </div>

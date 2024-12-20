@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import styles from "./GameDetail.module.scss";
+import styles from './GameDetail.module.scss';
 
-import SellerSmallCard from "@/components/SellerCard/SellerSmallCard";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import FullGameCard from "@/components/GameCards/FullGameCard";
+import FullGameCard from '@/components/GameCards/FullGameCard';
+import SellerSmallCard from '@/components/SellerCard/SellerSmallCard';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
 
-import withAuth from "@/utils/withAuth";
-import { getFromSessionStorage } from "@/utils/sessionStorage_helper";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useProduct from '@/hooks/useProduct';
 
-import useProduct from "@/hooks/useProduct";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { getFromSessionStorage } from '@/utils/sessionStorage_helper';
+import withAuth from '@/utils/withAuth';
 
 interface DetailsProps {
   productId: string;
@@ -23,7 +23,7 @@ function GameDetailPage({ productId }: DetailsProps) {
 
   const { userId } = useAppSelector((state) => state.user);
 
-  const sellerInfo = seller ?? JSON.parse(getFromSessionStorage("seller")!);
+  const sellerInfo = seller ?? JSON.parse(getFromSessionStorage('seller')!);
 
   if (isLoading) return null;
 
@@ -54,8 +54,8 @@ function GameDetailPage({ productId }: DetailsProps) {
           ) : (
             <p>
               {userId === data?.ownerId
-                ? "Ви ще не отримали відгуку!"
-                : "Користувач ще не отримав відгуку!"}
+                ? 'Ви ще не отримали відгуку!'
+                : 'Користувач ще не отримав відгуку!'}
             </p>
           )}
           {data?.latestReviews && data?.latestReviews.length > 0 && (

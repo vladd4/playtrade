@@ -1,7 +1,9 @@
-import { days } from "@/font";
-import styles from "./Alphabet.module.scss";
-import { alphabet_letters } from "@/static_store/alphabet_letters";
-import Link from "next/link";
+import styles from './Alphabet.module.scss';
+
+import Link from 'next/link';
+
+import { days } from '@/font';
+import { alphabet_letters } from '@/static_store/alphabet_letters';
 
 export default function Alphabet() {
   return (

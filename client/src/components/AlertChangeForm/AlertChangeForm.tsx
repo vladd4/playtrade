@@ -1,16 +1,21 @@
-"use client";
+'use client';
 
-import { jost } from "@/font";
-import styles from "./Alert.module.scss";
-import React, { useState } from "react";
-import ServiceButton from "../ServiceButtons/ServiceButton";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowChangeAlert } from "@/redux/slices/alertSlice";
-import { changeUserName, changeUserPassword } from "@/http/userController";
-import { Eye, EyeOff, X } from "lucide-react";
+import ServiceButton from '../ServiceButtons/ServiceButton';
+import { useQueryClient } from '@tanstack/react-query';
+import { Eye, EyeOff, X } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import styles from './Alert.module.scss';
+
+import React, { useState } from 'react';
+
+import { setShowChangeAlert } from '@/redux/slices/alertSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+
+import { changeUserName, changeUserPassword } from '@/http/userController';
+
+import { jost } from '@/font';
 
 interface AlertProps {
   currentUserName: string;
@@ -37,7 +42,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         value={value}
         name={name}
         onChange={onChange}
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
         required
       />
@@ -62,25 +67,21 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
 export default function AlertChangeForm({ currentUserName }: AlertProps) {
   const [formData, setFormData] = useState({
-    oldPassword: "",
-    newPassword: "",
+    oldPassword: '',
+    newPassword: '',
   });
-  const [userName, setUserName] = useState(
-    currentUserName ? currentUserName : ""
-  );
+  const [userName, setUserName] = useState(currentUserName ? currentUserName : '');
   const [isLoading, setIsLoading] = useState(false);
 
   const queryClient = useQueryClient();
 
-  const { showChangeAlert, changeAlertType } = useAppSelector(
-    (state) => state.alert
-  );
+  const { showChangeAlert, changeAlertType } = useAppSelector((state) => state.alert);
   const { userId } = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
 
   const resetState = () => {
-    setFormData((prev) => ({ ...prev, oldPassword: "", newPassword: "" }));
+    setFormData((prev) => ({ ...prev, oldPassword: '', newPassword: '' }));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,19 +93,19 @@ export default function AlertChangeForm({ currentUserName }: AlertProps) {
     e.preventDefault();
 
     if (!userId) {
-      toast.error("Користувача не знайдено. Спробуйте пізніше!");
+      toast.error('Користувача не знайдено. Спробуйте пізніше!');
       return;
     }
 
     setIsLoading(true);
     try {
-      if (changeAlertType === "password") {
+      if (changeAlertType === 'password') {
         await handlePasswordChange(userId);
       } else {
         await handleNameChange(userId);
       }
     } catch (error) {
-      toast.error("Щось пішло не так. Спробуйте пізніше!");
+      toast.error('Щось пішло не так. Спробуйте пізніше!');
     } finally {
       setIsLoading(false);
     }
@@ -113,23 +114,19 @@ export default function AlertChangeForm({ currentUserName }: AlertProps) {
   const handlePasswordChange = async (userId: string) => {
     const { oldPassword, newPassword } = formData;
     if (newPassword === oldPassword) {
-      toast.error("Новий пароль має відрізнятися!");
+      toast.error('Новий пароль має відрізнятися!');
       return;
     }
 
-    const statusCode = await changeUserPassword(
-      userId,
-      oldPassword,
-      newPassword
-    );
+    const statusCode = await changeUserPassword(userId, oldPassword, newPassword);
     if (statusCode === 200) {
-      toast.success("Пароль успішно змінено.");
+      toast.success('Пароль успішно змінено.');
       dispatch(setShowChangeAlert(false));
       resetState();
     } else if (statusCode === 400) {
-      toast.error("Неправильний пароль. Спробуйте ще раз.");
+      toast.error('Неправильний пароль. Спробуйте ще раз.');
     } else {
-      toast.error("Щось пішло не так. Спробуйте ще раз пізніше.");
+      toast.error('Щось пішло не так. Спробуйте ще раз пізніше.');
     }
   };
 
@@ -141,14 +138,14 @@ export default function AlertChangeForm({ currentUserName }: AlertProps) {
       dispatch(setShowChangeAlert(false));
       setFormData((prev) => ({ ...prev, userName: response.data.name }));
     } else {
-      toast.error("Щось пішло не так. Спробуйте ще раз пізніше.");
+      toast.error('Щось пішло не так. Спробуйте ще раз пізніше.');
     }
   };
 
   return (
     <section
       className={`${styles.root} ${jost.className} ${
-        showChangeAlert ? styles.show_root : ""
+        showChangeAlert ? styles.show_root : ''
       }`}
     >
       <article className={styles.form_block}>
@@ -160,12 +157,10 @@ export default function AlertChangeForm({ currentUserName }: AlertProps) {
           className={styles.svg}
         />
         <p>
-          {changeAlertType === "password"
-            ? "Зміна паролю"
-            : "Зміна ім'я користувача"}
+          {changeAlertType === 'password' ? 'Зміна паролю' : "Зміна ім'я користувача"}
         </p>
         <form onSubmit={handleSubmit}>
-          {changeAlertType === "password" ? (
+          {changeAlertType === 'password' ? (
             <>
               <PasswordInput
                 value={formData.oldPassword}
@@ -193,7 +188,7 @@ export default function AlertChangeForm({ currentUserName }: AlertProps) {
             </div>
           )}
           <ServiceButton type="submit" disabled={isLoading}>
-            {isLoading ? "Завантаження..." : "Зберегти"}
+            {isLoading ? 'Завантаження...' : 'Зберегти'}
           </ServiceButton>
         </form>
       </article>

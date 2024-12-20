@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import styles from "./Wallet.module.scss";
+import { ChevronDown, ChevronUp, Plus, Redo2 } from 'lucide-react';
 
-import { jost, mont } from "@/font";
+import styles from './Wallet.module.scss';
 
-import { ChevronDown, ChevronUp, Plus, Redo2 } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
-import { useRouter } from "next/navigation";
+import WalletHistory from '@/components/WalletHistory/WalletHistory';
 
-import WalletHistory from "@/components/WalletHistory/WalletHistory";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useUserProfile from '@/hooks/useUserProfile';
 
-import withAuth from "@/utils/withAuth";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import useUserProfile from "@/hooks/useUserProfile";
+import withAuth from '@/utils/withAuth';
+
+import { jost, mont } from '@/font';
 
 function Wallet() {
   const router = useRouter();
@@ -31,13 +32,13 @@ function Wallet() {
           <h5>Ваш баланс</h5>
           <span>{data?.balance || 0}$</span>
           <div className={styles.buttons_block}>
-            <div onClick={() => router.push("/profile/wallet/deposit")}>
+            <div onClick={() => router.push('/profile/wallet/deposit')}>
               <div className={styles.back_div}>
                 <Plus size={18} color="#fff" />
               </div>
               <p>Поповнити баланс</p>
             </div>
-            <div onClick={() => router.push("/profile/wallet/withdraw")}>
+            <div onClick={() => router.push('/profile/wallet/withdraw')}>
               <div className={styles.back_div}>
                 <Redo2 size={18} color="#fff" />
               </div>

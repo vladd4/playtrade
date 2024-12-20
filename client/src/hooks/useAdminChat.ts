@@ -1,5 +1,6 @@
-import { getChatByChatId } from "@/http/chatController";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+
+import { getChatByChatId } from '@/http/chatController';
 
 const useAdminChat = ({ id }: { id: string }) => {
   return useQuery({

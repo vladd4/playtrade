@@ -1,6 +1,6 @@
-import { LatestMessage, Message } from "./message.type";
-import { ChatProduct } from "./product.type";
-import { User } from "./user.type";
+import { LatestMessage, Message } from './message.type';
+import { ChatProduct } from './product.type';
+import { User } from './user.type';
 
 export type Chat = {
   id: string;

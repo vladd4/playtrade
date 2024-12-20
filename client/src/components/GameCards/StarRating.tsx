@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star } from 'lucide-react';
 
 interface StarRatingProps {
   rating: number;
@@ -12,7 +12,7 @@ const StarRating = ({ rating, className, size }: StarRatingProps) => {
       {[...Array(5)].map((_, index) => (
         <Star
           key={index}
-          fill={index < rating ? "#E8D635" : "none"}
+          fill={index < rating ? '#E8D635' : 'none'}
           color="#E8D635"
           size={size}
         />

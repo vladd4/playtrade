@@ -1,5 +1,5 @@
-import { LatestMessage } from "./message.type";
-import { User } from "./user.type";
+import { LatestMessage } from './message.type';
+import { User } from './user.type';
 
 export type SupportChat = {
   id: string;

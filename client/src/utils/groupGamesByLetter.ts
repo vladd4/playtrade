@@ -1,14 +1,17 @@
-import { Game } from "@/types/game.type";
+import { Game } from '@/types/game.type';
 
 export const groupedGames = (games: Game[]): Record<string, Game[]> => {
-  const grouped = games.reduce((acc, game) => {
-    const firstLetter = game.name.trim()[0].toUpperCase();
-    if (!acc[firstLetter]) {
-      acc[firstLetter] = [];
-    }
-    acc[firstLetter].push(game);
-    return acc;
-  }, {} as Record<string, Game[]>);
+  const grouped = games.reduce(
+    (acc, game) => {
+      const firstLetter = game.name.trim()[0].toUpperCase();
+      if (!acc[firstLetter]) {
+        acc[firstLetter] = [];
+      }
+      acc[firstLetter].push(game);
+      return acc;
+    },
+    {} as Record<string, Game[]>,
+  );
 
   const sortedKeys = Object.keys(grouped).sort();
 
@@ -21,9 +24,7 @@ export const groupedGames = (games: Game[]): Record<string, Game[]> => {
   return sortedGrouped;
 };
 
-export const parseGroupedGamesToOptions = (
-  groupedGames: Record<string, Game[]>
-) => {
+export const parseGroupedGamesToOptions = (groupedGames: Record<string, Game[]>) => {
   const options: {
     label: string;
     value: string;

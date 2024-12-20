@@ -1,11 +1,11 @@
-import { User } from "./user.type";
+import { User } from './user.type';
 
 export type Purchase = {
   id: string;
   name: string;
   date: string;
   price: number;
-  status: "success" | "rejected";
+  status: 'success' | 'rejected';
 };
 
 export type MyPurchase = {

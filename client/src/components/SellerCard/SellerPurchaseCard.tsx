@@ -1,20 +1,23 @@
-"use client";
+'use client';
 
-import styles from "./SellerCard.module.scss";
-import ServiceButton from "../ServiceButtons/ServiceButton";
+import StarRating from '../GameCards/StarRating';
+import ServiceButton from '../ServiceButtons/ServiceButton';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import { jost, mont } from "@/font";
-import { useRouter } from "next/navigation";
-import StarRating from "../GameCards/StarRating";
+import styles from './SellerCard.module.scss';
 
-import { formatImageFromServer } from "@/utils/formatImageName";
-import { MyPurchase } from "@/types/purchase.type";
+import { MyPurchase } from '@/types/purchase.type';
+
+import { useRouter } from 'next/navigation';
+
+import { formatImageFromServer } from '@/utils/formatImageName';
+
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost, mont } from '@/font';
 
 type SellerCardProps = {
   isNotification?: boolean;
   isActiveNotification?: boolean;
-  buttonLabel?: "Продати" | "Купити";
+  buttonLabel?: 'Продати' | 'Купити';
   product?: MyPurchase;
 };
 
@@ -28,27 +31,23 @@ export default function SellerPurchaseCard({
 
   return (
     <div className={styles.root}>
-      {isNotification && isActiveNotification && (
-        <div className={styles.notification} />
-      )}
+      {isNotification && isActiveNotification && <div className={styles.notification} />}
       <div className={`${styles.top_block} ${jost.className}`}>
         <div className={styles.seller_info}>
           <div
             style={{
-              backgroundColor: "#B0C4DE",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#fff",
-              fontSize: "12px",
-              fontWeight: "bold",
+              backgroundColor: '#B0C4DE',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#fff',
+              fontSize: '12px',
+              fontWeight: 'bold',
             }}
             className={styles.avatar_div}
           >
             <span>
-              {product?.seller?.name
-                ? product?.seller?.name[0]?.toUpperCase()
-                : "U"}
+              {product?.seller?.name ? product?.seller?.name[0]?.toUpperCase() : 'U'}
             </span>
           </div>
           <h1>Продавець {product?.seller?.name}</h1>

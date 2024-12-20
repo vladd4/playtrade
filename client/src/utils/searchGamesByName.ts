@@ -1,22 +1,20 @@
-import {
-  setFilteredGames,
-  setSearchedValue,
-} from "@/redux/slices/filteredGames";
-import { AppDispatch } from "@/redux/store";
-import { Game } from "@/types/game.type";
+import { Game } from '@/types/game.type';
+
+import { setFilteredGames, setSearchedValue } from '@/redux/slices/filteredGames';
+import { AppDispatch } from '@/redux/store';
 
 export const searchGameByName = (
   searchTerm: string,
   games: Record<string, Game[]>,
-  dispatch: AppDispatch
+  dispatch: AppDispatch,
 ) => {
   const result: Game[] = [];
 
-  const normalizedSearchTerm = searchTerm.toLowerCase().replace(/\s+/g, "");
+  const normalizedSearchTerm = searchTerm.toLowerCase().replace(/\s+/g, '');
 
   Object.keys(games).forEach((letter) => {
     const filteredGames = games[letter].filter((game) => {
-      const normalizedGameName = game.name.toLowerCase().replace(/\s+/g, "");
+      const normalizedGameName = game.name.toLowerCase().replace(/\s+/g, '');
 
       return normalizedGameName.includes(normalizedSearchTerm);
     });

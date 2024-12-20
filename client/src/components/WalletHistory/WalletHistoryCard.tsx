@@ -1,18 +1,18 @@
-import styles from "./Wallet.module.scss";
+import { MoveLeft, MoveRight } from 'lucide-react';
 
-import { MoveLeft, MoveRight } from "lucide-react";
+import styles from './Wallet.module.scss';
 
 type WalletCardProps = {
   amount: number;
   transactionType: string;
-  type: "plus" | "minus";
+  type: 'plus' | 'minus';
 };
 
 export default function WalletHistoryCard(props: WalletCardProps) {
   return (
     <div className={styles.card_root}>
       <div className={styles.top_block}>
-        {props.type === "minus" ? (
+        {props.type === 'minus' ? (
           <MoveLeft size={20} color="var(--button-active-color)" />
         ) : (
           <MoveRight size={20} color="var(--button-active-color)" />
@@ -22,7 +22,7 @@ export default function WalletHistoryCard(props: WalletCardProps) {
       <div className={styles.bottom_block}>
         <p>Сума</p>
         <p>
-          {props.type === "minus" ? "-" : "+"} {props.amount} $
+          {props.type === 'minus' ? '-' : '+'} {props.amount} $
         </p>
       </div>
     </div>

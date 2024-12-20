@@ -1,24 +1,25 @@
-import { jost } from "@/font";
-import styles from "./AdminEdit.module.scss";
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { isNumeric } from 'validator';
 
-import React, { FormEvent, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowEditUsersAdmin } from "@/redux/slices/alertSlice";
+import styles from './AdminEdit.module.scss';
 
-import SelectBlock from "@/components/SelectBlock/SelectBlock";
-import { verify_options } from "@/static_store/edit_admin_options";
-import { isNumeric } from "validator";
-import {
-  updateBalance,
-  updateStatus,
-  updateUserRole,
-} from "@/http/userController";
-import { useQueryClient } from "@tanstack/react-query";
+import React, { FormEvent, useEffect, useState } from 'react';
 
-import { privateAxios } from "@/http/axios";
-import { UserRoles } from "@/utils/constants";
+import SelectBlock from '@/components/SelectBlock/SelectBlock';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import { setShowEditUsersAdmin } from '@/redux/slices/alertSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+
+import { UserRoles } from '@/utils/constants';
+
+import { privateAxios } from '@/http/axios';
+import { updateBalance, updateStatus, updateUserRole } from '@/http/userController';
+
+import { jost } from '@/font';
+import { verify_options } from '@/static_store/edit_admin_options';
 
 interface UserFormValues {
   balance: string;
@@ -40,29 +41,22 @@ interface AdvertFormValues {
 
 export default function AdminEditAlert() {
   const [userFormValues, setUserFormValues] = useState<UserFormValues>();
-  const [managerFormValues, setManagerFormValues] =
-    useState<ManagerFormValues>();
+  const [managerFormValues, setManagerFormValues] = useState<ManagerFormValues>();
   const [advertFormValues, setAdvertFormValues] = useState<AdvertFormValues>();
-  const [label, setLabel] = useState("");
+  const [label, setLabel] = useState('');
 
   const dispatch = useAppDispatch();
-  const {
-    showEditUsersAdmin,
-    editUsersAdminType,
-    adminAdvertToEdit,
-    adminUserToEdit,
-  } = useAppSelector((state) => state.alert);
+  const { showEditUsersAdmin, editUsersAdminType, adminAdvertToEdit, adminUserToEdit } =
+    useAppSelector((state) => state.alert);
 
   const queryClient = useQueryClient();
 
   const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     setValues:
       | React.Dispatch<React.SetStateAction<UserFormValues | undefined>>
       | React.Dispatch<React.SetStateAction<AdvertFormValues | undefined>>
-      | React.Dispatch<React.SetStateAction<ManagerFormValues | undefined>>
+      | React.Dispatch<React.SetStateAction<ManagerFormValues | undefined>>,
   ) => {
     const { name, value } = e.target;
     setValues((prevValues: any) => ({
@@ -83,17 +77,17 @@ export default function AdminEditAlert() {
         !isNumeric(userFormValues.balance) ||
         parseFloat(userFormValues?.balance) <= 0
       ) {
-        toast.error("Некоректне значення балансу!");
+        toast.error('Некоректне значення балансу!');
       } else {
         const result = await updateBalance(
           userFormValues.userId,
-          parseFloat(userFormValues.balance)
+          parseFloat(userFormValues.balance),
         );
         if (result) {
-          toast.success("Значення балансу оновлено!");
+          toast.success('Значення балансу оновлено!');
           queryClient.invalidateQueries({ queryKey: [`all-users`] });
         } else {
-          toast.error("Щось пішло не так. Спробуйте пізніше!");
+          toast.error('Щось пішло не так. Спробуйте пізніше!');
         }
       }
     }
@@ -103,13 +97,13 @@ export default function AdminEditAlert() {
     e.preventDefault();
 
     if (userFormValues?.isVerified) {
-      const status = userFormValues.isVerified === "yes" ? true : false;
+      const status = userFormValues.isVerified === 'yes' ? true : false;
       const result = await updateStatus(userFormValues.userId, status);
       if (result) {
-        toast.success("Статус верифікації оновлено!");
+        toast.success('Статус верифікації оновлено!');
         queryClient.invalidateQueries({ queryKey: [`all-users`] });
       } else {
-        toast.error("Щось пішло не так. Спробуйте пізніше!");
+        toast.error('Щось пішло не так. Спробуйте пізніше!');
       }
     }
   };
@@ -120,14 +114,14 @@ export default function AdminEditAlert() {
     if (managerFormValues?.role) {
       const result = await updateUserRole(
         managerFormValues.userId,
-        managerFormValues.role
+        managerFormValues.role,
       );
       if (result) {
-        toast.success("Роль користувача оновлено!");
+        toast.success('Роль користувача оновлено!');
         queryClient.invalidateQueries({ queryKey: [`all-managers`] });
         dispatch(setShowEditUsersAdmin(false));
       } else {
-        toast.error("Щось пішло не так. Спробуйте пізніше!");
+        toast.error('Щось пішло не так. Спробуйте пізніше!');
       }
     }
   };
@@ -140,20 +134,20 @@ export default function AdminEditAlert() {
         !isNumeric(advertFormValues.price) ||
         parseFloat(advertFormValues?.price) <= 0
       ) {
-        toast.error("Некоректне значення ціни!");
+        toast.error('Некоректне значення ціни!');
       } else {
         const formData = new FormData();
         Object.entries(advertFormValues).forEach(([key, value]) =>
-          formData.append(key, value.trim())
+          formData.append(key, value.trim()),
         );
 
         const result = await privateAxios.put(
           `/products/${advertFormValues.productId}`,
-          formData
+          formData,
         );
 
         if (result.data !== null && result.status === 200) {
-          toast.success("Оголошення успішно змінено!");
+          toast.success('Оголошення успішно змінено!');
           queryClient.invalidateQueries({ queryKey: [`all-products`] });
           dispatch(setShowEditUsersAdmin(false));
         }
@@ -162,23 +156,23 @@ export default function AdminEditAlert() {
   };
 
   useEffect(() => {
-    if (editUsersAdminType === "user" && adminUserToEdit !== null) {
-      setLabel("користувача");
+    if (editUsersAdminType === 'user' && adminUserToEdit !== null) {
+      setLabel('користувача');
       setUserFormValues({
-        balance: adminUserToEdit.balance?.toString() ?? "0",
-        isVerified: adminUserToEdit.isVerified ? "yes" : "no",
+        balance: adminUserToEdit.balance?.toString() ?? '0',
+        isVerified: adminUserToEdit.isVerified ? 'yes' : 'no',
         userId: adminUserToEdit.id!,
       });
-    } else if (editUsersAdminType === "product" && adminAdvertToEdit !== null) {
-      setLabel("оголошення");
+    } else if (editUsersAdminType === 'product' && adminAdvertToEdit !== null) {
+      setLabel('оголошення');
       setAdvertFormValues({
-        price: adminAdvertToEdit.price ?? "0",
+        price: adminAdvertToEdit.price ?? '0',
         name: adminAdvertToEdit.name,
         description: adminAdvertToEdit.description,
         productId: adminAdvertToEdit.id,
       });
-    } else if (editUsersAdminType === "manager" && adminUserToEdit !== null) {
-      setLabel("користувача");
+    } else if (editUsersAdminType === 'manager' && adminUserToEdit !== null) {
+      setLabel('користувача');
       setManagerFormValues({
         role: adminUserToEdit.role as UserRoles,
         userId: adminUserToEdit.id!,
@@ -190,12 +184,12 @@ export default function AdminEditAlert() {
     <>
       <section
         className={`${styles.root} ${jost.className} ${
-          showEditUsersAdmin ? styles.show_form : ""
+          showEditUsersAdmin ? styles.show_form : ''
         }`}
       >
         <article className={styles.wrapper}>
           <h1>Редагувати {label}</h1>
-          {editUsersAdminType === "user" ? (
+          {editUsersAdminType === 'user' ? (
             <>
               <form onSubmit={handleUpdateUserBalance}>
                 <p>Баланс користувача</p>
@@ -213,8 +207,8 @@ export default function AdminEditAlert() {
                 <SelectBlock
                   value={userFormValues?.isVerified!}
                   defaultValue={{
-                    value: "placeholder",
-                    label: "Оберіть опцію",
+                    value: 'placeholder',
+                    label: 'Оберіть опцію',
                   }}
                   options={verify_options}
                   name="isVerified"
@@ -227,7 +221,7 @@ export default function AdminEditAlert() {
                 </ServiceButton>
               </form>
             </>
-          ) : editUsersAdminType === "product" ? (
+          ) : editUsersAdminType === 'product' ? (
             <form onSubmit={handleEditProduct}>
               <p>Назва продукту</p>
               <input
@@ -284,9 +278,7 @@ export default function AdminEditAlert() {
       </section>
       <div
         onClick={handleCloseAlert}
-        className={`${styles.overlay} ${
-          showEditUsersAdmin ? styles.show_form : ""
-        }`}
+        className={`${styles.overlay} ${showEditUsersAdmin ? styles.show_form : ''}`}
       />
     </>
   );

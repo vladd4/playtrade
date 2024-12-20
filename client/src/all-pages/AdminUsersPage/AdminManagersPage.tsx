@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import styles from "./AdminUsers.module.scss";
+import 'rc-pagination/assets/index.css';
+import Pagination from 'rc-pagination/lib/Pagination';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
-import AdminTable from "@/components/Admin/AdminTable/AdminTable";
-import { ITEMS_PER_PAGE_COUNT } from "@/utils/constants";
+import styles from './AdminUsers.module.scss';
 
-import Pagination from "rc-pagination/lib/Pagination";
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import AdminTable from '@/components/Admin/AdminTable/AdminTable';
 
-import "rc-pagination/assets/index.css";
-import usePagination from "@/hooks/usePagination";
-import useAllManagers from "@/hooks/useAllManagers";
-import withAdminAuth from "@/utils/withAdminAuth";
+import useAllManagers from '@/hooks/useAllManagers';
+import usePagination from '@/hooks/usePagination';
+
+import { ITEMS_PER_PAGE_COUNT } from '@/utils/constants';
+import withAdminAuth from '@/utils/withAdminAuth';
 
 function AdminManagersPage() {
   const { page, handlePageChange } = usePagination();

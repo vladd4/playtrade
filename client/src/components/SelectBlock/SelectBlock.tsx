@@ -1,14 +1,13 @@
-import { jost } from "@/font";
-import styles from "./Select.module.scss";
+import styles from './Select.module.scss';
+
+import { jost } from '@/font';
 
 interface SelectProps {
   name: string;
   label: string;
   options: { label: string; value: string }[];
   onStateChange: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => void;
   value: string;
   defaultValue?: { label: string; value: string };

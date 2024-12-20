@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type ImageViewerSlice = {
   showImageViewer: boolean;
@@ -9,7 +9,7 @@ const initialState: ImageViewerSlice = {
 };
 
 export const imageViewerSlice = createSlice({
-  name: "imageViewer",
+  name: 'imageViewer',
   initialState,
   reducers: {
     setShowImageViewer: (state, action: PayloadAction<boolean>) => {

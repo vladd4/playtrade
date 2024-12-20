@@ -1,6 +1,6 @@
-import styles from "./Loader.module.scss";
+import { Loader } from 'lucide-react';
 
-import { Loader } from "lucide-react";
+import styles from './Loader.module.scss';
 
 export default function LoaderComponent() {
   return (

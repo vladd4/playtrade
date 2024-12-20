@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import styles from "./AdminMessages.module.scss";
+import Pagination from 'rc-pagination/lib/Pagination';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
+import styles from './AdminMessages.module.scss';
 
-import Pagination from "rc-pagination/lib/Pagination";
-import { ITEMS_PER_PAGE_COUNT } from "@/utils/constants";
-import usePagination from "@/hooks/usePagination";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import useSupportChats from "@/hooks/useSupportChats";
-import AdminSupportItem from "@/components/Admin/AdminMessages/AdminSupportItem";
-import withManagerAuth from "@/utils/withManagerAuth";
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import AdminSupportItem from '@/components/Admin/AdminMessages/AdminSupportItem';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+import usePagination from '@/hooks/usePagination';
+import useSupportChats from '@/hooks/useSupportChats';
+
+import { ITEMS_PER_PAGE_COUNT } from '@/utils/constants';
+import withManagerAuth from '@/utils/withManagerAuth';
 
 function AdminSupportPage() {
   const { page, handlePageChange } = usePagination();
 
   const { data, isLoading } = useSupportChats({ page });
 
-  const { filteredSupportChat } = useAppSelector(
-    (state) => state.filteredAdminItems
-  );
+  const { filteredSupportChat } = useAppSelector((state) => state.filteredAdminItems);
 
   return (
     <section className={styles.root}>
@@ -29,9 +29,7 @@ function AdminSupportPage() {
           filteredSupportChat ? (
             <AdminSupportItem chat={filteredSupportChat} />
           ) : (
-            <p className={styles.no_data}>
-              За вашим пошуком нічого не знайдено.
-            </p>
+            <p className={styles.no_data}>За вашим пошуком нічого не знайдено.</p>
           )
         ) : isLoading ? null : data && data.chats && data.chats.length > 0 ? (
           <>

@@ -1,22 +1,26 @@
-"use client";
+'use client';
 
-import withGuest from "@/utils/withGuest";
-import ServiceButton from "../ServiceButtons/ServiceButton";
-import styles from "./Login.module.scss";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import Logo from "../Logo/Logo";
-import { jost } from "@/font";
+import BanCountDown from '../BanCountDown/BanCountDown';
+import Logo from '../Logo/Logo';
+import ServiceButton from '../ServiceButtons/ServiceButton';
+import { Eye, EyeOff } from 'lucide-react';
 
-import { useRouter } from "next/navigation";
+import styles from './Login.module.scss';
 
-import useLogin from "@/hooks/useLogin";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import BanCountDown from "../BanCountDown/BanCountDown";
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useLogin from '@/hooks/useLogin';
+
+import withGuest from '@/utils/withGuest';
+
+import { jost } from '@/font';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
 
   const router = useRouter();
 
@@ -38,7 +42,7 @@ function Login() {
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Пароль"
                 required
               />
@@ -59,13 +63,13 @@ function Login() {
               )}
               <p
                 className={styles.reset_pass}
-                onClick={() => router.push("/login/reset")}
+                onClick={() => router.push('/login/reset')}
               >
                 Забули пароль?
               </p>
             </div>
             <ServiceButton type="submit" disabled={isLoading}>
-              {isLoading ? "Завантаження..." : "Увійти"}
+              {isLoading ? 'Завантаження...' : 'Увійти'}
             </ServiceButton>
           </form>
         </article>

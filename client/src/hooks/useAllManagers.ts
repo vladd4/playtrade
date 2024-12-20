@@ -1,5 +1,6 @@
-import { getAllManagers } from "@/http/userController";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+import { getAllManagers } from '@/http/userController';
 
 const useAllManagers = (page: number) => {
   return useQuery({

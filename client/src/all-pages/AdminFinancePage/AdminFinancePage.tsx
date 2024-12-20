@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import styles from "./AdminFinance.module.scss";
+import styles from './AdminFinance.module.scss';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
-import AdminTable from "@/components/Admin/AdminTable/AdminTable";
-import SearchBar from "@/components/Admin/SearchBar/SearchBar";
-import InfoCard from "@/components/Admin/InfoCard/InfoCard";
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import AdminTable from '@/components/Admin/AdminTable/AdminTable';
+import InfoCard from '@/components/Admin/InfoCard/InfoCard';
+import SearchBar from '@/components/Admin/SearchBar/SearchBar';
 
-import withManagerAuth from "@/utils/withManagerAuth";
+import withManagerAuth from '@/utils/withManagerAuth';
 
 function AdminFinancePage() {
   return (

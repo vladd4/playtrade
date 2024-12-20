@@ -1,14 +1,16 @@
-import toast from "react-hot-toast";
-import { useAppDispatch, useAppSelector } from "./redux-hooks";
-import { useAuth } from "@/context/AuthContext";
-import { FormEvent, useState } from "react";
-import { loginAdmin, verifyAdmin } from "@/http/authController";
-import { useRouter } from "next/navigation";
-import {
-  setAdminId,
-  setAdminOtpId,
-  setUserRole,
-} from "@/redux/slices/userSlice";
+import toast from 'react-hot-toast';
+
+import { FormEvent, useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { setAdminId, setAdminOtpId, setUserRole } from '@/redux/slices/userSlice';
+
+import { loginAdmin, verifyAdmin } from '@/http/authController';
+
+import { useAuth } from '@/context/AuthContext';
+
+import { useAppDispatch, useAppSelector } from './redux-hooks';
 
 interface LoginProps {
   email?: string;
@@ -39,13 +41,13 @@ const useAdminLogin = ({ email, password, code }: LoginProps) => {
           password,
         });
 
-        if (userData.message === "OTP отправлен на почту" && userData.otpId) {
+        if (userData.message === 'OTP отправлен на почту' && userData.otpId) {
           dispatch(setAdminOtpId(userData.otpId));
-          router.push("admin-login/verify-otp");
-        } else if (userData.message.includes("Неправильні облікові дані")) {
-          toast.error("Неправильні облікові дані або доступ заборонено!");
+          router.push('admin-login/verify-otp');
+        } else if (userData.message.includes('Неправильні облікові дані')) {
+          toast.error('Неправильні облікові дані або доступ заборонено!');
         } else {
-          throw new Error("Admin login failed");
+          throw new Error('Admin login failed');
         }
       }
     } catch (error) {
@@ -61,24 +63,21 @@ const useAdminLogin = ({ email, password, code }: LoginProps) => {
     setIsLoading(true);
     try {
       if (!adminOtpId) {
-        router.push("/admin-login");
+        router.push('/admin-login');
       } else if (code) {
         const userData = await verifyAdmin({
           otpId: adminOtpId,
           code,
         });
 
-        if (
-          userData.message === "OTP підтверджено, вхід успішний" &&
-          userData.userId
-        ) {
+        if (userData.message === 'OTP підтверджено, вхід успішний' && userData.userId) {
           dispatch(setAdminId(userData.userId));
           dispatch(setUserRole(userData.role));
           setAdminAccessToken(userData.userId);
-        } else if (userData.message === "Неправильний OTP код") {
-          toast.error("Перевірте правильність даних!");
+        } else if (userData.message === 'Неправильний OTP код') {
+          toast.error('Перевірте правильність даних!');
         } else {
-          throw new Error("Admin login failed");
+          throw new Error('Admin login failed');
         }
       }
     } catch (error) {

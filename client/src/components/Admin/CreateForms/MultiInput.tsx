@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import styles from "./CreateForms.module.scss";
+import styles from './CreateForms.module.scss';
+
+import React, { useState } from 'react';
 
 interface MultiProps {
   tags: string[];
@@ -10,13 +11,13 @@ interface MultiProps {
 }
 
 export default function MultiInput({ tags, setTags, placeholder }: MultiProps) {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && inputValue) {
+    if (event.key === 'Enter' && inputValue) {
       event.preventDefault();
       addTag(inputValue);
-      setInputValue("");
+      setInputValue('');
     }
   };
 
@@ -44,12 +45,9 @@ export default function MultiInput({ tags, setTags, placeholder }: MultiProps) {
           tags.map((tag, index) => (
             <span key={index} className={styles.tag}>
               {tag}
-              <span
-                className={styles.remove_tag}
-                onClick={() => removeTag(tag)}
-              >
-                {" "}
-                x{" "}
+              <span className={styles.remove_tag} onClick={() => removeTag(tag)}>
+                {' '}
+                x{' '}
               </span>
             </span>
           ))}

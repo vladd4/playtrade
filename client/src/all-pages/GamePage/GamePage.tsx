@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import styles from "./GamePage.module.scss";
+import { Menu } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
 
-import { jost } from "@/font";
+import styles from './GamePage.module.scss';
 
-import GameCard from "@/components/GameCards/GameCard";
-import ServiceButtonsBlock from "@/components/ServiceButtons/ServiceButtonsBlock";
-import SellerCard from "@/components/SellerCard/SellerCard";
+import { useEffect } from 'react';
 
-import { Menu } from "lucide-react";
+import GameCard from '@/components/GameCards/GameCard';
+import SellerCard from '@/components/SellerCard/SellerCard';
+import ServiceButtonsBlock from '@/components/ServiceButtons/ServiceButtonsBlock';
 
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import useProducts from "@/hooks/useProducts";
-import { setShowFilter } from "@/redux/slices/filterSlice";
+import { setShowFilter } from '@/redux/slices/filterSlice';
 
-import withAuth from "@/utils/withAuth";
-import { getFromSessionStorage } from "@/utils/sessionStorage_helper";
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import useProducts from '@/hooks/useProducts';
 
-import type { ProductType } from "@/utils/constants";
+import type { ProductType } from '@/utils/constants';
+import { getFromSessionStorage } from '@/utils/sessionStorage_helper';
+import withAuth from '@/utils/withAuth';
 
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { jost } from '@/font';
 
 interface GamePageProps {
   gameId: string;
@@ -32,14 +32,15 @@ function GamePage({ gameId, type }: GamePageProps) {
 
   const { ref, inView, entry } = useInView();
 
-  const { data, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useProducts({ gameId, type });
-
-  const { filteredProducts, filtersCount } = useAppSelector(
-    (state) => state.filteredProducts
+  const { data, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useProducts(
+    { gameId, type },
   );
 
-  const game = JSON.parse(getFromSessionStorage("product-game")!);
+  const { filteredProducts, filtersCount } = useAppSelector(
+    (state) => state.filteredProducts,
+  );
+
+  const game = JSON.parse(getFromSessionStorage('product-game')!);
 
   useEffect(() => {
     if (entry && inView) {
@@ -85,7 +86,7 @@ function GamePage({ gameId, type }: GamePageProps) {
               page.products.length > 0 &&
               page.products.map((product) => (
                 <SellerCard key={product.id} product={product} />
-              ))
+              )),
           )
         ) : (
           <p className={styles.no_items}>Поки немає жодних товарів!</p>

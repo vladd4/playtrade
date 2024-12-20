@@ -1,16 +1,19 @@
-"use client";
+'use client';
 
-import styles from "./MsgCard.module.scss";
+import styles from './MsgCard.module.scss';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import { jost } from "@/font";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import { ChatWithLatestMsg } from "@/types/chat.type";
-import { formatImageFromServer, formatMessages } from "@/utils/formatImageName";
-import { formatChatCardTimestamp } from "@/utils/formatTimestamp";
-import { setToSessionStorage } from "@/utils/sessionStorage_helper";
+import { ChatWithLatestMsg } from '@/types/chat.type';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+
+import { formatImageFromServer, formatMessages } from '@/utils/formatImageName';
+import { formatChatCardTimestamp } from '@/utils/formatTimestamp';
+import { setToSessionStorage } from '@/utils/sessionStorage_helper';
+
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost } from '@/font';
 
 type MsgCardProps = {
   chat: ChatWithLatestMsg;
@@ -36,7 +39,7 @@ export default function MsgCard({ chat, isAlert }: MsgCardProps) {
         productId: chat.product.id,
       };
 
-      setToSessionStorage("chatInfo", JSON.stringify(chatInfo));
+      setToSessionStorage('chatInfo', JSON.stringify(chatInfo));
     }
   };
 
@@ -47,26 +50,22 @@ export default function MsgCard({ chat, isAlert }: MsgCardProps) {
           <div className={styles.seller_info}>
             <div
               style={{
-                backgroundColor: "#B0C4DE",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "#fff",
-                fontSize: "12px",
-                fontWeight: "bold",
+                backgroundColor: '#B0C4DE',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#fff',
+                fontSize: '12px',
+                fontWeight: 'bold',
               }}
               className={styles.image_div}
             >
-              <span>
-                {opponent?.name ? opponent?.name[0]?.toUpperCase() : "U"}
-              </span>
+              <span>{opponent?.name ? opponent?.name[0]?.toUpperCase() : 'U'}</span>
             </div>
             <div className={styles.info_block}>
               <h1>{opponent.name!}</h1>
               <p>Товар: {chat.product?.name}</p>
-              <p className={styles.text}>
-                {formatMessages(chat.latestMessage?.content)}
-              </p>
+              <p className={styles.text}>{formatMessages(chat.latestMessage?.content)}</p>
             </div>
           </div>
         )}

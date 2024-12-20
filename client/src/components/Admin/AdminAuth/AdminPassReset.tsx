@@ -1,14 +1,19 @@
-"use client";
+'use client';
 
-import styles from "./Admin.module.scss";
-import { useState } from "react";
+import styles from './Admin.module.scss';
 
-import { jost } from "@/font";
-import { useRouter } from "next/navigation";
-import Logo from "@/components/Logo/Logo";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import withAdminGuest from "@/utils/withAdminGuest";
-import { useAuth } from "@/context/AuthContext";
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import Logo from '@/components/Logo/Logo';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
+
+import withAdminGuest from '@/utils/withAdminGuest';
+
+import { useAuth } from '@/context/AuthContext';
+
+import { jost } from '@/font';
 
 interface ResetPassProps {
   isEmail: boolean;
@@ -16,7 +21,7 @@ interface ResetPassProps {
 }
 
 function AdminPassReset({ isEmail, link }: ResetPassProps) {
-  const [value, setValue] = useState("some@example.com");
+  const [value, setValue] = useState('some@example.com');
   const router = useRouter();
 
   const { setAdminAccessToken } = useAuth();
@@ -36,11 +41,9 @@ function AdminPassReset({ isEmail, link }: ResetPassProps) {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               type="text"
-              placeholder={isEmail ? "Електронна адреса" : "Тимчасовий пароль"}
+              placeholder={isEmail ? 'Електронна адреса' : 'Тимчасовий пароль'}
             />
-            {!isEmail && (
-              <p>*Замініть “тимчасовий пароль” в особистому кабінеті</p>
-            )}
+            {!isEmail && <p>*Замініть “тимчасовий пароль” в особистому кабінеті</p>}
           </div>
           <ServiceButton
             type="submit"
@@ -48,7 +51,7 @@ function AdminPassReset({ isEmail, link }: ResetPassProps) {
               e.preventDefault();
               router.push(link);
               if (!isEmail) {
-                setAdminAccessToken("adminToken");
+                setAdminAccessToken('adminToken');
               }
             }}
           >

@@ -1,6 +1,8 @@
-import { User } from "@/types/user.type";
-import { UserRoles } from "@/utils/constants";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+import { User } from '@/types/user.type';
+
+import { UserRoles } from '@/utils/constants';
 
 type UserSlice = {
   user: User | null;
@@ -19,7 +21,7 @@ const initialState: UserSlice = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {

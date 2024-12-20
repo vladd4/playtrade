@@ -1,4 +1,4 @@
-import { getDateSeparator } from "./formatTimestamp";
+import { getDateSeparator } from './formatTimestamp';
 
 interface MessageGroup<T> {
   date: string;
@@ -8,7 +8,7 @@ interface MessageGroup<T> {
 type FormattedMessageGroups<T> = MessageGroup<T>[];
 
 export function groupMessagesByDate<T extends { timestamp: string }>(
-  messages: T[]
+  messages: T[],
 ): FormattedMessageGroups<T> {
   if (messages.length === 0) {
     return [];

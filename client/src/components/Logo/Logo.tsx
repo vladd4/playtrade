@@ -1,4 +1,4 @@
-import styles from "./Logo.module.scss";
+import styles from './Logo.module.scss';
 
 type LogoProps = {
   className?: string;

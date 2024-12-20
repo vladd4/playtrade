@@ -1,29 +1,30 @@
-"use client";
+'use client';
 
-import styles from "./ServiceButtons.module.scss";
+import styles from './ServiceButtons.module.scss';
 
-import { useEffect, useState } from "react";
-import ServiceButton from "./ServiceButton";
+import { useEffect, useState } from 'react';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { product_types } from "@/static_store/product_types";
+import { useRouter, useSearchParams } from 'next/navigation';
+
+import ServiceButton from './ServiceButton';
+import { product_types } from '@/static_store/product_types';
 
 export default function ServiceButtonsBlock() {
   const params = useSearchParams();
   const router = useRouter();
 
   const [activeQuery, setActiveQuery] = useState(
-    params.get("type") || product_types[0].value
+    params.get('type') || product_types[0].value,
   );
 
   useEffect(() => {
-    const currentType = params.get("type") || product_types[0].value;
+    const currentType = params.get('type') || product_types[0].value;
     setActiveQuery(currentType);
   }, [params]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    queryParams.set("type", activeQuery);
+    queryParams.set('type', activeQuery);
     router.push(`?${queryParams.toString()}`, undefined);
   }, [activeQuery, router]);
 

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import styles from "./Profile.module.scss";
+import styles from './Profile.module.scss';
 
-import { mont } from "@/font";
+import ProfileCard from '@/components/Profile/ProfileCard';
 
-import ProfileCard from "@/components/Profile/ProfileCard";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useUserProfile from '@/hooks/useUserProfile';
 
-import withAuth from "@/utils/withAuth";
+import withAuth from '@/utils/withAuth';
 
-import useUserProfile from "@/hooks/useUserProfile";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { mont } from '@/font';
 
 function ProfilePage() {
   const { userId } = useAppSelector((state) => state.user);

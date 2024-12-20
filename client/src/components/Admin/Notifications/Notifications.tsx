@@ -1,51 +1,52 @@
-import { jost, mont } from "@/font";
-import styles from "./Notifications.module.scss";
+import styles from './Notifications.module.scss';
+
+import { jost, mont } from '@/font';
 
 const messages = [
   {
-    type: "Гаманець",
-    message: "Надходження коштів від ABCD",
-    date: "18.05.24",
+    type: 'Гаманець',
+    message: 'Надходження коштів від ABCD',
+    date: '18.05.24',
   },
   {
-    type: "Повідомлення",
-    message: "ABCD надіслав Вам повідомлення",
-    date: "18.05.24",
+    type: 'Повідомлення',
+    message: 'ABCD надіслав Вам повідомлення',
+    date: '18.05.24',
   },
   {
-    type: "Гаманець",
-    message: "Надходження коштів від ABCD",
-    date: "18.05.24",
+    type: 'Гаманець',
+    message: 'Надходження коштів від ABCD',
+    date: '18.05.24',
   },
   {
-    type: "Гаманець",
-    message: "Надходження коштів від ABCD",
-    date: "18.05.24",
+    type: 'Гаманець',
+    message: 'Надходження коштів від ABCD',
+    date: '18.05.24',
   },
   {
-    type: "Повідомлення",
-    message: "ABCD надіслав Вам повідомлення",
-    date: "18.05.24",
+    type: 'Повідомлення',
+    message: 'ABCD надіслав Вам повідомлення',
+    date: '18.05.24',
   },
   {
-    type: "Гаманець",
-    message: "Надходження коштів від ABCD",
-    date: "18.05.24",
+    type: 'Гаманець',
+    message: 'Надходження коштів від ABCD',
+    date: '18.05.24',
   },
   {
-    type: "Гаманець",
-    message: "Надходження коштів від ABCD",
-    date: "18.05.24",
+    type: 'Гаманець',
+    message: 'Надходження коштів від ABCD',
+    date: '18.05.24',
   },
   {
-    type: "Повідомлення",
-    message: "ABCD надіслав Вам повідомлення",
-    date: "18.05.24",
+    type: 'Повідомлення',
+    message: 'ABCD надіслав Вам повідомлення',
+    date: '18.05.24',
   },
   {
-    type: "Гаманець",
-    message: "Надходження коштів від ABCD",
-    date: "18.05.24",
+    type: 'Гаманець',
+    message: 'Надходження коштів від ABCD',
+    date: '18.05.24',
   },
 ];
 

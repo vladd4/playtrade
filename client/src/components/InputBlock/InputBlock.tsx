@@ -1,15 +1,14 @@
-"use client";
+'use client';
 
-import { jost } from "@/font";
-import styles from "./InputBlock.module.scss";
+import styles from './InputBlock.module.scss';
+
+import { jost } from '@/font';
 
 type InputProps = {
   name: string;
   value: string;
   setValue: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => void;
   label: string;
   placeholder: string;
@@ -27,7 +26,7 @@ export default function InputBlock(props: InputProps) {
           placeholder={props.placeholder}
           value={props.value}
           onChange={props.setValue}
-          style={props.isFull ? { height: "120px" } : {}}
+          style={props.isFull ? { height: '120px' } : {}}
         />
       ) : (
         <input

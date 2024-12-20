@@ -1,8 +1,10 @@
-"use client";
+'use client';
 
-import { jost, mont } from "@/font";
-import styles from "./InfoCard.module.scss";
-import { PieChart } from "@mui/x-charts";
+import { PieChart } from '@mui/x-charts';
+
+import styles from './InfoCard.module.scss';
+
+import { jost, mont } from '@/font';
 
 interface InfoCardProps {
   label?: string;
@@ -13,8 +15,8 @@ interface InfoCardProps {
 }
 
 const data = [
-  { name: "Group A", value: 15 },
-  { name: "Group B", value: 35 },
+  { name: 'Group A', value: 15 },
+  { name: 'Group B', value: 35 },
 ];
 
 export default function InfoCard({
@@ -38,7 +40,7 @@ export default function InfoCard({
             className={styles.chart}
             width={1}
             height={200}
-            colors={["#fff", "#7AB2B2"]}
+            colors={['#fff', '#7AB2B2']}
             series={[
               {
                 data: data,
@@ -50,16 +52,13 @@ export default function InfoCard({
                 endAngle: 360,
                 cx: 0,
                 cy: 90,
-                highlightScope: { faded: "global", highlighted: "item" },
+                highlightScope: { faded: 'global', highlighted: 'item' },
               },
             ]}
           />
           <div className={styles.labels_block}>
             <div className={styles.labels_div}>
-              <div
-                className={styles.color_mark}
-                style={{ backgroundColor: "#7AB2B2" }}
-              />
+              <div className={styles.color_mark} style={{ backgroundColor: '#7AB2B2' }} />
               <p>Успішні угоди</p>
             </div>
             <div className={styles.labels_div}>

@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import AdminMessageItem from "@/components/Admin/AdminMessages/AdminMessageItem";
-import styles from "./AdminMessages.module.scss";
+import Pagination from 'rc-pagination/lib/Pagination';
 
-import AdminHeader from "@/components/Admin/AdminHeader/AdminHeader";
-import SearchBar from "@/components/Admin/SearchBar/SearchBar";
+import styles from './AdminMessages.module.scss';
 
-import useAdminChats from "@/hooks/useAdminChats";
+import AdminHeader from '@/components/Admin/AdminHeader/AdminHeader';
+import AdminMessageItem from '@/components/Admin/AdminMessages/AdminMessageItem';
+import SearchBar from '@/components/Admin/SearchBar/SearchBar';
 
-import Pagination from "rc-pagination/lib/Pagination";
-import { ITEMS_PER_PAGE_COUNT } from "@/utils/constants";
-import usePagination from "@/hooks/usePagination";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import withManagerAuth from "@/utils/withManagerAuth";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useAdminChats from '@/hooks/useAdminChats';
+import usePagination from '@/hooks/usePagination';
+
+import { ITEMS_PER_PAGE_COUNT } from '@/utils/constants';
+import withManagerAuth from '@/utils/withManagerAuth';
 
 function AdminMessagesPage() {
   const { page, handlePageChange } = usePagination();
@@ -32,9 +33,7 @@ function AdminMessagesPage() {
           filteredChat ? (
             <AdminMessageItem chat={filteredChat} />
           ) : (
-            <p className={styles.no_data}>
-              За вашим пошуком нічого не знайдено.
-            </p>
+            <p className={styles.no_data}>За вашим пошуком нічого не знайдено.</p>
           )
         ) : isLoading ? null : data && data.chats && data.chats.length > 0 ? (
           <>

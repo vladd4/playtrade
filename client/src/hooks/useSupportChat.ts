@@ -1,5 +1,6 @@
-import { getSupportChatByChatId } from "@/http/supportController";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+
+import { getSupportChatByChatId } from '@/http/supportController';
 
 const useSupportChat = ({ id }: { id: string }) => {
   return useQuery({

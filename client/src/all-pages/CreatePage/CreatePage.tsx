@@ -1,40 +1,36 @@
-"use client";
+'use client';
 
-import styles from "./CreatePage.module.scss";
+import { Image, X } from 'lucide-react';
+import toast from 'react-hot-toast';
+import isNumeric from 'validator/lib/isNumeric';
 
-import { jost, mont } from "@/font";
+import styles from './CreatePage.module.scss';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-import InputBlock from "@/components/InputBlock/InputBlock";
-import ServiceButton from "@/components/ServiceButtons/ServiceButton";
-import SelectBlock from "@/components/SelectBlock/SelectBlock";
+import { useRouter } from 'next/navigation';
 
-import toast from "react-hot-toast";
+import InputBlock from '@/components/InputBlock/InputBlock';
+import SelectBlock from '@/components/SelectBlock/SelectBlock';
+import ServiceButton from '@/components/ServiceButtons/ServiceButton';
 
-import { Image, X } from "lucide-react";
+import { useAppSelector } from '@/hooks/redux-hooks';
+import useGames from '@/hooks/useGames';
 
-import withAuth from "@/utils/withAuth";
-import { parseGroupedGamesToOptions } from "@/utils/groupGamesByLetter";
-
+import { MAX_IMAGES, ProductType, TOAST_DURATION } from '@/utils/constants';
+import { formatImageName } from '@/utils/formatImageName';
+import { parseGroupedGamesToOptions } from '@/utils/groupGamesByLetter';
 import {
-  handleFileChange,
   handleCreateFormChange,
+  handleFileChange,
   resetCreateFormState,
-} from "@/utils/productCreateEdit_helpers";
-import { formatImageName } from "@/utils/formatImageName";
+} from '@/utils/productCreateEdit_helpers';
+import withAuth from '@/utils/withAuth';
 
-import { product_types } from "@/static_store/product_types";
+import { privateAxios } from '@/http/axios';
 
-import useGames from "@/hooks/useGames";
-
-import isNumeric from "validator/lib/isNumeric";
-
-import { privateAxios } from "@/http/axios";
-
-import { useRouter } from "next/navigation";
-import { MAX_IMAGES, ProductType, TOAST_DURATION } from "@/utils/constants";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { jost, mont } from '@/font';
+import { product_types } from '@/static_store/product_types';
 
 interface GameOptions {
   label: string;
@@ -46,25 +42,25 @@ interface GameOptions {
 
 function CreatePage() {
   const [form, setForm] = useState({
-    name: "",
-    game: "",
-    productType: "",
-    server: "",
-    region: "",
-    platform: "",
-    description: "",
-    fullDescription: "",
-    price: "",
+    name: '',
+    game: '',
+    productType: '',
+    server: '',
+    region: '',
+    platform: '',
+    description: '',
+    fullDescription: '',
+    price: '',
   });
   const [loading, setLoading] = useState(false);
 
   const [gameOptions, setGameOptions] = useState<GameOptions[]>([]);
-  const [serverOptions, setServerOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
-  const [regionOptions, setRegionOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
+  const [serverOptions, setServerOptions] = useState<{ label: string; value: string }[]>(
+    [],
+  );
+  const [regionOptions, setRegionOptions] = useState<{ label: string; value: string }[]>(
+    [],
+  );
   const [platformOptions, setPlatformOptions] = useState<
     { label: string; value: string }[]
   >([]);
@@ -80,9 +76,7 @@ function CreatePage() {
   const { userId } = useAppSelector((state) => state.user);
 
   const updateOptions = (selectedGameValue: string) => {
-    const selectedGame = gameOptions.find(
-      (game) => game.value === selectedGameValue
-    );
+    const selectedGame = gameOptions.find((game) => game.value === selectedGameValue);
     if (selectedGame) {
       setServerOptions(selectedGame.servers);
       setRegionOptions(selectedGame.regions);
@@ -110,12 +104,12 @@ function CreatePage() {
   }, [data, isLoading]);
 
   const validateForm = (): boolean => {
-    if (Object.values(form).some((field) => field === "")) {
-      toast.error("Заповніть всі поля будь-ласка!");
+    if (Object.values(form).some((field) => field === '')) {
+      toast.error('Заповніть всі поля будь-ласка!');
       return false;
     }
     if (!isNumeric(form.price) || parseFloat(form.price) <= 0) {
-      toast.error("Некоректне значення ціни!");
+      toast.error('Некоректне значення ціни!');
       return false;
     }
     return true;
@@ -129,36 +123,36 @@ function CreatePage() {
 
     const prodType = form.productType as ProductType;
 
-    formData.append("gameId", form.game);
-    formData.append("type", prodType);
-    formData.append("description", form.description.trim());
-    formData.append("detailDescription", form.fullDescription.trim());
-    formData.append("ownerId", userId);
-    formData.append("platform", form.platform);
-    formData.append("server", form.server);
-    formData.append("region", form.region);
-    formData.append("price", form.price);
-    formData.append("name", form.name.trim());
+    formData.append('gameId', form.game);
+    formData.append('type', prodType);
+    formData.append('description', form.description.trim());
+    formData.append('detailDescription', form.fullDescription.trim());
+    formData.append('ownerId', userId);
+    formData.append('platform', form.platform);
+    formData.append('server', form.server);
+    formData.append('region', form.region);
+    formData.append('price', form.price);
+    formData.append('name', form.name.trim());
 
     uploadedImages.forEach((file) => {
-      formData.append("images", file, file.name);
+      formData.append('images', file, file.name);
     });
 
     try {
-      const result = await privateAxios.post("/products", formData);
+      const result = await privateAxios.post('/products', formData);
       if (result.data !== null && result.status === 201) {
         resetCreateFormState(setForm);
         setUploadedImages([]);
 
-        toast.success("Продукт успішно доданий!");
+        toast.success('Продукт успішно доданий!');
         setTimeout(() => {
-          router.push("/profile/products");
+          router.push('/profile/products');
         }, TOAST_DURATION);
       } else {
-        throw new Error("Failed to add product");
+        throw new Error('Failed to add product');
       }
     } catch (error) {
-      toast.error("Щось пішло не так! Спробуйте пізніше");
+      toast.error('Щось пішло не так! Спробуйте пізніше');
     } finally {
       setLoading(false);
     }
@@ -181,8 +175,8 @@ function CreatePage() {
               updateOptions(e.target.value);
             }}
             defaultValue={{
-              label: "Наприклад: CS GO 2",
-              value: "placeholder",
+              label: 'Наприклад: CS GO 2',
+              value: 'placeholder',
             }}
           />
           <SelectBlock
@@ -192,8 +186,8 @@ function CreatePage() {
             label="Оберіть товар"
             onStateChange={(e) => handleCreateFormChange(e, setForm)}
             defaultValue={{
-              label: "Наприклад: Аккаунт",
-              value: "placeholder",
+              label: 'Наприклад: Аккаунт',
+              value: 'placeholder',
             }}
           />
           <SelectBlock
@@ -203,8 +197,8 @@ function CreatePage() {
             label="Оберіть сервер"
             onStateChange={(e) => handleCreateFormChange(e, setForm)}
             defaultValue={{
-              label: "Наприклад: Ukraine",
-              value: "placeholder",
+              label: 'Наприклад: Ukraine',
+              value: 'placeholder',
             }}
           />
           <SelectBlock
@@ -214,8 +208,8 @@ function CreatePage() {
             label="Оберіть регіон"
             onStateChange={(e) => handleCreateFormChange(e, setForm)}
             defaultValue={{
-              label: "Наприклад: Ukraine",
-              value: "placeholder",
+              label: 'Наприклад: Ukraine',
+              value: 'placeholder',
             }}
           />
           <SelectBlock
@@ -225,8 +219,8 @@ function CreatePage() {
             label="Оберіть платформу"
             onStateChange={(e) => handleCreateFormChange(e, setForm)}
             defaultValue={{
-              label: "Наприклад: PC",
-              value: "placeholder",
+              label: 'Наприклад: PC',
+              value: 'placeholder',
             }}
           />
           <InputBlock
@@ -262,15 +256,13 @@ function CreatePage() {
               uploadedImages.map((image) => {
                 return (
                   <p key={image.name}>
-                    {formatImageName(image.name)}{" "}
+                    {formatImageName(image.name)}{' '}
                     <X
                       color="red"
                       size={16}
                       className={styles.delete}
                       onClick={() => {
-                        setUploadedImages((prev) =>
-                          prev.filter((img) => img !== image)
-                        );
+                        setUploadedImages((prev) => prev.filter((img) => img !== image));
                       }}
                     />
                   </p>
@@ -281,7 +273,7 @@ function CreatePage() {
             type="file"
             accept="image/*"
             ref={fileInputRef}
-            style={{ display: "none" }}
+            style={{ display: 'none' }}
             onChange={(e) => handleFileChange(e, setUploadedImages)}
           />
           <InputBlock
@@ -297,7 +289,7 @@ function CreatePage() {
             onClick={handleAddProduct}
             disabled={loading}
           >
-            {loading ? "Завантаження..." : "Створити"}
+            {loading ? 'Завантаження...' : 'Створити'}
           </ServiceButton>
         </div>
       </article>

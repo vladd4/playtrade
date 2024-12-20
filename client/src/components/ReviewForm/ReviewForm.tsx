@@ -1,14 +1,21 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import styles from "./ReviewForm.module.scss";
-import ServiceButton from "../ServiceButtons/ServiceButton";
-import { Star } from "lucide-react";
-import withAuth from "@/utils/withAuth";
-import { jost } from "@/font";
-import { createReview } from "@/http/reviewController";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/hooks/redux-hooks";
+import ServiceButton from '../ServiceButtons/ServiceButton';
+import { Star } from 'lucide-react';
+
+import styles from './ReviewForm.module.scss';
+
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { useAppSelector } from '@/hooks/redux-hooks';
+
+import withAuth from '@/utils/withAuth';
+
+import { createReview } from '@/http/reviewController';
+
+import { jost } from '@/font';
 
 interface ReviewProps {
   productId: string;
@@ -16,7 +23,7 @@ interface ReviewProps {
 }
 
 function ReviewForm({ productId, sellerId }: ReviewProps) {
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,7 +56,7 @@ function ReviewForm({ productId, sellerId }: ReviewProps) {
         const result = await createReview(newReview);
 
         if (result) {
-          router.push("/");
+          router.push('/');
         }
       }
     } catch (error) {
@@ -71,7 +78,7 @@ function ReviewForm({ productId, sellerId }: ReviewProps) {
               strokeWidth={1}
               size={25}
               color="#E8D635"
-              fill={starValue <= rating ? "#E8D635" : "transparent"}
+              fill={starValue <= rating ? '#E8D635' : 'transparent'}
               onClick={() => handleRating(starValue)}
             />
           ))}
@@ -84,13 +91,13 @@ function ReviewForm({ productId, sellerId }: ReviewProps) {
           onChange={handleReviewChange}
         />
         <ServiceButton
-          disabled={review === "" || rating === 0 || isLoading}
+          disabled={review === '' || rating === 0 || isLoading}
           className={`${styles.submit_button} ${
-            review === "" || rating === 0 ? styles.disabled : ""
+            review === '' || rating === 0 ? styles.disabled : ''
           }`}
           onClick={handleAddReview}
         >
-          {isLoading ? "Завантаження..." : "Відправити"}
+          {isLoading ? 'Завантаження...' : 'Відправити'}
         </ServiceButton>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import { getProducts } from "@/http/productController";
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { getProducts } from '@/http/productController';
 
 const useAdminProducts = (page: number) => {
   return useQuery({

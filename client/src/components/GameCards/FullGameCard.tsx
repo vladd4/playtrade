@@ -1,42 +1,46 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import ImageViewer from '../ImageViewer/ImageViewer';
+import ServiceButton from '../ServiceButtons/ServiceButton';
+import { useQueryClient } from '@tanstack/react-query';
+import { Loader } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { setShowImageViewer } from "@/redux/slices/imageViewerSlice";
+import styles from './FullGameCard.module.scss';
+
+import { Product } from '@/types/product.type';
+import { CreateTransaction } from '@/types/transaction.type';
+
+import React, { useEffect, useState, useTransition } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { setShowImageViewer } from '@/redux/slices/imageViewerSlice';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import useUserProfile from '@/hooks/useUserProfile';
+
+import { formatImageFromServer } from '@/utils/formatImageName';
 import {
   getFromSessionStorage,
   setToSessionStorage,
-} from "@/utils/sessionStorage_helper";
-import { checkChatExistance, createChat } from "@/http/chatController";
-import { updateProduct, updateProductStatus } from "@/http/productController";
-import { Product } from "@/types/product.type";
+} from '@/utils/sessionStorage_helper';
 
-import styles from "./FullGameCard.module.scss";
-import { jost } from "@/font";
-import ServiceButton from "../ServiceButtons/ServiceButton";
-import ImageViewer from "../ImageViewer/ImageViewer";
-import { Loader } from "lucide-react";
-import { formatImageFromServer } from "@/utils/formatImageName";
-import useUserProfile from "@/hooks/useUserProfile";
-import { CreateTransaction } from "@/types/transaction.type";
-import { createTransaction } from "@/http/transactionController";
-import { updateBalance } from "@/http/userController";
-import { privateAxios } from "@/http/axios";
+import { privateAxios } from '@/http/axios';
+import { checkChatExistance, createChat } from '@/http/chatController';
+import { updateProduct, updateProductStatus } from '@/http/productController';
+import { createTransaction } from '@/http/transactionController';
+import { updateBalance } from '@/http/userController';
+
+import { jost } from '@/font';
 
 interface FullGameCardProps {
   isMyProduct?: boolean;
   product: Product;
 }
 
-const FullGameCard: React.FC<FullGameCardProps> = ({
-  isMyProduct,
-  product,
-}) => {
-  const [currentImage, setCurrentImage] = useState("");
+const FullGameCard: React.FC<FullGameCardProps> = ({ isMyProduct, product }) => {
+  const [currentImage, setCurrentImage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTransition, startTransition] = useTransition();
 
@@ -45,7 +49,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
   const queryClient = useQueryClient();
 
   const { userId } = useAppSelector((state) => state.user);
-  const seller = JSON.parse(getFromSessionStorage("seller") ?? "{}");
+  const seller = JSON.parse(getFromSessionStorage('seller') ?? '{}');
 
   const userData = useUserProfile({ id: userId! });
 
@@ -60,24 +64,19 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
     });
   };
 
-  const handleChangeProductStatus = async (
-    productId: string,
-    setToActive: boolean
-  ) => {
+  const handleChangeProductStatus = async (productId: string, setToActive: boolean) => {
     try {
       setIsLoading(true);
       const result = await updateProductStatus(productId, setToActive);
       if (result) {
-        toast.success(
-          `Оголошення ${setToActive ? "активовано" : "деактивовано"}!`
-        );
+        toast.success(`Оголошення ${setToActive ? 'активовано' : 'деактивовано'}!`);
         queryClient.invalidateQueries({ queryKey: [`my-products-${userId}`] });
       } else {
-        toast.error("Щось пішло не так. Спробуйте пізніше.");
+        toast.error('Щось пішло не так. Спробуйте пізніше.');
       }
     } catch (error) {
-      console.error("Error changing product status:", error);
-      toast.error("Помилка при зміні статусу продукту");
+      console.error('Error changing product status:', error);
+      toast.error('Помилка при зміні статусу продукту');
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +90,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
         const existingChat = await checkChatExistance(
           userId,
           product.ownerId,
-          product.id
+          product.id,
         );
         let chatId = existingChat?.id;
 
@@ -112,12 +111,12 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
             productName: product.name,
             productId: product.id,
           };
-          setToSessionStorage("chatInfo", JSON.stringify(chatInfo));
+          setToSessionStorage('chatInfo', JSON.stringify(chatInfo));
           router.push(`/messages/chat?chatId=${chatId}`);
         }
       } catch (error) {
-        console.error("Error joining chat:", error);
-        toast.error("Помилка при приєднанні до чату");
+        console.error('Error joining chat:', error);
+        toast.error('Помилка при приєднанні до чату');
       }
     });
   };
@@ -125,7 +124,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
   const handleBuyClick = async () => {
     if (!product) return;
 
-    const toastId = toast.loading("Processing...");
+    const toastId = toast.loading('Processing...');
 
     setTimeout(async () => {
       if (userData.data && userData.data.id && userData.data.balance) {
@@ -140,19 +139,19 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
           };
 
           const formData = new FormData();
-          formData.append("buyerId", userData.data.id);
+          formData.append('buyerId', userData.data.id);
 
           const newTransaction: CreateTransaction = {
             amount: Number(product.price),
             senderId: userData.data.id,
             receiverId: product.ownerId,
-            status: "completed",
+            status: 'completed',
           };
 
           try {
             const productResult = await privateAxios.put(
               `/products/${product.id}`,
-              formData
+              formData,
             );
 
             if (productResult) {
@@ -161,36 +160,31 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
               if (transactionResult) {
                 const userResult = await updateBalance(
                   userData.data.id,
-                  Math.floor(
-                    Number(userData.data.balance - Number(product.price))
-                  )
+                  Math.floor(Number(userData.data.balance - Number(product.price))),
                 );
 
                 if (userResult) {
-                  setToSessionStorage(
-                    "product_buy_info",
-                    JSON.stringify(productInfo)
-                  );
+                  setToSessionStorage('product_buy_info', JSON.stringify(productInfo));
                   router.push(
-                    `/feedback?productId=${product.id}&sellerId=${product.ownerId}`
+                    `/feedback?productId=${product.id}&sellerId=${product.ownerId}`,
                   );
                 }
               }
             } else {
-              toast.error("Щось пішло не так. Спробуйте пізніше");
+              toast.error('Щось пішло не так. Спробуйте пізніше');
             }
           } catch (error) {
             console.error(error);
-            toast.error("Щось пішло не так. Спробуйте пізніше");
+            toast.error('Щось пішло не так. Спробуйте пізніше');
           } finally {
             toast.dismiss(toastId);
           }
         } else {
-          toast.error("Недостатньо коштів!");
+          toast.error('Недостатньо коштів!');
           toast.dismiss(toastId);
         }
       } else {
-        toast.error("Недійсні дані користувача!");
+        toast.error('Недійсні дані користувача!');
         toast.dismiss(toastId);
       }
     }, 1000);
@@ -212,9 +206,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
         }}
         onClick={() =>
           handleShowViewer(
-            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}${formatImageFromServer(
-              image
-            )}`
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URL}${formatImageFromServer(image)}`,
           )
         }
       />
@@ -232,9 +224,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
           ) : (
             <ServiceButton
               isActive
-              className={`${styles.btn} ${
-                product.isActive ? "" : styles.non_active
-              }`}
+              className={`${styles.btn} ${product.isActive ? '' : styles.non_active}`}
               onClick={handleEditClick}
             >
               Редагувати
@@ -247,15 +237,11 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
             </ServiceButton>
           ) : (
             <ServiceButton
-              className={`${styles.btn} ${
-                product.isActive ? "" : styles.active_btn
-              }`}
-              onClick={() =>
-                handleChangeProductStatus(product.id, !product.isActive)
-              }
+              className={`${styles.btn} ${product.isActive ? '' : styles.active_btn}`}
+              onClick={() => handleChangeProductStatus(product.id, !product.isActive)}
               disabled={isLoading}
             >
-              {product.isActive ? "Деактивувати" : "Активувати"}
+              {product.isActive ? 'Деактивувати' : 'Активувати'}
             </ServiceButton>
           )}
         </>
@@ -268,18 +254,18 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
       <>
         <ServiceButton
           isActive
-          className={`${styles.btn} ${isOwner ? styles.disabled : ""}`}
+          className={`${styles.btn} ${isOwner ? styles.disabled : ''}`}
           disabled={isOwner}
           onClick={handleBuyClick}
         >
           Купити
         </ServiceButton>
         <ServiceButton
-          className={`${styles.btn} ${isOwner ? styles.disabled : ""}`}
+          className={`${styles.btn} ${isOwner ? styles.disabled : ''}`}
           disabled={isOwner}
           onClick={handleChatJoin}
         >
-          {isTransition ? "Завантаження..." : "Написати продавцю"}
+          {isTransition ? 'Завантаження...' : 'Написати продавцю'}
         </ServiceButton>
       </>
     );
@@ -291,24 +277,20 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
     <>
       <div
         className={`${styles.root} ${jost.className} ${
-          isMyProduct && product.inProcess ? styles.sold : ""
+          isMyProduct && product.inProcess ? styles.sold : ''
         }`}
       >
-        <h1
-          className={
-            isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
-          }
-        >
+        <h1 className={isMyProduct ? (product.isActive ? '' : styles.non_active) : ''}>
           {product?.name}
         </h1>
         <div
           className={`${styles.short_info} ${
-            isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
+            isMyProduct ? (product.isActive ? '' : styles.non_active) : ''
           }`}
         >
           <p
             className={`${styles.label} ${
-              isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
+              isMyProduct ? (product.isActive ? '' : styles.non_active) : ''
             }`}
           >
             Опис:
@@ -317,7 +299,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
         </div>
         <div
           className={`${styles.full_info} ${
-            isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
+            isMyProduct ? (product.isActive ? '' : styles.non_active) : ''
           }`}
         >
           <p className={styles.label}>Детальний опис:</p>
@@ -325,7 +307,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
         </div>
         <div
           className={`${styles.images} ${
-            isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
+            isMyProduct ? (product.isActive ? '' : styles.non_active) : ''
           }`}
         >
           <p className={styles.label}>Зображення:</p>
@@ -333,7 +315,7 @@ const FullGameCard: React.FC<FullGameCardProps> = ({
         </div>
         <p
           className={`${styles.price} ${
-            isMyProduct ? (product.isActive ? "" : styles.non_active) : ""
+            isMyProduct ? (product.isActive ? '' : styles.non_active) : ''
           }`}
         >
           Ціна: {product?.price}$

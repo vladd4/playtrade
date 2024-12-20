@@ -1,10 +1,12 @@
-import styles from "./SellerSmall.module.scss";
+import StarRating from '../GameCards/StarRating';
+import { MessageSquareText } from 'lucide-react';
 
-import No_Avatar from "@/../public/no-avatar.jpg";
-import { jost } from "@/font";
-import { MessageSquareText } from "lucide-react";
-import StarRating from "../GameCards/StarRating";
-import { formatImageFromServer } from "@/utils/formatImageName";
+import styles from './SellerSmall.module.scss';
+
+import { formatImageFromServer } from '@/utils/formatImageName';
+
+import No_Avatar from '@/../public/no-avatar.jpg';
+import { jost } from '@/font';
 
 type SellerSmallCardProps = {
   isFeed?: boolean;
@@ -24,22 +26,22 @@ export default function SellerSmallCard({
   reviewsCount,
 }: SellerSmallCardProps) {
   return (
-    <div className={`${styles.root} ${isFeed ? styles.feed_root : ""}`}>
+    <div className={`${styles.root} ${isFeed ? styles.feed_root : ''}`}>
       <div className={`${styles.top_block} ${jost.className}`}>
         <div className={styles.seller_info}>
           <div
             style={{
-              backgroundColor: "#B0C4DE",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#fff",
-              fontSize: "12px",
-              fontWeight: "bold",
+              backgroundColor: '#B0C4DE',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#fff',
+              fontSize: '12px',
+              fontWeight: 'bold',
             }}
             className={styles.avatar_div}
           >
-            <span>{userName ? userName[0]?.toUpperCase() : "U"}</span>
+            <span>{userName ? userName[0]?.toUpperCase() : 'U'}</span>
           </div>
           <div className={styles.info_block}>
             <h1>{userName}</h1>
@@ -48,16 +50,10 @@ export default function SellerSmallCard({
               rating={userRating ? userRating : 0}
               className={styles.stars}
             />
-            {!isFeed && (
-              <p>{reviewsCount ? reviewsCount : 0} відгуків за 1 рік</p>
-            )}
+            {!isFeed && <p>{reviewsCount ? reviewsCount : 0} відгуків за 1 рік</p>}
           </div>
         </div>
-        {isFeed ? (
-          <p className={styles.date}>{date}</p>
-        ) : (
-          <MessageSquareText size={26} />
-        )}
+        {isFeed ? <p className={styles.date}>{date}</p> : <MessageSquareText size={26} />}
       </div>
       {isFeed && <p className={`${styles.comment} ${jost.className}`}>Супер</p>}
     </div>

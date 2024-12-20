@@ -1,14 +1,14 @@
 export const game_filters = [
   {
-    heading: "Платформа",
-    type: "platforms",
+    heading: 'Платформа',
+    type: 'platforms',
   },
   {
-    heading: "Сервер",
-    type: "servers",
+    heading: 'Сервер',
+    type: 'servers',
   },
   {
-    heading: "Регіон",
-    type: "regions",
+    heading: 'Регіон',
+    type: 'regions',
   },
 ];

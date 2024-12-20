@@ -1,5 +1,6 @@
-import { HistoryMessage } from "@/types/message.type";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+import { HistoryMessage } from '@/types/message.type';
 
 type ChatHistory = {
   chatHistory: HistoryMessage[] | null;
@@ -10,7 +11,7 @@ const initialState: ChatHistory = {
 };
 
 export const chatHistorySlice = createSlice({
-  name: "chatHistory",
+  name: 'chatHistory',
   initialState,
   reducers: {
     setChatHistory: (state, action: PayloadAction<HistoryMessage[]>) => {

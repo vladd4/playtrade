@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import styles from "./ChatPage.module.scss";
+import styles from './ChatPage.module.scss';
 
-import { mont } from "@/font";
+import Chat from '@/components/ChatComponent/Chat';
 
-import Chat from "@/components/ChatComponent/Chat";
+import withAuth from '@/utils/withAuth';
 
-import withAuth from "@/utils/withAuth";
+import { mont } from '@/font';
 
 interface ChatProps {
   chatId: string;

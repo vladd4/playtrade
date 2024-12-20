@@ -1,12 +1,14 @@
-"use client";
+'use client';
 
-import styles from "./GameCards.module.scss";
-import { mont } from "@/font";
-import { useRouter } from "next/navigation";
-import { setToSessionStorage } from "@/utils/sessionStorage_helper";
+import styles from './GameCards.module.scss';
 
-import No_image from "@/../public/no-image.jpg";
-import { formatImageFromServer } from "@/utils/formatImageName";
+import { useRouter } from 'next/navigation';
+
+import { formatImageFromServer } from '@/utils/formatImageName';
+import { setToSessionStorage } from '@/utils/sessionStorage_helper';
+
+import No_image from '@/../public/no-image.jpg';
+import { mont } from '@/font';
 
 type GameCardProps = {
   id: string;
@@ -43,22 +45,22 @@ export default function GameCard({
 
       router.push(`/game-details/game?id=${gameId}&type=item`);
 
-      setToSessionStorage("game-filters", JSON.stringify(filters));
+      setToSessionStorage('game-filters', JSON.stringify(filters));
       setToSessionStorage(
-        "product-game",
+        'product-game',
         JSON.stringify({
           heading,
           description,
           imageSrc,
           id,
-        })
+        }),
       );
     }
   };
 
   return (
     <div
-      className={`${styles.card_root} ${isFullCard ? styles.full_card : ""}`}
+      className={`${styles.card_root} ${isFullCard ? styles.full_card : ''}`}
       onClick={handleGameClick}
     >
       <div
