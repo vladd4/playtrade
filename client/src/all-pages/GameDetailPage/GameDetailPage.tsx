@@ -48,7 +48,7 @@ function GameDetailPage({ productId }: DetailsProps) {
                 <SellerSmallCard
                   key={review.id}
                   isFeed
-                  userName={review.buyerName}
+                  userName={review?.buyerName!}
                   content={review.content}
                 />
               );
