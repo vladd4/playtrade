@@ -13,8 +13,9 @@ type SellerSmallCardProps = {
   date?: string;
   userAvatar?: string;
   userName: string;
-  userRating: number;
+  userRating?: number;
   reviewsCount?: number;
+  content?: string;
 };
 
 export default function SellerSmallCard({
@@ -24,6 +25,7 @@ export default function SellerSmallCard({
   userRating,
   userAvatar,
   reviewsCount,
+  content,
 }: SellerSmallCardProps) {
   return (
     <div className={`${styles.root} ${isFeed ? styles.feed_root : ''}`}>
@@ -44,18 +46,21 @@ export default function SellerSmallCard({
             <span>{userName ? userName[0]?.toUpperCase() : 'U'}</span>
           </div>
           <div className={styles.info_block}>
-            <h1>{userName}</h1>
-            <StarRating
-              size={11}
-              rating={userRating ? userRating : 0}
-              className={styles.stars}
-            />
+            <h1 className={styles.username}>{userName ? userName : 'Bot User'}</h1>
+            {!isFeed && (
+              <StarRating
+                size={11}
+                rating={userRating ? userRating : 0}
+                className={styles.stars}
+              />
+            )}
+
             {!isFeed && <p>{reviewsCount ? reviewsCount : 0} відгуків за 1 рік</p>}
           </div>
         </div>
         {isFeed ? <p className={styles.date}>{date}</p> : <MessageSquareText size={26} />}
       </div>
-      {isFeed && <p className={`${styles.comment} ${jost.className}`}>Супер</p>}
+      {isFeed && <p className={`${styles.comment} ${jost.className}`}>{content}</p>}
     </div>
   );
 }

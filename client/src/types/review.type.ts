@@ -5,4 +5,5 @@ export type Review = {
   buyerId: string;
   sellerId: string;
   productId: string;
+  buyerName: string;
 };

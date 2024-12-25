@@ -37,16 +37,18 @@ export default function SellerCard({
   const handleMoreClick = () => {
     router.push(`/game-details/seller-details/product?id=${product?.id}`);
     const sellerData = {
+      id: product?.sellerId!,
       name: product?.seller!,
       imageUrl: product?.imageUrl!,
-      rating: product?.rating!,
+      rating: product?.sellerRating!,
     };
     setToSessionStorage(
       'seller',
       JSON.stringify({
         name: product?.seller!,
         imageUrl: product?.imageUrl!,
-        rating: product?.rating!,
+        rating: product?.sellerRating!,
+        id: product?.sellerId!,
       }),
     );
 
@@ -74,7 +76,7 @@ export default function SellerCard({
           </div>
           <h1>Продавець {product?.seller}</h1>
           <StarRating
-            rating={product?.rating ? product.rating : 0}
+            rating={product?.sellerRating ? product.sellerRating : 0}
             className={styles.stars}
             size={11}
           />

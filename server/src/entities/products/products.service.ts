@@ -371,6 +371,8 @@ export class ProductsService {
         server: product.server,
         region: product.region,
         seller: product.owner ? product.owner.name : 'Unknown',
+        sellerRating: product.owner ? product.owner.rating : 0,
+        sellerId: product.owner.id,
         description: product.description,
         price: product.price,
         isActive: product.isActive,

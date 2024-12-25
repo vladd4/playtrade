@@ -25,6 +25,19 @@ export async function getReviewById(id: string): Promise<Review | null> {
   }
 }
 
+export async function getReviewsBySellerId(sellerId: string): Promise<Review[] | null> {
+  try {
+    const { data } = await privateAxios.get<Review[]>(`/reviews/seller/${sellerId}`);
+    return data;
+  } catch (error: any) {
+    console.log(
+      `Error getting reviews by seller id ${sellerId}:`,
+      error.response?.data || error.message,
+    );
+    return null;
+  }
+}
+
 export async function deleteReview(id: string): Promise<Review | null> {
   try {
     const { data } = await privateAxios.delete<Review>(`/reviews/${id}`);

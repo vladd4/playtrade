@@ -29,7 +29,13 @@ export default function Footer() {
   useEffect(() => {
     if (pathName !== '/' && backButton !== null && pathName !== '/login') {
       backButton.show();
-      backButton.onClick(() => router.back());
+      backButton.onClick(() => {
+        if (window.history && window.history.length > 1) {
+          window.history.back();
+        } else {
+          router.push('/');
+        }
+      });
     } else {
       backButton?.hide();
     }

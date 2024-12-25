@@ -8,6 +8,7 @@ import ServiceButton from '@/components/ServiceButtons/ServiceButton';
 
 import { useAppSelector } from '@/hooks/redux-hooks';
 import useProduct from '@/hooks/useProduct';
+import useSellerReviews from '@/hooks/useSellerReviews';
 
 import { getFromSessionStorage } from '@/utils/sessionStorage_helper';
 import withAuth from '@/utils/withAuth';
@@ -25,13 +26,15 @@ function GameDetailPage({ productId }: DetailsProps) {
 
   const sellerInfo = seller ?? JSON.parse(getFromSessionStorage('seller')!);
 
+  const sellerReviews = useSellerReviews({ sellerId: sellerInfo?.id! });
+
   if (isLoading) return null;
 
   return (
     <section className={styles.root}>
       <article className={styles.wrapper}>
         <SellerSmallCard
-          reviewsCount={data?.reviewsCount}
+          reviewsCount={sellerReviews?.data?.length ?? 0}
           userName={sellerInfo.name!}
           userAvatar={sellerInfo.imageUrl!}
           userRating={sellerInfo.rating!}
@@ -39,29 +42,23 @@ function GameDetailPage({ productId }: DetailsProps) {
         <FullGameCard product={data!} />
         <div className={styles.feed_block}>
           <h3>Відгуки продавця:</h3>
-          {data?.latestReviews && data?.latestReviews.length > 0 ? (
-            data?.latestReviews.map((review) => {
+          {sellerReviews.data && sellerReviews.data.length > 0 ? (
+            sellerReviews.data.map((review) => {
               return (
                 <SellerSmallCard
                   key={review.id}
                   isFeed
-                  date={review.id}
-                  userName={review.sellerId}
-                  userRating={review.rating}
+                  userName={review.buyerName}
+                  content={review.content}
                 />
               );
             })
           ) : (
-            <p>
+            <p className={styles.p}>
               {userId === data?.ownerId
                 ? 'Ви ще не отримали відгуку!'
                 : 'Користувач ще не отримав відгуку!'}
             </p>
-          )}
-          {data?.latestReviews && data?.latestReviews.length > 0 && (
-            <ServiceButton isActive className={styles.feed_btn}>
-              Дивитись більше
-            </ServiceButton>
           )}
         </div>
       </article>

@@ -59,12 +59,13 @@ export type ChatProduct = Omit<
 export type MiniProduct = {
   id: string;
   seller: string;
+  sellerRating: number;
+  sellerId: string;
   description: string;
   platform: string;
   server: string;
   price: string;
   imageUrl: string;
-  rating: number;
 };
 
 export type AllMiniProducts = {

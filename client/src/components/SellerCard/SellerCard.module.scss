@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import '../../styles/variables';
 
 .root {
   width: 100%;
@@ -88,14 +88,14 @@
     }
   }
   .info {
-    width: 100%;
-    display: grid;
-    place-items: flex-start;
-    margin: 4% 0%;
+    width: 100% !important;
+    display: grid !important;
+    place-items: flex-start !important;
+    margin: 4% 0% !important;
     p {
-      margin: 0;
-      padding: 0;
-      text-align: start;
+      margin: 0 !important;
+      padding: 0 !important;
+      text-align: start !important;
     }
   }
 }

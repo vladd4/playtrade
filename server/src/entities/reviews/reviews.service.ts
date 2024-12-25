@@ -39,10 +39,16 @@ export class ReviewsService {
 
     const savedReview = await this.reviewRepository.save(review);
 
-    const reviews = await this.reviewRepository.find({
-      where: { seller: seller },
-      relations: ['seller'],
-    });
+    console.log(seller);
+
+    const reviews = await this.reviewRepository
+      .createQueryBuilder('review')
+      .leftJoinAndSelect('review.seller', 'seller')
+      .where('seller.id = :sellerId', { sellerId: seller.id })
+      .getMany();
+
+    console.log(reviews);
+
     if (reviews.length > 0) {
       const validRatings = reviews.filter(
         (review) => typeof review.rating === 'number' && !isNaN(review.rating),
@@ -60,7 +66,14 @@ export class ReviewsService {
     } else {
       seller.rating = 0;
     }
+
+    console.log('Seller rating before update:', seller.rating); // Debug log
+
     await this.usersService.update(seller.id, { rating: seller.rating });
+
+    // Fetch the updated seller to verify the rating update
+    const updatedSeller = await this.usersService.findOne(seller.id);
+    console.log('Seller rating after update:', updatedSeller?.rating); // Debug log
 
     return savedReview;
   }
@@ -117,9 +130,19 @@ export class ReviewsService {
   }
 
   async findAllBySellerId(sellerId: string): Promise<Review[]> {
-    return this.reviewRepository.find({
+    const reviews = await this.reviewRepository.find({
       where: { seller: { id: sellerId } },
+      relations: ['buyer'],
     });
+
+    const reviewsWithBuyerName = reviews.map((review) => {
+      return {
+        ...review,
+        buyerName: review.buyer ? review.buyer.name : null,
+      };
+    });
+
+    return reviewsWithBuyerName;
   }
   async findOne(id: string): Promise<Review> {
     return this.reviewRepository.findOne({ where: { id: id } });

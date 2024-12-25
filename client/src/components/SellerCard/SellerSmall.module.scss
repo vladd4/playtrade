@@ -25,9 +25,11 @@
         width: 30px;
         height: 30px;
       }
-      h1 {
+      .username {
         font-size: 15px;
         margin: 0;
+        font-weight: 500;
+        padding: 0;
       }
       p {
         font-size: 11px;
@@ -37,9 +39,9 @@
   }
   .comment {
     width: 100%;
-    text-align: start;
+    text-align: flex-start;
     font-size: 15px;
-    margin-top: -2%;
+    margin-top: 0%;
   }
 }
 .feed_root {
