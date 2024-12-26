@@ -4,7 +4,7 @@ export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const NUMBER_REGEX = /^[0-9]*$/;
 export const ITEMS_PER_PAGE_COUNT = 10;
 export const ENGLISH_ONLY_REGEX = /^[A-Za-z0-9\s-]+$/;
-export const USER_PLACEHOLDER_ID = 'ca2cfeff-8480-4dd2-b840-dc4c489cede1';
+export const USER_PLACEHOLDER_ID = 'ac22cb1a-57d9-4745-bfd5-d5453ef01f81';
 
 export enum ProductType {
   CURRENCY = 'currency',

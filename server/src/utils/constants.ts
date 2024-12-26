@@ -1,1 +1,1 @@
-export const TECH_PLACEHOLDER_ID = 'ca2cfeff-8480-4dd2-b840-dc4c489cede1';
+export const TECH_PLACEHOLDER_ID = 'ac22cb1a-57d9-4745-bfd5-d5453ef01f81';
