@@ -24,7 +24,7 @@ const withAdminGuest = <P extends object>(WrappedComponent: React.ComponentType<
         if (userRole === UserRoles.ADMIN) {
           router.push('/admin');
         } else if (userRole === UserRoles.MANAGER) {
-          router.push('/admin/operations');
+          router.push('/admin');
         }
       }
     }, [isAdminAuthenticated, loading, router, userRole]);
